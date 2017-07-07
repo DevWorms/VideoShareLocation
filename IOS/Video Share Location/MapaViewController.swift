@@ -78,11 +78,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
             title = "Error"
             message = "Error al guardar"
         }
+        print("Video Path", videoPath)
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-    
 }
 
     extension MapaViewController: UIImagePickerControllerDelegate {
@@ -91,10 +91,17 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
             dismiss(animated: true, completion: nil)
             // Handle a movie capture
             if mediaType == kUTTypeMovie {
-                let path = (info[UIImagePickerControllerMediaURL] as! URL).path;
+                let path = "/private/var/mobile/Media/DCIM/IMG_0273.MOV"//(info[UIImagePickerControllerMediaURL] as! URL).path;
+                //print("Video Path Final: ", path)
                 if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path) {
+                    print("Ruta encontrada")
                     UISaveVideoAtPathToSavedPhotosAlbum(path, self, #selector(MapaViewController.video(_:    didFinishSavingWithError:contextInfo:)), nil)
                 }
+                /*let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! as NSURL
+                if let fileAbsoluteUrl = documentsUrl.appendingPathComponent( ".MOV")?.absoluteURL {
+                    print("Relative ", fileAbsoluteUrl)
+                 //  /private/var/mobile/Media/DCIM/IMG_0273.MOV
+                }*/
             }
         }
     }
