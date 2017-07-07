@@ -36,6 +36,7 @@
 		94EAA7241EFD0EBB00871095 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA7231EFD0EBA00871095 /* QuartzCore.framework */; };
 		94EAA7261EFD0EC800871095 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA7251EFD0EC800871095 /* SystemConfiguration.framework */; };
 		94EAA7281EFD0ED500871095 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA7271EFD0ED500871095 /* UIKit.framework */; };
+		94F62B5E1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		94EAA7231EFD0EBA00871095 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		94EAA7251EFD0EC800871095 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		94EAA7271EFD0ED500871095 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistroUsuarioViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				94EAA6D51EFCEFC400871095 /* LaunchScreen.storyboard */,
 				94EAA6D81EFCEFC400871095 /* Info.plist */,
 				9401E6091F02425300AE0F4A /* MapaViewController.swift */,
+				94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */,
 			);
 			path = "Video Share Location";
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 			files = (
 				94EAA6CF1EFCEFC400871095 /* ViewController.swift in Sources */,
 				9401E60A1F02425300AE0F4A /* MapaViewController.swift in Sources */,
+				94F62B5E1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift in Sources */,
 				94AB7F011F05E7B90058CCB8 /* ReproducirVideoViewController.swift in Sources */,
 				94EAA6CD1EFCEFC400871095 /* AppDelegate.swift in Sources */,
 				94AB7EFF1F05E6D10058CCB8 /* GrabarVideoViewController.swift in Sources */,

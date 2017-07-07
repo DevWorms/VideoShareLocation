@@ -56,14 +56,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UEV-rS-V7R">
-                                <rect key="frame" x="149" y="589" width="76" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Abrir mapa"/>
-                                <connections>
-                                    <segue destination="Tni-bA-Rtq" kind="show" id="h9S-cB-2LA"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -80,6 +72,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="997.60000000000002" y="98.50074962518741"/>
+        </scene>
+        <!--Registro Usuario View Controller-->
+        <scene sceneID="rcn-gA-SWm">
+            <objects>
+                <viewController storyboardIdentifier="RegistroUsuarioViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MVG-E3-NqW" customClass="RegistroUsuarioViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="j2f-NS-6Kc"/>
+                        <viewControllerLayoutGuide type="bottom" id="L2i-3y-eVM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WmM-dK-H8W">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NQt-Uh-Ssc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1929" y="99"/>
         </scene>
         <!--Mapa View Controller-->
         <scene sceneID="IoW-gw-O1g">
@@ -124,7 +134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cnW-tZ-bAL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1988" y="99.400299850074973"/>
+            <point key="canvasLocation" x="2791" y="99"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZtL-cS-SZV">

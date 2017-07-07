@@ -11,7 +11,7 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import FBSDKShareKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     var dict : [String : AnyObject]!
     
@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         button.readPermissions = ["public_profile", "email", "user_friends"]
         return button
     }()
+    
     @IBOutlet weak var lbl_idFb: UILabel!
     @IBOutlet weak var lbl_nombre: UILabel!
     @IBOutlet weak var lbl_apellido: UILabel!
@@ -27,32 +28,37 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(loginButton)
         loginButton.center = view.center
+        view.addSubview(loginButton)
+        self.loginButton.delegate = self
+        
         if let accessToken = FBSDKAccessToken.current() {
-            print("Token de usuario ", accessToken)// User is logged in, use 'accessToken' here.
-            
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).start(completionHandler: { (connection, result, error) -> Void in //recibimos respuesta de facebook con los datos del usuario
+            print("Token de usuario ", accessToken)
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).start(completionHandler: { (connection, result, error) -> Void in
                 if (error == nil){
                     self.dict = result as! [String : AnyObject]
                     self.setInterfaz(result: self.dict as NSDictionary)
                 }
-                //aqui se maneja el error
             })
         }
-        
+    }
 
-        
-        //self.loginButton.delegate = self
-        // Do any additional setup after loading the view, typically from a nib.
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        if (result.token != nil) {
+            print("¡Login completado!")
+            self.setInterfaz(result: self.dict as NSDictionary)
+        }
+        if (result.isCancelled){
+            print("¡Cancelo Login!")
+        }
     }
     
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result:
-        FBSDKLoginManagerLoginResult!, error: NSError!) {
-        print("¡Login completado!")
-    }
-    
-    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!){
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!){
+        print("Usuario Logout")
+        lbl_idFb.text=""
+        lbl_nombre.text = ""
+        lbl_apellido.text = ""
+        lbl_correo.text = ""
     }
     
     func setInterfaz(result: NSDictionary){
@@ -60,8 +66,6 @@ class ViewController: UIViewController {
         let nombre = result.value(forKey: "name") as! String
         let apellido = result.value(forKey: "last_name") as! String
         let correo = result.value(forKey: "email") as! String
-        //let genero = result.value(forKey: "gender") as! String
-        //let edad = result.value(forKey: "age_range") as! String
         
         lbl_idFb.text = idFace
         lbl_nombre.text = nombre
@@ -71,41 +75,26 @@ class ViewController: UIViewController {
         print("Nombre: ", nombre)
         print("Apellido: ", apellido)
         print("Correo: ", correo)
-        //print("Genero: ", genero)
-        //print("Edad: ", edad)
-        
-        //almacenadas en el dispositivo permanentemente, bueno hasta que la app se desisntale o hasta que las borremos (cerrar sesion)
-        
-        //enviar estos datos a nuestro sitio web (bases de datos) -> procesar la informacion de facebook de nuestro usuario.
 
-        /*
-        let defaultvar = UserDefaults.standard
-        defaultvar.set(idFace, forKey: "idFace")//almacenar valores persistentes
-        defaultvar.set(name, forKey: "name")
-        defaultvar.set(last_name, forKey: "last_name")
+        let guardarDatos = UserDefaults.standard
+        guardarDatos.set(idFace, forKey: "idFace")
+        guardarDatos.set(nombre, forKey: "nombre")
+        guardarDatos.set(apellido, forKey: "apellido")
+        guardarDatos.set(correo, forKey: "correo")
+        print("¡Datos guardados!")
         
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)//instanciamos nuestro story
+        let facebookProfileUrl: String = "https://graph.facebook.com/\(idFace)/picture?type=large"
+        print(facebookProfileUrl)
         
-        let siguienteViewController = storyBoard.instantiateViewController(withIdentifier: "mainController")
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let siguienteViewController = storyBoard.instantiateViewController(withIdentifier: "RegistroUsuarioViewController")
+        self.present(siguienteViewController, animated: true, completion: nil)
         
-        self.present(siguienteViewController, animated: true, completion: nil)//mostrar nuestro viewcontroller
-        
-        
-        //nombreLabel.text = name
-        //apellidoLabel.text = last_name
-        
-        //extraer la imagen de perfil
-        
-        let facebookProfileUrl = NSURL(string: "https://graph.facebook.com/\(idFace)/picture?type=large")
-        
-        if let data = NSData(contentsOf: facebookProfileUrl! as URL) {
+        //let facebookProfileUrl = NSURL(string: "https://graph.facebook.com/\(idFace)/picture?type=large")
+        /*if let data = NSData(contentsOf: facebookProfileUrl! as URL) {
             fotoView.image = UIImage(data: data as Data)
         }
         */
     }
-    
-    /*func loginButtonWillLogin(loginButton: FBSDKLoginButton!) –> Bool {
-     return true
-     }*/
 }
 

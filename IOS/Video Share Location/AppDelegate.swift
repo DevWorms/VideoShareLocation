@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication!) {
         FBSDKAppEvents.activateApp()
+        //FBSDKAppEvents
+        //FBSDKAppEventsLogger.activate(application)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
