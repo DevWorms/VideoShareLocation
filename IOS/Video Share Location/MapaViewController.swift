@@ -5,12 +5,35 @@ import MobileCoreServices
 
 class MapaViewController: UIViewController, CLLocationManagerDelegate {
 
+    let VideoData = UserDefaults.standard
+    
+    @IBAction func revisarElementos(_ sender: Any) {
+        var listaVideos = VideoData.stringArray(forKey: "VideoPath") ?? [String]()
+        var listaNuevaVideos = [String]()
+        let fileManager = FileManager.default
+        var y: Int = 0
+        var totalLista: Int = 0
+        print(listaNuevaVideos.count, "Este es la nueva al iniciar")
+        totalLista = listaVideos.count
+        print("Total = ", totalLista)
+        for var m in 0..<listaVideos.count {
+            if (!fileManager.fileExists(atPath: listaVideos[m])){
+                print("No existe el indice: ", m)
+            } else {
+                print("Si existe el indice: ", m)
+                listaNuevaVideos.append(listaVideos[m])
+                y+=1
+            }
+            m+=1
+        }
+        VideoData.set(listaNuevaVideos, forKey: "VideoPath")
+    }
     @IBOutlet weak var mapContainer: GMSMapView!
     var locationManager = CLLocationManager()
     var camera: GMSCameraPosition!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Ubicaciones"
+        //self.title = "Ubicaciones"
         camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
         mapContainer.camera = camera
         mapContainer.isMyLocationEnabled = true
@@ -34,12 +57,12 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         let location = locations.last
         camera = GMSCameraPosition.camera(withLatitude: (location?.coordinate.latitude)!, longitude:(location?.coordinate.longitude)!, zoom:18)
         self.mapContainer?.animate(to: camera)
-        let latitud: Double = (location?.coordinate.latitude)!
-        let longitud: Double = (location?.coordinate.longitude)!
-        print("Latitud, ", latitud)
-        print("Longitud, ", longitud)
+        //Ahorrar bateria desactivando la actualizacion del GPS
+        //let latitud: Double = (location?.coordinate.latitude)!
+        //let longitud: Double = (location?.coordinate.longitude)!
+        //print("Latitud, ", latitud)
+        //print("Longitud, ", longitud)
         //self.locationManager.stopUpdatingLocation()
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -78,7 +101,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
             title = "Error"
             message = "Error al guardar"
         }
-        print("Video Path", videoPath)
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
         present(alert, animated: true, completion: nil)
@@ -91,18 +113,45 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
             dismiss(animated: true, completion: nil)
             // Handle a movie capture
             if mediaType == kUTTypeMovie {
-                let path = "/private/var/mobile/Media/DCIM/IMG_0273.MOV"//(info[UIImagePickerControllerMediaURL] as! URL).path;
-                //print("Video Path Final: ", path)
-                if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path) {
-                    print("Ruta encontrada")
-                    UISaveVideoAtPathToSavedPhotosAlbum(path, self, #selector(MapaViewController.video(_:    didFinishSavingWithError:contextInfo:)), nil)
+                ///////Obtener la fecha para el nombre del video/////////
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .short
+                dateFormatter.timeStyle = .medium
+                let temp1 : String = dateFormatter.string(from: date)
+                let temp2 = temp1.replacingOccurrences(of: ":", with: "_")
+                let temp3 = temp2.replacingOccurrences(of: "/", with: "_")
+                let temp4 = temp3.replacingOccurrences(of: " ", with: "_")
+                /////////////////////////////////////////////////////////
+                let sourcePath = (info[UIImagePickerControllerMediaURL] as! URL).path;
+                let fileManger = FileManager.default
+                let doumentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+                let destinationPath = doumentDirectoryPath.appendingPathComponent("Video_\(temp4).MOV")
+                //let destinationPath = doumentDirectoryPath.appendingPathComponent("Video.MOV")
+                do{
+                    try fileManger.copyItem(atPath: sourcePath, toPath: destinationPath)
+                }catch let error as NSError {
+                    print("Error encontrado, Detalles: \(error)")
                 }
-                /*let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! as NSURL
-                if let fileAbsoluteUrl = documentsUrl.appendingPathComponent( ".MOV")?.absoluteURL {
-                    print("Relative ", fileAbsoluteUrl)
-                 //  /private/var/mobile/Media/DCIM/IMG_0273.MOV
-                }*/
+                if(dataAlreadyExist(dataKey: "VideoPath")){
+                    var array = VideoData.stringArray(forKey: "VideoPath") ?? [String]()
+                    array.append(destinationPath)
+                    VideoData.set(array, forKey: "VideoPath")
+                } else {
+                    var noArray = [String]()
+                    noArray.append(destinationPath)
+                    VideoData.set(noArray, forKey: "VideoPath")
+                }
+                print("Destino: ", destinationPath)
+                
+                if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(sourcePath) {
+                    UISaveVideoAtPathToSavedPhotosAlbum(sourcePath, self, #selector(MapaViewController.video(_:    didFinishSavingWithError:contextInfo:)), nil)
+                }
             }
+        }
+        
+        func dataAlreadyExist(dataKey: String) -> Bool {
+            return UserDefaults.standard.stringArray(forKey: dataKey) != nil
         }
     }
 

@@ -7,81 +7,54 @@
 //
 
 import UIKit
-import FBSDKLoginKit
-import FBSDKCoreKit
-import FBSDKShareKit
 
-class ViewController: UIViewController, FBSDKLoginButtonDelegate {
+class ViewController: UIViewController {
     
-    var dict : [String : AnyObject]!
+    @IBAction func iniciar(_ sender: Any) {
+
+    }
+    
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-    
-    let loginButton: FBSDKLoginButton = {
-        let button = FBSDKLoginButton()
-        button.readPermissions = ["public_profile", "email", "user_friends"]
-        return button
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginButton.center = view.center
-        view.addSubview(loginButton)
-        self.loginButton.delegate = self
-        
-        let obtenerDatos = UserDefaults.standard
-        let idFace : String = obtenerDatos.object(forKey: "idFace") as! String
-        if (idFace != nil){
-            let siguienteViewController = storyBoard.instantiateViewController(withIdentifier: "RegistroUsuarioViewController")
-            self.present(siguienteViewController, animated: true, completion: nil)
-        }
-    }
-
-    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        if (result.token != nil) {
-            print("¡Login completado!")
-            if let accessToken = FBSDKAccessToken.current() {
-                print("Token de usuario ", accessToken)
-                FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, gender"]).start(completionHandler: { (connection, result, error) -> Void in
-                    if (error == nil){
-                        self.dict = result as! [String : AnyObject]
-                        self.setInterfaz(result: self.dict as NSDictionary)
-                    }
-                })
+        if (dataAlreadyExist(dataKey: "dataUserUpdate")){
+            mandarMapa()
+        } else {
+            if (dataAlreadyExist(dataKey: "loginEnd")){
+                mandarRegistroUsuario()
+            } else {
+                mandarLogin()
             }
         }
-        if (result.isCancelled){
-            print("¡Cancelo Login!")
-        }
     }
     
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!){
-        print("Usuario Logout")
+    func mandarLogin() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = vc
+        print("El Login no ha sido terminado")
     }
     
-    func setInterfaz(result: NSDictionary){
-        let idFace = result.value(forKey: "id") as! String
-        let nombre = result.value(forKey: "first_name") as! String
-        let apellido = result.value(forKey: "last_name") as! String
-        let correo = result.value(forKey: "email") as! String
-        let genero = result.value(forKey: "gender") as! String
-        
-        print("Id Facebook: ", idFace)
-        print("Nombre: ", nombre)
-        print("Apellido: ", apellido)
-        print("Correo: ", correo)
-        print("Genero: ", genero)
+    func mandarRegistroUsuario() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "RegistroUsuarioViewController")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = vc
+        print("El Registro de usuario no ha sido terminado")
+    }
     
-        let guardarDatos = UserDefaults.standard
-        guardarDatos.set(idFace, forKey: "idFace")
-        guardarDatos.set(nombre, forKey: "nombre")
-        guardarDatos.set(apellido, forKey: "apellido")
-        guardarDatos.set(correo, forKey: "correo")
-        guardarDatos.set(genero, forKey: "genero")
-        print("¡Datos guardados!")
-
-        
-        let siguienteViewController = storyBoard.instantiateViewController(withIdentifier: "RegistroUsuarioViewController")
-        self.present(siguienteViewController, animated: true, completion: nil)
+    func mandarMapa(){
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "MapaViewController")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = vc
+        print("Todo listo, iniciando..")
+    }
+    
+    func dataAlreadyExist(dataKey: String) -> Bool {
+        return UserDefaults.standard.object(forKey: dataKey) != nil
     }
 }
 

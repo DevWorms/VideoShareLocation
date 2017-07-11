@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Tma-4b-mRY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bas-QM-q4T">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Facebook-->
+        <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" title="Login" id="BYZ-38-t0r" customClass="LoginViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -31,13 +31,13 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Facebook" prompt="Login" id="KMm-NG-Fit">
+                    <navigationItem key="navigationItem" title="Login" prompt="VideoShareLocation" id="KMm-NG-Fit">
                         <barButtonItem key="backBarButtonItem" title="Regresar" id="Tya-si-v2A"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="997.60000000000002" y="98.50074962518741"/>
+            <point key="canvasLocation" x="3168" y="99"/>
         </scene>
         <!--Registro Usuario View Controller-->
         <scene sceneID="rcn-gA-SWm">
@@ -89,6 +89,7 @@
                                 <state key="normal" title="Guardar"/>
                                 <connections>
                                     <action selector="actualizarDatos:" destination="MVG-E3-NqW" eventType="touchUpInside" id="KI1-46-ZFZ"/>
+                                    <action selector="guardarRegistro:" destination="MVG-E3-NqW" eventType="touchUpInside" id="UzR-Wt-H7b"/>
                                     <segue destination="qNj-Al-e8c" kind="show" id="5E6-7F-kcf"/>
                                 </connections>
                             </button>
@@ -103,12 +104,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NQt-Uh-Ssc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1928.8" y="98.50074962518741"/>
+            <point key="canvasLocation" x="3807.1999999999998" y="98.50074962518741"/>
         </scene>
-        <!--VideoShareLocation-->
+        <!--Mapa-->
         <scene sceneID="IoW-gw-O1g">
             <objects>
-                <viewController id="Tni-bA-Rtq" customClass="MapaViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Tni-bA-Rtq" userLabel="Mapa" customClass="MapaViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JHs-Lu-lX4"/>
                         <viewControllerLayoutGuide type="bottom" id="hUe-h5-CE6"/>
@@ -138,43 +139,31 @@
                                 <rect key="frame" x="253" y="614" width="106" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="..."/>
+                                <connections>
+                                    <action selector="revisarElementos:" destination="Tni-bA-Rtq" eventType="touchUpInside" id="YAC-5T-qi0"/>
+                                    <segue destination="cTY-Sq-vJT" kind="show" id="zdk-Kc-V9C"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="VideoShareLocation" id="sCm-i5-n0h"/>
+                    <navigationItem key="navigationItem" title="VideoShareLocation" id="sCm-i5-n0h">
+                        <barButtonItem key="backBarButtonItem" title="Regresar" id="PeI-d1-yWp"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapContainer" destination="ICa-QL-Z85" id="Vlf-yV-6Xj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cnW-tZ-bAL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3728.8000000000002" y="98.50074962518741"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ZtL-cS-SZV">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tma-4b-mRY" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="M8e-Rb-xKm">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="NqY-c3-3xp"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dRO-Cr-cpw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="25" y="99"/>
+            <point key="canvasLocation" x="5607.1999999999998" y="98.50074962518741"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3GU-4E-leY">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qNj-Al-e8c" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MapaViewController" automaticallyAdjustsScrollViewInsets="NO" id="qNj-Al-e8c" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="h3D-S5-tSP">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="h3D-S5-tSP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -185,7 +174,72 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aqp-ZC-Dyx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2789.5999999999999" y="98.50074962518741"/>
+            <point key="canvasLocation" x="4668" y="98.50074962518741"/>
+        </scene>
+        <!--Videos-->
+        <scene sceneID="9Bu-xO-Mgo">
+            <objects>
+                <tableViewController id="cTY-Sq-vJT" customClass="ListaVideoViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="YIK-Mc-6QC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LabelCell" textLabel="WbW-pA-8D6" detailTextLabel="vOn-9R-VUq" style="IBUITableViewCellStyleSubtitle" id="b1z-3e-Omi">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b1z-3e-Omi" id="0z8-nl-sRo">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WbW-pA-8D6">
+                                            <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vOn-9R-VUq">
+                                            <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="cTY-Sq-vJT" id="CHY-nf-hYy"/>
+                            <outlet property="delegate" destination="cTY-Sq-vJT" id="1R4-tG-rhU"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Videos" id="Tbv-Nc-7rC">
+                        <barButtonItem key="backBarButtonItem" title="Regresar" id="mnD-q9-zEk"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GYl-Fs-NNt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6663.1999999999998" y="98.50074962518741"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="pxW-TJ-ALu">
+            <objects>
+                <viewController id="bas-QM-q4T" customClass="ViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oom-BR-cp2"/>
+                        <viewControllerLayoutGuide type="bottom" id="s32-Yf-w50"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="J4e-FD-BLk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wc5-Na-8Lh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2510" y="99"/>
         </scene>
     </scenes>
 </document>

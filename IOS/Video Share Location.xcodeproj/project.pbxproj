@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		145A18F91F1438FC002BBFC3 /* ListaVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */; };
+		145A18FB1F145165002BBFC3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145A18FA1F145165002BBFC3 /* LoginViewController.swift */; };
 		9401E60A1F02425300AE0F4A /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401E6091F02425300AE0F4A /* MapaViewController.swift */; };
-		94AB7F011F05E7B90058CCB8 /* ReproducirVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB7F001F05E7B90058CCB8 /* ReproducirVideoViewController.swift */; };
 		94EAA6CD1EFCEFC400871095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */; };
 		94EAA6CF1EFCEFC400871095 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EAA6CE1EFCEFC400871095 /* ViewController.swift */; };
 		94EAA6D21EFCEFC400871095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94EAA6D01EFCEFC400871095 /* Main.storyboard */; };
@@ -39,8 +40,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListaVideoViewController.swift; sourceTree = "<group>"; };
+		145A18FA1F145165002BBFC3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9401E6091F02425300AE0F4A /* MapaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
-		94AB7F001F05E7B90058CCB8 /* ReproducirVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReproducirVideoViewController.swift; sourceTree = "<group>"; };
 		94EAA6C91EFCEFC400871095 /* Video Share Location.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Video Share Location.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94EAA6CE1EFCEFC400871095 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -131,7 +133,6 @@
 		94EAA6CB1EFCEFC400871095 /* Video Share Location */ = {
 			isa = PBXGroup;
 			children = (
-				94AB7F001F05E7B90058CCB8 /* ReproducirVideoViewController.swift */,
 				94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */,
 				94EAA6CE1EFCEFC400871095 /* ViewController.swift */,
 				94EAA6D01EFCEFC400871095 /* Main.storyboard */,
@@ -140,6 +141,8 @@
 				94EAA6D81EFCEFC400871095 /* Info.plist */,
 				9401E6091F02425300AE0F4A /* MapaViewController.swift */,
 				94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */,
+				145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */,
+				145A18FA1F145165002BBFC3 /* LoginViewController.swift */,
 			);
 			path = "Video Share Location";
 			sourceTree = "<group>";
@@ -238,10 +241,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				145A18FB1F145165002BBFC3 /* LoginViewController.swift in Sources */,
 				94EAA6CF1EFCEFC400871095 /* ViewController.swift in Sources */,
 				9401E60A1F02425300AE0F4A /* MapaViewController.swift in Sources */,
+				145A18F91F1438FC002BBFC3 /* ListaVideoViewController.swift in Sources */,
 				94F62B5E1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift in Sources */,
-				94AB7F011F05E7B90058CCB8 /* ReproducirVideoViewController.swift in Sources */,
 				94EAA6CD1EFCEFC400871095 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,6 +377,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Video Share Location/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.devworms.Video-Share-Location";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -390,6 +395,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Video Share Location/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.devworms.Video-Share-Location";
 				PRODUCT_NAME = "$(TARGET_NAME)";

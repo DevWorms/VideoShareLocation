@@ -14,6 +14,11 @@ class RegistroUsuarioViewController: UIViewController {
         guardarDatos.set(apellido, forKey: "apellido")
     }
     
+    @IBAction func guardarRegistro(_ sender: Any) {
+        let guardarDatos = UserDefaults.standard
+        guardarDatos.set("Si", forKey: "dataUserUpdate")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,14 +44,4 @@ class RegistroUsuarioViewController: UIViewController {
         et_nombre.resignFirstResponder()
         et_apellido.resignFirstResponder()
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
