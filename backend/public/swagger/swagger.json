@@ -1,0 +1,93 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentación para VideoShare endpoints",
+    "version": "0.0.1",
+    "title": "VideoShare WebService"
+  },
+  "host": "videoshare.devworms.com",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Token de Fb",
+        "description": "token de fb de usuario",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tokenfb",
+            "in": "formData",
+            "description": "autenticacion del usuario",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "nombre del usuario",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/profile": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "profile",
+        "description": "perfil de usuario",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "apikey",
+            "in": "formData",
+            "description": "apikey del usuario",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "formData",
+            "description": "id del usuario",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  }
+}
