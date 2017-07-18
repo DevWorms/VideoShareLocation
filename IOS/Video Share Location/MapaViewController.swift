@@ -33,9 +33,13 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         //marker.snippet = "Australia"
         //marker.tracksInfoWindowChanges = true
         //marker.map = mapContainer
-        //llenarMapa()
+        llenarMapaMarkers()
         self.locationManager.delegate = self
         self.locationManager.startUpdatingLocation()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     @IBAction func limpiarLista(_ sender: Any) {
@@ -121,16 +125,23 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
             DataUserDefault.set(LatDouble, forKey: "LatVideo")
             DataUserDefault.set(LongDouble, forKey: "LongVideo")
         }
-        
-        //marker.position = CLLocationCoordinate2D(latitude: LatLong[0] as! Double, longitude: LatLong[1] as! Double)
-        //marker.title = "Bani Azarael"
-        //marker.snippet = "Videos de Bani"
-        //marker.icon = GMSMarker.markerImage(with: .blue)
-        //marker.map = mapContainer
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    func llenarMapaMarkers() {
+        if (arrayAlreadyExist(dataKey: "LatVideo")){
+            var LatVideo = DataUserDefault.array(forKey: "LatVideo") ?? [Double]()
+            var LongVideo = DataUserDefault.array(forKey: "LongVideo") ?? [Double]()
+            for c in 0..<LatVideo.count {
+                let marker = GMSMarker()
+                marker.position = CLLocationCoordinate2D(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
+                marker.title = "Bani Azarael"
+                marker.snippet = "Videos de Bani"
+                marker.icon = GMSMarker.markerImage(with: .blue)
+                marker.map = mapContainer
+            }
+        } else {
+            print("¡No existen markers almacenados!")
+        }
     }
     
     @IBAction func Grabar(_ sender: Any) {
@@ -163,7 +174,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
     func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
         var title = "Guardado"
         var message = "Exito al guardar"
-        DistanciaGuardarMarker()
         if let _ = error {
             title = "Error"
             message = "Error al guardar"
@@ -212,10 +222,10 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
                     DataUserDefault.set(noArray, forKey: "VideoPath")
                 }
                 print("Destino: ", destinationPath)
-                
                 let alerta = UIAlertController(title: "¿Que desea hacer?", message: "Elija una opción para continuar", preferredStyle: UIAlertControllerStyle.alert)
                 alerta.addAction(UIAlertAction(title: "Subir video", style: UIAlertActionStyle.default, handler: { alertAction in
                     print("Subir al servidor")
+                    self.DistanciaGuardarMarker()
                     //Codigo subir a API
                     alerta.dismiss(animated: true, completion: nil)
                 }))
@@ -223,6 +233,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
                     if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(sourcePath) {
                         UISaveVideoAtPathToSavedPhotosAlbum(sourcePath, self, #selector(MapaViewController.video(_:    didFinishSavingWithError:contextInfo:)), nil)
                     }
+                    self.DistanciaGuardarMarker()
                     print("Guardado en el telefono")
                     alerta.dismiss(animated: true, completion: nil)
                 }))
