@@ -140,7 +140,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="..."/>
                                 <connections>
-                                    <action selector="revisarElementos:" destination="Tni-bA-Rtq" eventType="touchUpInside" id="YAC-5T-qi0"/>
+                                    <action selector="limpiarLista:" destination="Tni-bA-Rtq" eventType="touchUpInside" id="GGo-lT-EN3"/>
                                     <segue destination="cTY-Sq-vJT" kind="show" id="zdk-Kc-V9C"/>
                                 </connections>
                             </button>
@@ -163,7 +163,7 @@
             <objects>
                 <navigationController storyboardIdentifier="MapaViewController" automaticallyAdjustsScrollViewInsets="NO" id="qNj-Al-e8c" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="h3D-S5-tSP">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="h3D-S5-tSP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
