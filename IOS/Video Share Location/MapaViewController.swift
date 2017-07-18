@@ -1,19 +1,22 @@
 
 import UIKit
+import Foundation
 import GoogleMaps
 import MobileCoreServices
+import CoreLocation
 
 class MapaViewController: UIViewController, CLLocationManagerDelegate {
 
-    let VideoData = UserDefaults.standard
+    let DataUserDefault = UserDefaults.standard
+    var latitud: Double = 0.0
+    var longitud: Double = 0.0
     
     @IBAction func revisarElementos(_ sender: Any) {
-        var listaVideos = VideoData.stringArray(forKey: "VideoPath") ?? [String]()
+        var listaVideos = DataUserDefault.stringArray(forKey: "VideoPath") ?? [String]()
         var listaNuevaVideos = [String]()
         let fileManager = FileManager.default
         var y: Int = 0
         var totalLista: Int = 0
-        print(listaNuevaVideos.count, "Este es la nueva al iniciar")
         totalLista = listaVideos.count
         print("Total = ", totalLista)
         for var m in 0..<listaVideos.count {
@@ -26,28 +29,29 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
             }
             m+=1
         }
-        VideoData.set(listaNuevaVideos, forKey: "VideoPath")
+        DataUserDefault.set(listaNuevaVideos, forKey: "VideoPath")
     }
+    
     @IBOutlet weak var mapContainer: GMSMapView!
     var locationManager = CLLocationManager()
     var camera: GMSCameraPosition!
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.title = "Ubicaciones"
-        camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
-        mapContainer.camera = camera
+        //camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
+        //mapContainer.camera = camera
         mapContainer.isMyLocationEnabled = true
         mapContainer.settings.allowScrollGesturesDuringRotateOrZoom = true
         mapContainer.settings.compassButton = true
         mapContainer.settings.consumesGesturesInView = true
-        //mapContainer.settings.myLocationButton = true
+        mapContainer.settings.myLocationButton = true
         mapContainer.settings.zoomGestures = true
 
-        /*let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
-        marker.map = mapContainer*/
+        //let marker = GMSMarker()
+        //marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
+        //marker.title = "Sydney"
+        //marker.snippet = "Australia"
+        //marker.tracksInfoWindowChanges = true
+        //marker.map = mapContainer
         
         self.locationManager.delegate = self
         self.locationManager.startUpdatingLocation()
@@ -55,14 +59,66 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
-        camera = GMSCameraPosition.camera(withLatitude: (location?.coordinate.latitude)!, longitude:(location?.coordinate.longitude)!, zoom:18)
-        self.mapContainer?.animate(to: camera)
-        //Ahorrar bateria desactivando la actualizacion del GPS
-        //let latitud: Double = (location?.coordinate.latitude)!
-        //let longitud: Double = (location?.coordinate.longitude)!
-        //print("Latitud, ", latitud)
-        //print("Longitud, ", longitud)
+        latitud = (location?.coordinate.latitude)!
+        longitud = (location?.coordinate.longitude)!
         //self.locationManager.stopUpdatingLocation()
+    }
+    
+    func colocarMarker() {
+        let LatLong = DataUserDefault.array(forKey: "LatLong") ?? [Double]()
+        var ponerMarker: Bool = false
+        let marker = GMSMarker()
+        
+        if (arrayAlreadyExist(dataKey: "LatVideo")){
+            var LatVideo = DataUserDefault.array(forKey: "LatVideo") ?? [Double]()
+            var LongVideo = DataUserDefault.array(forKey: "LongVideo") ?? [Double]()
+            print("La lista tiene ", LatVideo.count, "indices")
+            for var c in 0..<LatVideo.count {
+                
+                let Punto1 = CLLocation(latitude: LatLong[0] as! Double, longitude: LatLong[1] as! Double)
+                let Punto2 = CLLocation(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
+                let distancia = Punto1.distance(from: Punto2)
+                if (distancia<=10) {
+                    print("Distancia dentro del rango")
+                    ponerMarker = false
+                    c=9999
+                } else {
+                    print("Distancia fuera del rango")
+                    ponerMarker = true
+                }
+                print("Distancia = ", distancia, " metros")
+            }
+            if (ponerMarker){
+                marker.position = CLLocationCoordinate2D(latitude: LatLong[0] as! Double, longitude: LatLong[1] as! Double)
+                marker.title = "Bani Azarael"
+                //marker.snippet = "Videos de Bani"
+                marker.icon = GMSMarker.markerImage(with: .blue)
+                marker.map = mapContainer
+                LatVideo.append(LatLong[0] as! Double)
+                LongVideo.append(LatLong[1] as! Double)
+                DataUserDefault.set(LatVideo, forKey: "LatVideo")
+                DataUserDefault.set(LongVideo, forKey: "LongVideo")
+            }
+        } else {
+            marker.position = CLLocationCoordinate2D(latitude: LatLong[0] as! Double, longitude: LatLong[1] as! Double)
+            marker.title = "Bani Azarael"
+            //marker.snippet = "Videos de Bani"
+            marker.icon = GMSMarker.markerImage(with: .blue)
+            marker.map = mapContainer
+            print("Primer video")
+            var LatDouble = [Double]()
+            var LongDouble = [Double]()
+            LatDouble.append(LatLong[0] as! Double)
+            LongDouble.append(LatLong[1] as! Double)
+            DataUserDefault.set(LatDouble, forKey: "LatVideo")
+            DataUserDefault.set(LongDouble, forKey: "LongVideo")
+        }
+        
+        //marker.position = CLLocationCoordinate2D(latitude: LatLong[0] as! Double, longitude: LatLong[1] as! Double)
+        //marker.title = "Bani Azarael"
+        //marker.snippet = "Videos de Bani"
+        //marker.icon = GMSMarker.markerImage(with: .blue)
+        //marker.map = mapContainer
     }
     
     override func didReceiveMemoryWarning() {
@@ -76,6 +132,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         } else{
             print("Error camara")
         }
+        let LatLong = [latitud,longitud]
+        DataUserDefault.set(LatLong, forKey: "LatLong")
     }
     
     func startCameraFromViewController(_ viewController: UIViewController, withDelegate delegate: UIImagePickerControllerDelegate & UINavigationControllerDelegate) -> Bool {
@@ -97,6 +155,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
     func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
         var title = "Guardado"
         var message = "Exito al guardar"
+        colocarMarker()
         if let _ = error {
             title = "Error"
             message = "Error al guardar"
@@ -107,11 +166,14 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
     }
 }
 
+
+    extension FloatingPoint {
+        var degreesToRadians: Self { return self * .pi / 180 }
+    }
     extension MapaViewController: UIImagePickerControllerDelegate {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String :     Any]) {
             let mediaType = info[UIImagePickerControllerMediaType] as! NSString
             dismiss(animated: true, completion: nil)
-            // Handle a movie capture
             if mediaType == kUTTypeMovie {
                 ///////Obtener la fecha para el nombre del video/////////
                 let date = Date()
@@ -127,20 +189,19 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
                 let fileManger = FileManager.default
                 let doumentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
                 let destinationPath = doumentDirectoryPath.appendingPathComponent("Video_\(temp4).MOV")
-                //let destinationPath = doumentDirectoryPath.appendingPathComponent("Video.MOV")
                 do{
                     try fileManger.copyItem(atPath: sourcePath, toPath: destinationPath)
                 }catch let error as NSError {
                     print("Error encontrado, Detalles: \(error)")
                 }
                 if(dataAlreadyExist(dataKey: "VideoPath")){
-                    var array = VideoData.stringArray(forKey: "VideoPath") ?? [String]()
+                    var array = DataUserDefault.stringArray(forKey: "VideoPath") ?? [String]()
                     array.append(destinationPath)
-                    VideoData.set(array, forKey: "VideoPath")
+                    DataUserDefault.set(array, forKey: "VideoPath")
                 } else {
                     var noArray = [String]()
                     noArray.append(destinationPath)
-                    VideoData.set(noArray, forKey: "VideoPath")
+                    DataUserDefault.set(noArray, forKey: "VideoPath")
                 }
                 print("Destino: ", destinationPath)
                 
@@ -152,6 +213,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         
         func dataAlreadyExist(dataKey: String) -> Bool {
             return UserDefaults.standard.stringArray(forKey: dataKey) != nil
+        }
+        func arrayAlreadyExist(dataKey: String) -> Bool {
+            return UserDefaults.standard.array(forKey: dataKey) != nil
         }
     }
 
