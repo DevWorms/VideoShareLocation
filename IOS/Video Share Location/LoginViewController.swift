@@ -107,12 +107,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     //recoge apikey del JSon
-    func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
+   func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
         if error != nil {
             print(error!)
         } else if urlResponse != nil {
-            if let content = data{
-                do{
+            //if let content = data{
+                /*do{
                     let myJson = try JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
                     if let loginJson = myJson["user"] as? NSDictionary{
                         if let apikey = loginJson["apikey"]{
@@ -122,10 +122,31 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                         
                     }
                 }
-                catch{}
+                catch{}*/
+                if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
+                    //print(json)
+                    if let jsonResult = json as? [String: Any] {
+                        DispatchQueue.main.async {
+                            
+                            if let result = jsonResult["user"] as? [String: Any]{
+                                globalkey = result["apikey"] as! String
+                                print(globalkey)
+                            }
+                            
+                            //UserDefaults.standard.setValue("Hola \(result["name"]!)", forKey: "name")
+                            
+                            
+                        }
+                    }
+                    
+                } else {
+                    print("HTTP Status Code: 200")
+                    print("El JSON de respuesta es inválido.")
+                }
+                
             }
         }
         }
-    }
+    
 
 
