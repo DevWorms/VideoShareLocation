@@ -3,8 +3,12 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import FBSDKShareKit
 
+var globalkey = ""
+
+
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
+    var datos = [[String : Any]]()
     var dict : [String : AnyObject]!
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     
@@ -67,6 +71,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         guardarDatos.set(correo, forKey: "correo")
         guardarDatos.set(genero, forKey: "genero")
         print("¡Datos guardados!")
+    
+        
+        //ejecuta conexion con api
+    
+        login(token:idFace, nombre:nombre)
         
         
         let siguienteViewController = storyBoard.instantiateViewController(withIdentifier: "RegistroUsuarioViewController")
@@ -76,4 +85,47 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func dataAlreadyExist(userKey: String) -> Bool {
         return UserDefaults.standard.object(forKey: userKey) != nil
     }
-}
+    
+    // Conexion con api
+    
+    func login(token:String, nombre:String) {
+        
+        let parameterString = "tokenfb=\(token)&name=\(nombre)"
+        
+        print(parameterString)
+        
+        let strUrl = "http://videoshare.devworms.com/api/login"
+        
+        if let httpBody = parameterString.data(using: String.Encoding.utf8) {
+            var urlRequest = URLRequest(url: URL(string: strUrl)!)
+            urlRequest.httpMethod = "POST"
+            
+            URLSession.shared.uploadTask(with: urlRequest, from: httpBody, completionHandler: parseJsonLogin).resume()
+        } else {
+            print("Error de codificación de caracteres.")
+        }
+    }
+    
+    //recoge apikey del JSon
+    func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
+        if error != nil {
+            print(error!)
+        } else if urlResponse != nil {
+            if let content = data{
+                do{
+                    let myJson = try JSONSerialization.jsonObject(with: content, options: <#T##JSONSerialization.ReadingOptions#>) as AnyObject
+                    if let loginJson = myJson["user"] as? NSDictionary{
+                        if let apikey = loginJson["apikey"]{
+                            globalkey = apikey as! String
+                            print(globalkey)
+                        }
+                        
+                    }
+                }
+                catch{}
+            }
+        }
+        }
+    }
+
+
