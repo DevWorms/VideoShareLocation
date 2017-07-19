@@ -18,3 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post("login","UserController@login");
 Route::post("profile","UserController@profile");
+Route::post("video", "VideoController@video");
+Route::post("users", "UserController@users");
+Route::post("videos", "VideoController@allvideos");

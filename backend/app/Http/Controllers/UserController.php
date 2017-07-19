@@ -51,6 +51,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'apikey' => 'required',
                 'id' => 'required',
+
             ]);
 
             if ($validator->fails()) {
@@ -84,5 +85,44 @@ class UserController extends Controller
             $res['mensaje'] = $error->getMessage();
             return response()->json($res, 500);
         }
+    }
+
+    public function users(Request $request){
+        try{
+            $validator = Validator::make($request->all(), [
+                'apikey' => 'required',
+                'id' => 'required',
+
+            ]);
+
+            if ($validator->fails()) {
+                //Si los datos no estan completos, devuelve error
+                $errors = $validator->errors();
+                $res['estado'] = 0;
+                $res['mensaje'] = $errors->first();
+                return response()->json($res, 400);
+            }
+
+            $users = User::select("name", "id")->get();
+
+            $res ['estado'] = 1;
+            $res ['mensaje'] = "¡success!";
+            $res ['users'] = $users;
+            return response()->json($res, 200);
+
+        }catch (ModelNotFoundException $error) {
+            $res['estado'] = 0;
+            $res['mensaje'] = "Usuario incorrecto";
+            return response()->json($res, 400);
+
+        } catch
+        (Exception $error) {
+            $res['estado'] = 0;
+            $res['mensaje'] = $error->getMessage();
+            return response()->json($res, 500);
+        }
+
+
+
     }
 }
