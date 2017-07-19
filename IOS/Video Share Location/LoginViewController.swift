@@ -113,7 +113,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         } else if urlResponse != nil {
             if let content = data{
                 do{
-                    let myJson = try JSONSerialization.jsonObject(with: content, options: <#T##JSONSerialization.ReadingOptions#>) as AnyObject
+                    let myJson = try JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
                     if let loginJson = myJson["user"] as? NSDictionary{
                         if let apikey = loginJson["apikey"]{
                             globalkey = apikey as! String
