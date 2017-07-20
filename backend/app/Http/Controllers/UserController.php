@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Monolog\Processor\UidProcessorTest;
 
@@ -68,6 +69,10 @@ class UserController extends Controller
 
                 $videos= Video::where("user_id",$request->get("id"))->get();
 
+                foreach ($videos as $video) {
+                    $video = $this->returnVideo($video);
+                }
+
                 $res ['estado'] = 1;
                 $res ['mensaje'] = "¡Registro con éxito!";
                 $res ['user'] = $user;
@@ -121,8 +126,12 @@ class UserController extends Controller
             $res['mensaje'] = $error->getMessage();
             return response()->json($res, 500);
         }
+    }
 
+    public function returnVideo(Video $video) {
+        $url = $video->ruta;
+        $video->url = url(Storage::url($url));
 
-
+        return $video;
     }
 }

@@ -13,16 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Factory::create("es_Es");
-        for ($i = 0; $i < 10; $i++) {
-            User::create([
-                "name" => $faker->name,
-                "email" => $faker->email,
-                "password" => bcrypt("nose"),
-                "phone" => $faker->phoneNumber,
-                "tokenfb" => $faker->word,
-                "apikey" => $i + 1,
-            ]);
-        }
+
+        factory(\App\User::class,5)->create()->each(function ($user){
+            $user->videos()->saveMany(factory(\App\Video::class, rand(1,5))->make([
+                'user_id'=>$user->id,
+
+            ]));
+        });
     }
+
 }

@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class VideoController extends Controller
@@ -61,7 +62,7 @@ class VideoController extends Controller
 
                     if (in_array($extension, $this->extensions)) {
                         // Si va bien, lo mueve a la carpeta y guarda el registro
-                        $url = $video->store("public");
+                        $url = $video->storeAs("/", uniqid() . '.' . $extension);
                         $nombre = $video->getClientOriginalName();
                         $descripcion = ($request->get("descripcion")) ? $request->get("descripcion") : "hola        ";
                         $lat = $request->get("lat");
@@ -133,6 +134,10 @@ class VideoController extends Controller
                ->havingRaw("distance < ?", [$this->distance])
                ->orderBy('created_at')->get();
 
+           foreach ($allvideo as $video) {
+               $video = $this->returnVideo($video);
+           }
+
             $res ['estado'] = 1;
             $res ['videos'] = $allvideo;
             $res ['mensaje'] = "Exito";
@@ -149,5 +154,12 @@ class VideoController extends Controller
             return response()->json($res, 500);
         }
 
+    }
+
+    public function returnVideo(Video $video) {
+        $url = $video->ruta;
+        $video->url = url(Storage::url($url));
+
+        return $video;
     }
 }
