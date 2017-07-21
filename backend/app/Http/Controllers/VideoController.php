@@ -126,10 +126,10 @@ class VideoController extends Controller
                ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
                ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
                ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
-                               cos( radians( lat ) )
-                               * cos( radians( long ) - radians(?)
+                               cos( radians( `lat` ) )
+                               * cos( radians( `long` ) - radians(?)
                                ) + sin( radians(?) ) *
-                               sin( radians( lat ) ) )
+                               sin( radians( `lat` ) ) )
                              ) AS distance', [$lat, $long, $lat])
                ->havingRaw("distance < ?", [$this->distance])
                ->orderBy('created_at')->get();
