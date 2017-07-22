@@ -88,6 +88,160 @@
           }
         }
       }
-    }
-  }
-}
+    },
+      "/users": {
+          "post": {
+            "tags": [
+              "user"
+            ],
+            "summary": "Users",
+            "description": "usuarios en la app",
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "name": "apikey",
+                "in": "formData",
+                "description": "apikey del usuario",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "id",
+                "in": "formData",
+                "description": "id del usuario",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "successful operation"
+              },
+              "400": {
+                "description": "Invalid username/password supplied"
+              },
+              "500": {
+                "description": "Internal server error"
+              }
+            }
+          }
+        },
+      "/video": {
+        "post": {
+          "tags": [
+            "videos"
+          ],
+          "summary": "Video",
+          "description": "Carga de video del usuario ",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "apikey",
+              "in": "formData",
+              "description": "apikey del usuario",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "id",
+              "in": "formData",
+              "description": "id del usuario",
+              "required": true,
+              "type": "string"
+            },
+             {
+              "name": "archivo",
+              "in": "formData",
+              "description": "video del usuario",
+              "required": true,
+              "type": "file"
+            },
+
+            {
+              "name": "lat",
+              "in": "formData",
+              "description": "latitud del usuario",
+              "required": true,
+              "type": "string"
+            },
+
+            {
+              "name": "long",
+              "in": "formData",
+              "description": "longitud del usuario",
+              "required": true,
+              "type": "string"
+            }
+            ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "Invalid username/password supplied"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+          "/videos": {
+            "post": {
+              "tags": [
+                "videos"
+              ],
+              "summary": "Videos",
+              "description": "Videos de los usuarios en la app",
+              "produces": [
+                "application/json"
+              ],
+              "parameters": [
+                {
+                  "name": "apikey",
+                  "in": "formData",
+                  "description": "apikey del usuario",
+                  "required": true,
+                  "type": "string"
+                },
+                {
+                  "name": "id",
+                  "in": "formData",
+                  "description": "id del usuario",
+                  "required": true,
+                  "type": "string"
+                },
+                {
+                  "name": "lat",
+                  "in": "formData",
+                  "description": "latitud del usuario",
+                  "required": true,
+                  "type": "string"
+                },
+                {
+                  "name": "long",
+                  "in": "formData",
+                  "description": "longitud del usuario",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation"
+                },
+                "400": {
+                  "description": "Invalid username/password supplied"
+                },
+                "500": {
+                  "description": "Internal server error"
+                }
+              }
+            }
+          }
+          }
+   }
