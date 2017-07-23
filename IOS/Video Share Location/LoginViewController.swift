@@ -4,6 +4,7 @@ import FBSDKCoreKit
 import FBSDKShareKit
 
 var globalkey = ""
+var globalId = ""
 
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
@@ -111,18 +112,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         if error != nil {
             print(error!)
         } else if urlResponse != nil {
-            //if let content = data{
-                /*do{
-                    let myJson = try JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
-                    if let loginJson = myJson["user"] as? NSDictionary{
-                        if let apikey = loginJson["apikey"]{
-                            globalkey = apikey as! String
-                            print(globalkey)
-                        }
-                        
-                    }
-                }
-                catch{}*/
                 if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
                     //print(json)
                     if let jsonResult = json as? [String: Any] {
@@ -130,11 +119,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                             
                             if let result = jsonResult["user"] as? [String: Any]{
                                 globalkey = result["apikey"] as! String
+                                globalId = result["id"] as! String
                                 print(globalkey)
+                                print(globalId)
                             }
-                            
-                            //UserDefaults.standard.setValue("Hola \(result["name"]!)", forKey: "name")
-                            
                             
                         }
                     }
@@ -146,7 +134,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 
             }
         }
-        }
+    }
     
 
 

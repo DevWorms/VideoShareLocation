@@ -44,4 +44,49 @@ class RegistroUsuarioViewController: UIViewController {
         et_nombre.resignFirstResponder()
         et_apellido.resignFirstResponder()
     }
+    
+    // Conexion con api
+    
+    func login(token:String, nombre:String) {
+        
+        let parameterString = "apikey=\(globalkey)&id=\(globalId)"
+        
+        print(parameterString)
+        
+        let strUrl = "http://videoshare.devworms.com/api/profile"
+        
+        if let httpBody = parameterString.data(using: String.Encoding.utf8) {
+            var urlRequest = URLRequest(url: URL(string: strUrl)!)
+            urlRequest.httpMethod = "POST"
+            
+            URLSession.shared.uploadTask(with: urlRequest, from: httpBody, completionHandler: parseJsonLogin).resume()
+        } else {
+            print("Error de codificación de caracteres.")
+        }
+    }
+    
+    //recoge apikey del JSon
+    func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
+        if error != nil {
+            print(error!)
+        } else if urlResponse != nil {
+            if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
+                //print(json)
+                if let jsonResult = json as? [String: Any] {
+                    DispatchQueue.main.async {
+                        
+                        if let result = jsonResult["estado"]{
+                            print(result as! String)
+                        }
+                        
+                    }
+                }
+                
+            } else {
+                print("HTTP Status Code: 200")
+                print("El JSON de respuesta es inválido.")
+            }
+            
+        }
+    }
 }
