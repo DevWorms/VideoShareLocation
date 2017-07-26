@@ -7,12 +7,23 @@ import CoreLocation
 
 class MapaViewController: UIViewController, CLLocationManagerDelegate {
 
+    //Inicia clase de usuario ficticio
+    class UsuarioFicticio{
+        var nombre = "Juanito Bananas"
+        var videoinfo = [["Latitud":19.4405597, "Longitud": -99.2546524],["Latitud":19.517076, "Longitud":-98.886662],["Latitud":19.395759,"Longitud":-99.091438]] as [Any]
+
+    }
+    
+    //Termina clase de ususario ficticio
+    
     let DataUserDefault = UserDefaults.standard
     var latitud: Double = 0.0
     var longitud: Double = 0.0
     var locationManager = CLLocationManager()
     var camera: GMSCameraPosition!
     @IBOutlet weak var mapContainer: GMSMapView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +45,12 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         //marker.tracksInfoWindowChanges = true
         //marker.map = mapContainer
         llenarMapaMarkers()
+        //Usuario ficticio ------------------///
+        crearMarkerr()
+        //usuario ficticio ------------------///
         self.locationManager.delegate = self
         self.locationManager.startUpdatingLocation()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -64,6 +79,24 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         DataUserDefault.set(listaNuevaVideos, forKey: "VideoPath")
         /////////////Crea un array con los videos que existen para llenar lista///////////////
     }
+    
+    ////Funcion crear markers ficticios
+    func crearMarkerr(){
+        let juanito = UsuarioFicticio()
+        let videoinfo = juanito.videoinfo
+        for i in 0 ..< videoinfo.count {
+            let markerr = GMSMarker()
+            let result = videoinfo[i] as! [String:Any]
+            let latficticia = result["Latitud"]
+            let longficticia = result["Longitud"]
+            markerr.position = CLLocationCoordinate2D(latitude: latficticia as! Double, longitude: longficticia as! Double)
+            markerr.title = "Juanito Bananas"
+            markerr.snippet = "Videos de Juanito"
+            markerr.icon = GMSMarker.markerImage(with: .brown)
+            markerr.map = mapContainer
+        }
+    }
+    ///Funcion crear markers ficticios termina
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
@@ -251,3 +284,4 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
 
     extension MapaViewController: UINavigationControllerDelegate {
     }
+
