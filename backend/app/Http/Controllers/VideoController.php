@@ -23,7 +23,7 @@ class VideoController extends Controller
     function __construct()
     {
         $this->size = 100000000;
-        $this->distance= 5;
+        $this->distance = 5;
         $this->extensions = [
             // extensiones de video
             "h263", "h264", "mp4", "mov", "m4v",
@@ -102,8 +102,10 @@ class VideoController extends Controller
             return response()->json($res, 500);
         }
     }
-    public function allvideos(Request $request){
-        try{
+
+    public function allvideos(Request $request)
+    {
+        try {
             $validator = Validator::make($request->all(), [
                 'id' => 'required',
                 'apikey' => 'required',
@@ -119,24 +121,24 @@ class VideoController extends Controller
             }
             $lat = $request->get("lat");
             $long = $request->get("long");
-           $boundaries = $this->getBoundaries($lat, $long);
-           $horamin = Carbon::now()->subHour(3);
+            $boundaries = $this->getBoundaries($lat, $long);
+            $horamin = Carbon::now()->subHour(3);
 
-           $allvideo = Video::where('created_at', '>=', $horamin)
-               ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
-               ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
-               ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
+            $allvideo = Video::where('created_at', '>=', $horamin)
+                ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
+                ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
+                ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
                                cos( radians( `lat` ) )
                                * cos( radians( `long` ) - radians(?)
                                ) + sin( radians(?) ) *
                                sin( radians( `lat` ) ) )
                              ) AS distance', [$lat, $long, $lat])
-               ->havingRaw("distance < ?", [$this->distance])
-               ->orderBy('created_at')->get();
+                ->havingRaw("distance < ?", [$this->distance])
+                ->orderBy('created_at')->get();
 
-           foreach ($allvideo as $video) {
-               $video = $this->returnVideo($video);
-           }
+            foreach ($allvideo as $video) {
+                $video = $this->returnVideo($video);
+            }
 
             $res ['estado'] = 1;
             $res ['videos'] = $allvideo;
@@ -144,7 +146,7 @@ class VideoController extends Controller
             return response()->json($res, 200);
 
 
-        }catch (ModelNotFoundException $ex) {
+        } catch (ModelNotFoundException $ex) {
             $res['estado'] = 0;
             $res['mensaje'] = "Usuario o contraseña incorrectos";
             return response()->json($res, 400);
@@ -156,7 +158,37 @@ class VideoController extends Controller
 
     }
 
-    public function returnVideo(Video $video) {
+    public function videosusers(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'id' => 'required',
+                'apikey' => 'required',
+            ]);
+            if ($validator->fails()) {
+                //Si los datos no estan completos, devuelve error
+                $errors = $validator->errors();
+                $res['estado'] = 0;
+                $res['mensaje'] = $errors->first();
+                return response()->json($res, 400);
+            }
+            $user = User::where(['id' => $request->get('id'), 'apikey' => $request->get("apikey")])
+                ->firstOrfail();
+            $usarios= User::whereHas('videos')->with('videos')->select("id","name")->get();
+            $res ['estado'] = 1;
+            $res ['users'] = $usarios;
+            return response()->json($res, 200);
+
+        } catch (ModelNotFoundException $ex) {
+            $res['estado'] = 0;
+            $res['mensaje'] = "Usuario o contraseña incorrectos";
+            return response()->json($res, 400);
+        }
+
+    }
+
+    public function returnVideo(Video $video)
+    {
         $url = $video->ruta;
         $video->url = url(Storage::url($url));
 

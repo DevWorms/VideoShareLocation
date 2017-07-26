@@ -29,9 +29,21 @@ class UserController extends Controller
                 return response()->json($res, 400);
             } else {
                 $apikey = Hash::make($request->get('tokenfb'));
-                $usuario = User::firstOrCreate([
-                    'tokenfb' => $request->get('tokenfb')
-                ], ['apikey' => $apikey, "name" => $request->get("nombre")]);
+                $name = $request->get("name");
+                $tokenfb = $request->get("tokenfb");
+
+                if ($name == null || $name == "") {
+
+                    $usuario = User::firstOrCreate([//busca el usuario y lo crea
+                        'tokenfb' => $tokenfb,
+                    ], ['apikey' => $apikey, "name" => $name]);
+
+                } else {
+
+                    $usuario = User::updateOrCreate([//busca el usuario y lo actaliza
+                        'tokenfb' => $tokenfb,
+                    ], ["name" => $name]);
+                }
             }
 
             $res ['estado'] = 1;
@@ -65,18 +77,15 @@ class UserController extends Controller
                 $user = User::where([
                     'id' => $request->get('id'),
                     'apikey' => $request->get("apikey"),
-                ])->firstOrFail();
+                ])->with("videos")->firstOrFail();
 
-                $videos= Video::where("user_id",$request->get("id"))->get();
-
-                foreach ($videos as $video) {
+                foreach ($user->videos as $video) {
                     $video = $this->returnVideo($video);
                 }
 
                 $res ['estado'] = 1;
                 $res ['mensaje'] = "¡Registro con éxito!";
                 $res ['user'] = $user;
-                $res ["videos"] = $videos;
                 return response()->json($res, 200);
             }
         } catch (ModelNotFoundException $error) {
@@ -92,8 +101,9 @@ class UserController extends Controller
         }
     }
 
-    public function users(Request $request){
-        try{
+    public function users(Request $request)
+    {
+        try {
             $validator = Validator::make($request->all(), [
                 'apikey' => 'required',
                 'id' => 'required',
@@ -115,7 +125,7 @@ class UserController extends Controller
             $res ['users'] = $users;
             return response()->json($res, 200);
 
-        }catch (ModelNotFoundException $error) {
+        } catch (ModelNotFoundException $error) {
             $res['estado'] = 0;
             $res['mensaje'] = "Usuario incorrecto";
             return response()->json($res, 400);
@@ -128,7 +138,8 @@ class UserController extends Controller
         }
     }
 
-    public function returnVideo(Video $video) {
+    public function returnVideo(Video $video)
+    {
         $url = $video->ruta;
         $video->url = url(Storage::url($url));
 

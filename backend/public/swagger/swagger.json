@@ -5,7 +5,7 @@
     "version": "0.0.1",
     "title": "VideoShare WebService"
   },
-  "host": "videoshare.devworms.com",
+  "host": "videosharelocation.dev/backend/public",
   "basePath": "/api",
   "schemes": [
     "http"
