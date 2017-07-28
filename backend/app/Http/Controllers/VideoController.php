@@ -109,8 +109,6 @@ class VideoController extends Controller
             $validator = Validator::make($request->all(), [
                 'id' => 'required',
                 'apikey' => 'required',
-                'lat' => 'required',
-                'long' => 'required',
             ]);
             if ($validator->fails()) {
                 //Si los datos no estan completos, devuelve error
@@ -121,31 +119,69 @@ class VideoController extends Controller
             }
             $lat = $request->get("lat");
             $long = $request->get("long");
-            $boundaries = $this->getBoundaries($lat, $long);
-            $horamin = Carbon::now()->subHour(3);
 
-            $allvideo = Video::where('created_at', '>=', $horamin)
-                ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
-                ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
-                ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
+            if ($lat == null || $long == null) {
+
+                $usarios = User::whereHas('videos')->with('videos')->select("id", "name")->get();
+                $res ['estado'] = 1;
+                $res ['users'] = $usarios;
+                return response()->json($res, 200);
+
+            } else {
+                $boundaries = $this->getBoundaries($lat, $long);
+                $horamin = Carbon::now()->subHour(3);
+                $allusers = User::whereHas("videos", function ($uv) use ($horamin, $boundaries, $lat, $long) {
+                    $uv->where('created_at', '>=', $horamin)
+                        ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
+                        ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
+                        ->selectRaw('( 6371 * acos( cos( radians(?) ) *
                                cos( radians( `lat` ) )
                                * cos( radians( `long` ) - radians(?)
                                ) + sin( radians(?) ) *
                                sin( radians( `lat` ) ) )
                              ) AS distance', [$lat, $long, $lat])
-                ->havingRaw("distance < ?", [$this->distance])
-                ->orderBy('created_at')->get();
+                        ->havingRaw("distance < ?", [$this->distance]);
+                })->get();
+                /**
+                $allvideo = Video::where('created_at', '>=', $horamin)
+                    ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
+                    ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
+                    ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
+                               cos( radians( `lat` ) )
+                               * cos( radians( `long` ) - radians(?)
+                               ) + sin( radians(?) ) *
+                               sin( radians( `lat` ) ) )
+                             ) AS distance', [$lat, $long, $lat])
+                    ->havingRaw("distance < ?", [$this->distance])
+                    ->orderBy('created_at')->get();
 
-            foreach ($allvideo as $video) {
-                $video = $this->returnVideo($video);
+               foreach ($allusers as $video) {
+                    $video = $this->returnVideo($video);
+                }*/
+                foreach ($allusers as $user) {
+                    $allvideo = Video::where('created_at', '>=', $horamin)
+                        ->where("user_id", $user->id)
+                        ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
+                        ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
+                        ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
+                               cos( radians( `lat` ) )
+                               * cos( radians( `long` ) - radians(?)
+                               ) + sin( radians(?) ) *
+                               sin( radians( `lat` ) ) )
+                             ) AS distance', [$lat, $long, $lat])
+                        ->havingRaw("distance < ?", [$this->distance])
+                        ->orderBy('created_at')->get();
+
+                    $user->videos= $allvideo;
+                }
+
+                $res ['estado'] = 1;
+                $res ['users'] = $allusers;
+                $res ['mensaje'] = "Exito";
+                return response()->json($res, 200);
+
             }
-
-            $res ['estado'] = 1;
-            $res ['videos'] = $allvideo;
-            $res ['mensaje'] = "Exito";
-            return response()->json($res, 200);
-
-
+    
         } catch (ModelNotFoundException $ex) {
             $res['estado'] = 0;
             $res['mensaje'] = "Usuario o contraseña incorrectos";
@@ -158,34 +194,34 @@ class VideoController extends Controller
 
     }
 
-    public function videosusers(Request $request)
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'id' => 'required',
-                'apikey' => 'required',
-            ]);
-            if ($validator->fails()) {
-                //Si los datos no estan completos, devuelve error
-                $errors = $validator->errors();
-                $res['estado'] = 0;
-                $res['mensaje'] = $errors->first();
-                return response()->json($res, 400);
-            }
-            $user = User::where(['id' => $request->get('id'), 'apikey' => $request->get("apikey")])
-                ->firstOrfail();
-            $usarios= User::whereHas('videos')->with('videos')->select("id","name")->get();
-            $res ['estado'] = 1;
-            $res ['users'] = $usarios;
-            return response()->json($res, 200);
-
-        } catch (ModelNotFoundException $ex) {
-            $res['estado'] = 0;
-            $res['mensaje'] = "Usuario o contraseña incorrectos";
-            return response()->json($res, 400);
-        }
-
-    }
+    /** public function videosusers(Request $request)
+     * {
+     * try {
+     * $validator = Validator::make($request->all(), [
+     * 'id' => 'required',
+     * 'apikey' => 'required',
+     * ]);
+     * if ($validator->fails()) {
+     * //Si los datos no estan completos, devuelve error
+     * $errors = $validator->errors();
+     * $res['estado'] = 0;
+     * $res['mensaje'] = $errors->first();
+     * return response()->json($res, 400);
+     * }
+     * $user = User::where(['id' => $request->get('id'), 'apikey' => $request->get("apikey")])
+     * ->firstOrfail();
+     * $usarios= User::whereHas('videos')->with('videos')->select("id","name")->get();
+     * $res ['estado'] = 1;
+     * $res ['users'] = $usarios;
+     * return response()->json($res, 200);
+     *
+     * } catch (ModelNotFoundException $ex) {
+     * $res['estado'] = 0;
+     * $res['mensaje'] = "Usuario o contraseña incorrectos";
+     * return response()->json($res, 400);
+     * }
+     *
+     * }*/
 
     public function returnVideo(Video $video)
     {

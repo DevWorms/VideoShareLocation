@@ -39,10 +39,20 @@ class UserController extends Controller
                     ], ['apikey' => $apikey, "name" => $name]);
 
                 } else {
-
-                    $usuario = User::updateOrCreate([//busca el usuario y lo actaliza
+                    $usuario = User::where("tokenfb", $tokenfb)->first();
+                    if ($usuario) {
+                        $usuario->name = $name;
+                        $usuario->save();
+                    }else {
+                        $usuario = User::create([
+                            'tokenfb' => $tokenfb,
+                             "name" => $name,
+                            'apikey' => $apikey,
+                        ]);
+                    }
+                   /** por pruebas $usuario  $usuario = User::updateOrCreate([//busca el usuario y lo actaliza
                         'tokenfb' => $tokenfb,
-                    ], ["name" => $name]);
+                    ], ["name" => $name]);*/
                 }
             }
 
