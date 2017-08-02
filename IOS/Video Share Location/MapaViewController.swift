@@ -7,26 +7,35 @@ import CoreLocation
 
 class MapaViewController: UIViewController, CLLocationManagerDelegate {
 
-    //Inicia clase de usuario ficticio
-    class UsuarioFicticio{
-        var nombre = "Juanito Bananas"
-        var videoinfo = [["Latitud":19.4405597, "Longitud": -99.2546524],["Latitud":19.517076, "Longitud":-98.886662],["Latitud":19.395759,"Longitud":-99.091438]] as [Any]
-
+    //CLASE USUARIOS
+    class Usuarios{
+        var nombre = ""
+        var videoinfo = [[String:AnyObject]]()
     }
+    //TERMINA CLASE USUARIOS
     
-    //Termina clase de ususario ficticio
-    
+    var usuarios: [Usuarios] = []
     let DataUserDefault = UserDefaults.standard
     var latitud: Double = 0.0
     var longitud: Double = 0.0
     var locationManager = CLLocationManager()
     var camera: GMSCameraPosition!
+    var api: String = ""
+    var userid: String! = ""
     @IBOutlet weak var mapContainer: GMSMapView!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let apikey = UserDefaults.standard.value(forKey: globalkey) {
+            api = apikey as! String
+        }
+        
+        if let id = UserDefaults.standard.value(forKey: globalid) {
+            userid = id as! String
+        }
+        videos(apikey: api, id: userid)
         //camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
         /////////////Configuracion de controles del mapa///////////////
         //mapContainer.camera = camera
@@ -45,9 +54,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         //marker.tracksInfoWindowChanges = true
         //marker.map = mapContainer
         llenarMapaMarkers()
-        //Usuario ficticio ------------------///
+        //LLENAR MARKERS DE USUSARIOS DE LA API///
         crearMarkerr()
-        //usuario ficticio ------------------///
         self.locationManager.delegate = self
         self.locationManager.startUpdatingLocation()
         
@@ -80,23 +88,79 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         /////////////Crea un array con los videos que existen para llenar lista///////////////
     }
     
-    ////Funcion crear markers ficticios
+    ////FUNCION CREAR MARKERS PARA LOS VIDEOS EXISTENTES
     func crearMarkerr(){
-        let juanito = UsuarioFicticio()
-        let videoinfo = juanito.videoinfo
-        for i in 0 ..< videoinfo.count {
-            let markerr = GMSMarker()
-            let result = videoinfo[i] as! [String:Any]
-            let latficticia = result["Latitud"]
-            let longficticia = result["Longitud"]
-            markerr.position = CLLocationCoordinate2D(latitude: latficticia as! Double, longitude: longficticia as! Double)
-            markerr.title = "Juanito Bananas"
-            markerr.snippet = "Videos de Juanito"
-            markerr.icon = GMSMarker.markerImage(with: .brown)
-            markerr.map = mapContainer
+        for i in 0 ..< usuarios.count {
+            for c in 0 ..< usuarios[i].videoinfo.count {
+                let markerr = GMSMarker()
+                let result = usuarios[i].videoinfo[c] as [String:Any]
+                let latficticia = result["Lat"]
+                let longficticia = result["Long"]
+                markerr.position = CLLocationCoordinate2D(latitude: latficticia as! Double, longitude: longficticia as! Double)
+                markerr.title = usuarios[i].nombre
+                markerr.snippet = "Videos de \(usuarios[i].nombre)"
+                markerr.icon = GMSMarker.markerImage(with: .brown)
+                markerr.map = mapContainer
+            }
+            
         }
     }
-    ///Funcion crear markers ficticios termina
+    ///Funcion crear markers termina
+    
+    ///// CONEXION POST URL CON API OBTENER VIDEOS
+    
+    func videos(apikey: String, id: String) {
+        
+        let parameterString = "apikey=\(apikey)&id=\(id)"
+        
+        print(parameterString)
+        
+        let strUrl = "http://videoshare.devworms.com/api/videos"
+        
+        if let httpBody = parameterString.data(using: String.Encoding.utf8) {
+            var urlRequest = URLRequest(url: URL(string: strUrl)!)
+            urlRequest.httpMethod = "POST"
+            
+            URLSession.shared.uploadTask(with: urlRequest, from: httpBody, completionHandler: parseJsonLogin).resume()
+        } else {
+            print("Error de codificación de caracteres.")
+        }
+    }
+    
+    ////////RECOGE VIDEOS DE API
+    func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
+        if error != nil {
+            print(error!)
+        } else if urlResponse != nil {
+            if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
+                //print(json)
+                if let jsonResult = json as? [String: Any] {
+                    DispatchQueue.main.async {
+                        self.usuarios = [Usuarios]()
+                        
+                        if let result = jsonResult["users"] as?  [[String: Any]] {
+                            for user in result{
+                                let usuario = Usuarios()
+                                if let nombre = user["name"] as? String, let videos = user["videos"] as? [String:AnyObject]{
+                                    usuario.nombre = nombre
+                                    usuario.videoinfo = [videos]
+                                }
+                                self.usuarios.append(usuario)
+                            }
+                        }
+                        
+                    }
+                }
+                
+            } else {
+                print("HTTP Status Code: 200")
+                print("El JSON de respuesta es inválido.")
+            }
+            
+        }
+    }
+    /////TERMINA JSON PARA RECUPERAR VIDESO DE API
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
