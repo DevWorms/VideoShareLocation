@@ -28,7 +28,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 13.0)
+        camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 8.0)
         mapContainer.camera = camera
         if let apikey = UserDefaults.standard.value(forKey: globalkey) {
             api = apikey as! String
@@ -305,21 +305,27 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        print("Este es el titulo del marker: ", marker.snippet!)
-        print("Latitud del marker seleccionado: ", marker.position.latitude)
-        print("Longitud del marker seleccionado: ", marker.position.longitude)
-        print("")
-        showModalUsuarios()
+        print("Marker Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+        camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 20.0)
+        mapContainer.camera = camera
+        mapContainer.selectedMarker = marker
+        //showModalUsuarios()
         return true
     }
     
-    func showModalUsuarios() {
-        /*
-        let modalViewController = ModalViewController()
+    func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
+        print("InfoWindow Cerrado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
+        print("InfoWindow Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+    }
+    
+    /*func showModalUsuarios() {
+        let modalViewController = SelectUserVideoViewController()
         modalViewController.modalPresentationStyle = .overCurrentContext
         presentViewController(modalViewController, animated: true, completion: nil)
-        */
-    }
+    }*/
 }
     extension MapaViewController: UIImagePickerControllerDelegate {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String :     Any]) {
