@@ -122,7 +122,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                             if let result = jsonResult["user"] as? [String: Any]{
                                 gkey = result["apikey"] as! String
                                 let idd = result["id"]
-                                gid = 	String(describing: idd)
+                                if idd != nil{
+                                    let r = idd as! Int
+                                    gid = "\(r)"
+                                }
                                 UserDefaults.standard.set(gkey, forKey: globalkey)
                                 UserDefaults.standard.set(gid, forKey: globalid)
                                 print(gkey)

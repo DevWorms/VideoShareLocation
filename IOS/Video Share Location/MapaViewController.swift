@@ -10,7 +10,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
     //CLASE USUARIOS
     class Usuarios{
         var nombre = ""
-        var videoinfo = [[String:AnyObject]]()
+        var videoinfo = [[String:Any]]()
     }
     //TERMINA CLASE USUARIOS
     
@@ -55,7 +55,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         //marker.map = mapContainer
         llenarMapaMarkers()
         //LLENAR MARKERS DE USUSARIOS DE LA API///
-        crearMarkerr()
+        //crearMarkerr()
         self.locationManager.delegate = self
         self.locationManager.startUpdatingLocation()
         
@@ -90,17 +90,18 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
     
     ////FUNCION CREAR MARKERS PARA LOS VIDEOS EXISTENTES
     func crearMarkerr(){
+        print(usuarios.count)
         for i in 0 ..< usuarios.count {
             for c in 0 ..< usuarios[i].videoinfo.count {
                 let markerr = GMSMarker()
                 let result = usuarios[i].videoinfo[c] as [String:Any]
-                let latficticia = result["Lat"]
-                let longficticia = result["Long"]
-                markerr.position = CLLocationCoordinate2D(latitude: latficticia as! Double, longitude: longficticia as! Double)
-                markerr.title = usuarios[i].nombre
-                markerr.snippet = "Videos de \(usuarios[i].nombre)"
-                markerr.icon = GMSMarker.markerImage(with: .brown)
-                markerr.map = mapContainer
+                if let lat = result["lat"] as? String, let long = result["long"] as? String{
+                    markerr.position = CLLocationCoordinate2D(latitude: Double(lat)!, longitude: Double(long)!)
+                    markerr.title = usuarios[i].nombre
+                    markerr.snippet = "Videos de \(usuarios[i].nombre)"
+                    markerr.icon = GMSMarker.markerImage(with: .brown)
+                    markerr.map = mapContainer
+                }
             }
             
         }
@@ -139,17 +140,28 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
                         self.usuarios = [Usuarios]()
                         
                         if let result = jsonResult["users"] as?  [[String: Any]] {
+                            //print(result)
                             for user in result{
+                                //print(user)
+                                //print(user["videos"])
                                 let usuario = Usuarios()
-                                if let nombre = user["name"] as? String, let videos = user["videos"] as? [String:AnyObject]{
+                                if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]]{
                                     usuario.nombre = nombre
-                                    usuario.videoinfo = [videos]
+                                    for video in videos
+                                    {
+                                        usuario.videoinfo.append(video)
+                                    }
+                                    //usuario.videoinfo = [videos]
+                                    print(nombre)
+                                    print(usuario.videoinfo[0]["lat"])
+                                    print("salto\n\n")
                                 }
                                 self.usuarios.append(usuario)
                             }
                         }
-                        
+                     self.crearMarkerr()
                     }
+                    
                 }
                 
             } else {
