@@ -49,7 +49,7 @@ class RegistroUsuarioViewController: UIViewController {
     
     func login(token:String, nombre:String) {
         
-        let parameterString = "apikey=\(globalkey)&id=\(globalId)"
+        let parameterString = "apikey=\(globalkey)&id=\(globalid)"
         
         print(parameterString)
         

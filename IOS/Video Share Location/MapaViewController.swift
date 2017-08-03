@@ -4,40 +4,56 @@ import Foundation
 import GoogleMaps
 import MobileCoreServices
 import CoreLocation
+import SwiftyJSON
+import Alamofire
 
-class MapaViewController: UIViewController, CLLocationManagerDelegate {
+class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
-    //Inicia clase de usuario ficticio
-    class UsuarioFicticio{
-        var nombre = "Juanito Bananas"
-        var videoinfo = [["Latitud":19.4405597, "Longitud": -99.2546524],["Latitud":19.517076, "Longitud":-98.886662],["Latitud":19.395759,"Longitud":-99.091438]] as [Any]
-
+    //CLASE USUARIOS
+    class Usuarios{
+        var nombre = ""
+        var videoinfo = [[String:Any]]()
     }
+    //TERMINA CLASE USUARIOS
     
-    //Termina clase de ususario ficticio
-    
+    var usuarios: [Usuarios] = []
     let DataUserDefault = UserDefaults.standard
-    var latitud: Double = 0.0
-    var longitud: Double = 0.0
+    var mlatitud: Double = 0.0
+    var mlongitud: Double = 0.0
     var locationManager = CLLocationManager()
     var camera: GMSCameraPosition!
+    var api: String = ""
+    var userid: String! = ""
     @IBOutlet weak var mapContainer: GMSMapView!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
-        /////////////Configuracion de controles del mapa///////////////
-        //mapContainer.camera = camera
+        camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 8.0)
+        mapContainer.camera = camera
+        if let apikey = UserDefaults.standard.value(forKey: globalkey) {
+            api = apikey as! String
+        }
+        
+        if let id = UserDefaults.standard.value(forKey: globalid) {
+            userid = id as! String
+        }
+        videos(apikey: api, id: userid)
+        /*
+        ================================================================================================
+        Configuracion de controles del mapa
+        ================================================================================================
+        */
         mapContainer.isMyLocationEnabled = true
         mapContainer.settings.allowScrollGesturesDuringRotateOrZoom = true
         mapContainer.settings.compassButton = true
         mapContainer.settings.consumesGesturesInView = true
         mapContainer.settings.myLocationButton = true
         mapContainer.settings.zoomGestures = true
-        /////////////Configuracion de controles del mapa///////////////
-        
+        /*
+        ================================================================================================
+        */
         //let marker = GMSMarker()
         //marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
         //marker.title = "Sydney"
@@ -45,11 +61,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         //marker.tracksInfoWindowChanges = true
         //marker.map = mapContainer
         llenarMapaMarkers()
-        //Usuario ficticio ------------------///
-        crearMarkerr()
-        //usuario ficticio ------------------///
+        //LLENAR MARKERS DE USUSARIOS DE LA API///
+        //crearMarkerr()
         self.locationManager.delegate = self
         self.locationManager.startUpdatingLocation()
+        self.mapContainer.delegate = self
         
     }
     
@@ -58,7 +74,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func limpiarLista(_ sender: Any) {
-        /////////////Crea un array con los videos que existen para llenar lista///////////////
+        /*
+        ================================================================================================
+        Crea un array con los videos que existen para llenar lista
+        ================================================================================================
+        */
         var listaVideos = DataUserDefault.stringArray(forKey: "VideoPath") ?? [String]()
         var listaNuevaVideos = [String]()
         let fileManager = FileManager.default
@@ -77,31 +97,130 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
             m+=1
         }
         DataUserDefault.set(listaNuevaVideos, forKey: "VideoPath")
-        /////////////Crea un array con los videos que existen para llenar lista///////////////
+        /*
+        ================================================================================================
+        */
     }
     
-    ////Funcion crear markers ficticios
+    ////FUNCION CREAR MARKERS PARA LOS VIDEOS EXISTENTES
     func crearMarkerr(){
-        let juanito = UsuarioFicticio()
-        let videoinfo = juanito.videoinfo
-        for i in 0 ..< videoinfo.count {
-            let markerr = GMSMarker()
-            let result = videoinfo[i] as! [String:Any]
-            let latficticia = result["Latitud"]
-            let longficticia = result["Longitud"]
-            markerr.position = CLLocationCoordinate2D(latitude: latficticia as! Double, longitude: longficticia as! Double)
-            markerr.title = "Juanito Bananas"
-            markerr.snippet = "Videos de Juanito"
-            markerr.icon = GMSMarker.markerImage(with: .brown)
-            markerr.map = mapContainer
+        print(usuarios.count)
+        for i in 0 ..< usuarios.count {
+            for c in 0 ..< usuarios[i].videoinfo.count {
+                let markerr = GMSMarker()
+                let result = usuarios[i].videoinfo[c] as [String:Any]
+                if let lat = result["lat"] as? String, let long = result["long"] as? String{
+                    markerr.position = CLLocationCoordinate2D(latitude: Double(lat)!, longitude: Double(long)!)
+                    markerr.title = usuarios[i].nombre
+                    markerr.snippet = "Videos de \(usuarios[i].nombre)"
+                    markerr.icon = GMSMarker.markerImage(with: .brown)
+                    markerr.map = mapContainer
+                }
+            }
+            
         }
     }
-    ///Funcion crear markers ficticios termina
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error obteniendo ubicacion: \(error)")
+    }
+    
+    func drawPath(startLocation: CLLocation, endLocation: CLLocation) {
+        //googleMap.clear()
+        let origin = "\(startLocation.coordinate.latitude),\(startLocation.coordinate.longitude)"
+        let destination = "\(endLocation.coordinate.latitude),\(endLocation.coordinate.longitude)"
+        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving"
+        Alamofire.request(url).responseJSON { response in
+            print(response.request as Any)  // original URL request
+            print(response.response as Any) // HTTP URL response
+            print(response.data as Any)     // server data
+            print(response.result as Any)   // result of response serialization
+            let json = JSON(data: response.data!)
+            let routes = json["routes"].arrayValue
+            for route in routes {
+                let routeOverviewPolyline = route["overview_polyline"].dictionary
+                let points = routeOverviewPolyline?["points"]?.stringValue
+                let path = GMSPath.init(fromEncodedPath: points!)
+                let polyline = GMSPolyline.init(path: path)
+                polyline.strokeWidth = 3
+                polyline.strokeColor = UIColor.blue
+                polyline.map = self.mapContainer
+            }
+        }
+    }
+    
+    ///Funcion crear markers termina
+    
+    ///// CONEXION POST URL CON API OBTENER VIDEOS
+    
+    func videos(apikey: String, id: String) {
+        
+        let parameterString = "apikey=\(apikey)&id=\(id)"
+        
+        print(parameterString)
+        
+        let strUrl = "http://videoshare.devworms.com/api/videos"
+        
+        if let httpBody = parameterString.data(using: String.Encoding.utf8) {
+            var urlRequest = URLRequest(url: URL(string: strUrl)!)
+            urlRequest.httpMethod = "POST"
+            
+            URLSession.shared.uploadTask(with: urlRequest, from: httpBody, completionHandler: parseJsonLogin).resume()
+        } else {
+            print("Error de codificación de caracteres.")
+        }
+    }
+    
+    ////////RECOGE VIDEOS DE API
+    func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
+        if error != nil {
+            print(error!)
+        } else if urlResponse != nil {
+            if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
+                //print(json)
+                if let jsonResult = json as? [String: Any] {
+                    DispatchQueue.main.async {
+                        self.usuarios = [Usuarios]()
+                        
+                        if let result = jsonResult["users"] as?  [[String: Any]] {
+                            //print(result)
+                            for user in result{
+                                //print(user)
+                                //print(user["videos"])
+                                let usuario = Usuarios()
+                                if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]]{
+                                    usuario.nombre = nombre
+                                    for video in videos
+                                    {
+                                        usuario.videoinfo.append(video)
+                                    }
+                                    //usuario.videoinfo = [videos]
+                                    print(nombre)
+                                    print(usuario.videoinfo[0]["lat"])
+                                    print("salto\n\n")
+                                }
+                                self.usuarios.append(usuario)
+                            }
+                        }
+                     self.crearMarkerr()
+                    }
+                    
+                }
+                
+            } else {
+                print("HTTP Status Code: 200")
+                print("El JSON de respuesta es inválido.")
+            }
+            
+        }
+    }
+    /////TERMINA JSON PARA RECUPERAR VIDESO DE API
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
-        latitud = (location?.coordinate.latitude)!
-        longitud = (location?.coordinate.longitude)!
+        mlatitud = (location?.coordinate.latitude)!
+        mlongitud = (location?.coordinate.longitude)!
         //self.locationManager.stopUpdatingLocation()
     }
     
@@ -184,7 +303,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         } else{
             print("Error camara")
         }
-        let LatLong = [latitud,longitud]
+        let LatLong = [mlatitud,mlongitud]
         DataUserDefault.set(LatLong, forKey: "LatLong")
     }
     
@@ -215,12 +334,48 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        print("Marker Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+        camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 20.0)
+        mapContainer.camera = camera
+        mapContainer.selectedMarker = marker
+        return true
+    }
+    
+    func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
+        print("InfoWindow Cerrado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
+        print("InfoWindow Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+        showModalUsuarios()
+    }
+    
+    func mapView(_ mapView: GMSMapView, didLongPressInfoWindowOf marker: GMSMarker) {
+        print("Mantener presionado")
+        let location1 = CLLocation(latitude: mlatitud, longitude: mlongitud)
+        let location2 = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
+        mapContainer.clear()
+        videos(apikey: api, id: userid)
+        self.drawPath(startLocation: location1, endLocation: location2)
+    }
+    
+    func showModalUsuarios() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "UserVC")
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true, completion: nil)
+    }
 }
 
 
-    extension FloatingPoint {
-        var degreesToRadians: Self { return self * .pi / 180 }
-    }
+/*
+ ================================================================================================
+ Comienzan extensiones de clases para grabar videos y almacenar
+ ================================================================================================
+ */
     extension MapaViewController: UIImagePickerControllerDelegate {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String :     Any]) {
             let mediaType = info[UIImagePickerControllerMediaType] as! NSString

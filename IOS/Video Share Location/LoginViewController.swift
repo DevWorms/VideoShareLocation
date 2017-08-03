@@ -3,8 +3,10 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import FBSDKShareKit
 
-var globalkey = ""
-var globalId = ""
+var globalkey = "globalkey"
+var globalid = "globalid"
+var gkey = ""
+var gid = ""
 
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
@@ -118,10 +120,16 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                         DispatchQueue.main.async {
                             
                             if let result = jsonResult["user"] as? [String: Any]{
-                                globalkey = result["apikey"] as! String
-                                globalId = result["id"] as! String
-                                print(globalkey)
-                                print(globalId)
+                                gkey = result["apikey"] as! String
+                                let idd = result["id"]
+                                if idd != nil{
+                                    let r = idd as! Int
+                                    gid = "\(r)"
+                                }
+                                UserDefaults.standard.set(gkey, forKey: globalkey)
+                                UserDefaults.standard.set(gid, forKey: globalid)
+                                print(gkey)
+                                print(gid)
                             }
                             
                         }
