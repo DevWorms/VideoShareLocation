@@ -123,6 +123,13 @@ class VideoController extends Controller
             if ($lat == null || $long == null) {
 
                 $usarios = User::whereHas('videos')->with('videos')->select("id", "name")->get();
+                foreach ($usarios as $user){
+                    foreach ($user->videos as $video) {
+                        $video= $this->returnVideo($video);
+
+                    }
+
+                }
                 $res ['estado'] = 1;
                 $res ['users'] = $usarios;
                 return response()->json($res, 200);
@@ -172,6 +179,10 @@ class VideoController extends Controller
                         ->havingRaw("distance < ?", [$this->distance])
                         ->orderBy('created_at')->get();
 
+                    foreach($allvideo as $v){
+                        $v = $this->returnVideo($v);
+                    }
+
                     $user->videos= $allvideo;
                 }
 
@@ -181,7 +192,7 @@ class VideoController extends Controller
                 return response()->json($res, 200);
 
             }
-    
+
         } catch (ModelNotFoundException $ex) {
             $res['estado'] = 0;
             $res['mensaje'] = "Usuario o contraseña incorrectos";
