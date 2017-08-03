@@ -163,7 +163,7 @@
             <objects>
                 <navigationController storyboardIdentifier="MapaViewController" automaticallyAdjustsScrollViewInsets="NO" id="qNj-Al-e8c" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="h3D-S5-tSP">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="h3D-S5-tSP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

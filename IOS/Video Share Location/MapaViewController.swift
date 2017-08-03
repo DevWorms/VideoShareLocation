@@ -5,7 +5,7 @@ import GoogleMaps
 import MobileCoreServices
 import CoreLocation
 
-class MapaViewController: UIViewController, CLLocationManagerDelegate {
+class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
     //CLASE USUARIOS
     class Usuarios{
@@ -28,6 +28,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 13.0)
+        mapContainer.camera = camera
         if let apikey = UserDefaults.standard.value(forKey: globalkey) {
             api = apikey as! String
         }
@@ -36,17 +38,20 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
             userid = id as! String
         }
         videos(apikey: api, id: userid)
-        //camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
-        /////////////Configuracion de controles del mapa///////////////
-        //mapContainer.camera = camera
+        /*
+        ================================================================================================
+        Configuracion de controles del mapa
+        ================================================================================================
+        */
         mapContainer.isMyLocationEnabled = true
         mapContainer.settings.allowScrollGesturesDuringRotateOrZoom = true
         mapContainer.settings.compassButton = true
         mapContainer.settings.consumesGesturesInView = true
         mapContainer.settings.myLocationButton = true
         mapContainer.settings.zoomGestures = true
-        /////////////Configuracion de controles del mapa///////////////
-        
+        /*
+        ================================================================================================
+        */
         //let marker = GMSMarker()
         //marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
         //marker.title = "Sydney"
@@ -58,6 +63,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         //crearMarkerr()
         self.locationManager.delegate = self
         self.locationManager.startUpdatingLocation()
+        self.mapContainer.delegate = self
         
     }
     
@@ -66,7 +72,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func limpiarLista(_ sender: Any) {
-        /////////////Crea un array con los videos que existen para llenar lista///////////////
+        /*
+        ================================================================================================
+        Crea un array con los videos que existen para llenar lista
+        ================================================================================================
+        */
         var listaVideos = DataUserDefault.stringArray(forKey: "VideoPath") ?? [String]()
         var listaNuevaVideos = [String]()
         let fileManager = FileManager.default
@@ -85,7 +95,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
             m+=1
         }
         DataUserDefault.set(listaNuevaVideos, forKey: "VideoPath")
-        /////////////Crea un array con los videos que existen para llenar lista///////////////
+        /*
+        ================================================================================================
+        */
     }
     
     ////FUNCION CREAR MARKERS PARA LOS VIDEOS EXISTENTES
@@ -291,12 +303,24 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-}
-
-
-    extension FloatingPoint {
-        var degreesToRadians: Self { return self * .pi / 180 }
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        print("Este es el titulo del marker: ", marker.snippet!)
+        print("Latitud del marker seleccionado: ", marker.position.latitude)
+        print("Longitud del marker seleccionado: ", marker.position.longitude)
+        print("")
+        showModalUsuarios()
+        return true
     }
+    
+    func showModalUsuarios() {
+        /*
+        let modalViewController = ModalViewController()
+        modalViewController.modalPresentationStyle = .overCurrentContext
+        presentViewController(modalViewController, animated: true, completion: nil)
+        */
+    }
+}
     extension MapaViewController: UIImagePickerControllerDelegate {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String :     Any]) {
             let mediaType = info[UIImagePickerControllerMediaType] as! NSString
