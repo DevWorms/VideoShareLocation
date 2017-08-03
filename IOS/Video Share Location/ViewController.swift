@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if (dataAlreadyExist(dataKey: "dataUserUpdate")){
+            //mandarLogin()
             mandarMapa()
         } else {
             if (dataAlreadyExist(dataKey: "loginEnd")){

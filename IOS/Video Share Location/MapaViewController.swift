@@ -4,6 +4,8 @@ import Foundation
 import GoogleMaps
 import MobileCoreServices
 import CoreLocation
+import SwiftyJSON
+import Alamofire
 
 class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
@@ -16,8 +18,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     var usuarios: [Usuarios] = []
     let DataUserDefault = UserDefaults.standard
-    var latitud: Double = 0.0
-    var longitud: Double = 0.0
+    var mlatitud: Double = 0.0
+    var mlongitud: Double = 0.0
     var locationManager = CLLocationManager()
     var camera: GMSCameraPosition!
     var api: String = ""
@@ -118,6 +120,35 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             
         }
     }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error obteniendo ubicacion: \(error)")
+    }
+    
+    func drawPath(startLocation: CLLocation, endLocation: CLLocation) {
+        //googleMap.clear()
+        let origin = "\(startLocation.coordinate.latitude),\(startLocation.coordinate.longitude)"
+        let destination = "\(endLocation.coordinate.latitude),\(endLocation.coordinate.longitude)"
+        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving"
+        Alamofire.request(url).responseJSON { response in
+            print(response.request as Any)  // original URL request
+            print(response.response as Any) // HTTP URL response
+            print(response.data as Any)     // server data
+            print(response.result as Any)   // result of response serialization
+            let json = JSON(data: response.data!)
+            let routes = json["routes"].arrayValue
+            for route in routes {
+                let routeOverviewPolyline = route["overview_polyline"].dictionary
+                let points = routeOverviewPolyline?["points"]?.stringValue
+                let path = GMSPath.init(fromEncodedPath: points!)
+                let polyline = GMSPolyline.init(path: path)
+                polyline.strokeWidth = 3
+                polyline.strokeColor = UIColor.blue
+                polyline.map = self.mapContainer
+            }
+        }
+    }
+    
     ///Funcion crear markers termina
     
     ///// CONEXION POST URL CON API OBTENER VIDEOS
@@ -188,8 +219,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
-        latitud = (location?.coordinate.latitude)!
-        longitud = (location?.coordinate.longitude)!
+        mlatitud = (location?.coordinate.latitude)!
+        mlongitud = (location?.coordinate.longitude)!
         //self.locationManager.stopUpdatingLocation()
     }
     
@@ -272,7 +303,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         } else{
             print("Error camara")
         }
-        let LatLong = [latitud,longitud]
+        let LatLong = [mlatitud,mlongitud]
         DataUserDefault.set(LatLong, forKey: "LatLong")
     }
     
@@ -321,6 +352,15 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         showModalUsuarios()
     }
     
+    func mapView(_ mapView: GMSMapView, didLongPressInfoWindowOf marker: GMSMarker) {
+        print("Mantener presionado")
+        let location1 = CLLocation(latitude: mlatitud, longitude: mlongitud)
+        let location2 = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
+        mapContainer.clear()
+        videos(apikey: api, id: userid)
+        self.drawPath(startLocation: location1, endLocation: location2)
+    }
+    
     func showModalUsuarios() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "UserVC")
@@ -329,6 +369,13 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.present(vc, animated: true, completion: nil)
     }
 }
+
+
+/*
+ ================================================================================================
+ Comienzan extensiones de clases para grabar videos y almacenar
+ ================================================================================================
+ */
     extension MapaViewController: UIImagePickerControllerDelegate {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String :     Any]) {
             let mediaType = info[UIImagePickerControllerMediaType] as! NSString

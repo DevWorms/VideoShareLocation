@@ -9,15 +9,17 @@
 import UIKit
 
 class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    
+        
     @IBAction func cerrarUsuario(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    
     @IBOutlet weak var collectionViewUser: UICollectionView!
     var images = ["one","two","three","four","five"]
     var usernames = ["Usuario 1","Usuario 2","Usuario 3","Usuario 4","Usuario 5"]
     override func viewDidLoad() {
         super.viewDidLoad()
+        //detectRoute.isHidden = false
         self.collectionViewUser.delegate = self
         self.collectionViewUser.dataSource = self
     }

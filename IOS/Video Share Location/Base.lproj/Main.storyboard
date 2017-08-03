@@ -288,7 +288,7 @@
                                                         </label>
                                                     </subviews>
                                                 </view>
-                                                <color key="backgroundColor" red="0.28268392749999999" green="0.96369132079999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <outlet property="imageViewUser" destination="fVI-Wy-61h" id="WY2-5O-3PJ"/>
                                                     <outlet property="labelUser" destination="oit-qv-rd1" id="Mva-zS-FAy"/>
@@ -298,7 +298,7 @@
                                         </cells>
                                     </collectionView>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.88612572550000002" blue="0.56593436829999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m2g-yJ-u4S">
                                 <rect key="frame" x="315" y="222" width="35" height="35"/>
@@ -366,7 +366,7 @@
                                                         </label>
                                                     </subviews>
                                                 </view>
-                                                <color key="backgroundColor" red="0.28268392749999999" green="0.96369132079999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <outlet property="imageViewVideo" destination="qYz-j6-B2Z" id="CE1-wq-ZjH"/>
                                                     <outlet property="labelVideo" destination="n2s-em-hN9" id="xWC-rC-91r"/>
@@ -375,7 +375,7 @@
                                         </cells>
                                     </collectionView>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.88612572550000002" blue="0.56593436829999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zC3-zS-fpV">
                                 <rect key="frame" x="316" y="222" width="35" height="35"/>
@@ -386,7 +386,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
                         <outlet property="collectionViewVideo" destination="Y7S-8k-Tbf" id="473-OP-bVU"/>

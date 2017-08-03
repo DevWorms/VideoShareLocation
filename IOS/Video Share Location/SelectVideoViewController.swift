@@ -34,11 +34,9 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Seleccionaste video ", indexPath.row+1)
-        //dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cerrarModalVideo(_ sender: Any) {
         dismiss(animated: true, completion: nil)
-    }
-    
+    }    
 }
