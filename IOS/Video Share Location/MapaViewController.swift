@@ -309,7 +309,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 20.0)
         mapContainer.camera = camera
         mapContainer.selectedMarker = marker
-        //showModalUsuarios()
         return true
     }
     
@@ -319,13 +318,16 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
         print("InfoWindow Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+        showModalUsuarios()
     }
     
-    /*func showModalUsuarios() {
-        let modalViewController = SelectUserVideoViewController()
-        modalViewController.modalPresentationStyle = .overCurrentContext
-        presentViewController(modalViewController, animated: true, completion: nil)
-    }*/
+    func showModalUsuarios() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "UserVC")
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true, completion: nil)
+    }
 }
     extension MapaViewController: UIImagePickerControllerDelegate {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String :     Any]) {

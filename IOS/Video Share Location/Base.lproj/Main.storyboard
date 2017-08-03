@@ -312,7 +312,7 @@
                         <color key="backgroundColor" white="1" alpha="0.05936399648" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="collectionViewUser" destination="G3k-yX-5Qp" id="wvD-Fj-Nrr"/>
+                        <outlet property="collectionViewUser" destination="G3k-yX-5Qp" id="xBm-OH-INe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWU-3g-xan" userLabel="First Responder" sceneMemberID="firstResponder"/>

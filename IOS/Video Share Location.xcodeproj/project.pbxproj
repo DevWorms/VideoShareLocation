@@ -10,6 +10,10 @@
 		145A18F91F1438FC002BBFC3 /* ListaVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */; };
 		145A18FB1F145165002BBFC3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145A18FA1F145165002BBFC3 /* LoginViewController.swift */; };
 		9401E60A1F02425300AE0F4A /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401E6091F02425300AE0F4A /* MapaViewController.swift */; };
+		943EF8571F33059600453111 /* SelectUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EF8561F33059600453111 /* SelectUserViewController.swift */; };
+		943EF8591F3305C100453111 /* UserDataCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EF8581F3305C100453111 /* UserDataCollectionViewCell.swift */; };
+		943EF85B1F3305E000453111 /* SelectVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EF85A1F3305E000453111 /* SelectVideoViewController.swift */; };
+		943EF85D1F3305F600453111 /* VideoDataCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EF85C1F3305F600453111 /* VideoDataCollectionViewCell.swift */; };
 		94EAA6CD1EFCEFC400871095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */; };
 		94EAA6CF1EFCEFC400871095 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EAA6CE1EFCEFC400871095 /* ViewController.swift */; };
 		94EAA6D21EFCEFC400871095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94EAA6D01EFCEFC400871095 /* Main.storyboard */; };
@@ -43,6 +47,10 @@
 		145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListaVideoViewController.swift; sourceTree = "<group>"; };
 		145A18FA1F145165002BBFC3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9401E6091F02425300AE0F4A /* MapaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
+		943EF8561F33059600453111 /* SelectUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectUserViewController.swift; sourceTree = "<group>"; };
+		943EF8581F3305C100453111 /* UserDataCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataCollectionViewCell.swift; sourceTree = "<group>"; };
+		943EF85A1F3305E000453111 /* SelectVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectVideoViewController.swift; sourceTree = "<group>"; };
+		943EF85C1F3305F600453111 /* VideoDataCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoDataCollectionViewCell.swift; sourceTree = "<group>"; };
 		94EAA6C91EFCEFC400871095 /* Video Share Location.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Video Share Location.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94EAA6CE1EFCEFC400871095 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -134,15 +142,19 @@
 			isa = PBXGroup;
 			children = (
 				94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */,
-				94EAA6CE1EFCEFC400871095 /* ViewController.swift */,
-				94EAA6D01EFCEFC400871095 /* Main.storyboard */,
-				94EAA6D31EFCEFC400871095 /* Assets.xcassets */,
-				94EAA6D51EFCEFC400871095 /* LaunchScreen.storyboard */,
 				94EAA6D81EFCEFC400871095 /* Info.plist */,
-				9401E6091F02425300AE0F4A /* MapaViewController.swift */,
-				94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */,
-				145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */,
+				94EAA6D01EFCEFC400871095 /* Main.storyboard */,
+				94EAA6D51EFCEFC400871095 /* LaunchScreen.storyboard */,
+				94EAA6D31EFCEFC400871095 /* Assets.xcassets */,
+				94EAA6CE1EFCEFC400871095 /* ViewController.swift */,
 				145A18FA1F145165002BBFC3 /* LoginViewController.swift */,
+				94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */,
+				9401E6091F02425300AE0F4A /* MapaViewController.swift */,
+				943EF8561F33059600453111 /* SelectUserViewController.swift */,
+				943EF8581F3305C100453111 /* UserDataCollectionViewCell.swift */,
+				943EF85A1F3305E000453111 /* SelectVideoViewController.swift */,
+				943EF85C1F3305F600453111 /* VideoDataCollectionViewCell.swift */,
+				145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */,
 			);
 			path = "Video Share Location";
 			sourceTree = "<group>";
@@ -244,9 +256,13 @@
 				145A18FB1F145165002BBFC3 /* LoginViewController.swift in Sources */,
 				94EAA6CF1EFCEFC400871095 /* ViewController.swift in Sources */,
 				9401E60A1F02425300AE0F4A /* MapaViewController.swift in Sources */,
+				943EF8571F33059600453111 /* SelectUserViewController.swift in Sources */,
+				943EF85D1F3305F600453111 /* VideoDataCollectionViewCell.swift in Sources */,
 				145A18F91F1438FC002BBFC3 /* ListaVideoViewController.swift in Sources */,
 				94F62B5E1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift in Sources */,
+				943EF8591F3305C100453111 /* UserDataCollectionViewCell.swift in Sources */,
 				94EAA6CD1EFCEFC400871095 /* AppDelegate.swift in Sources */,
+				943EF85B1F3305E000453111 /* SelectVideoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
