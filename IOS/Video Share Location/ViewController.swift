@@ -10,15 +10,24 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBAction func iniciar(_ sender: Any) {
-
-    }
-    
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (dataAlreadyExist(dataKey: "dataUserUpdate")){
+        
+        if (dataAlreadyExist(dataKey: "loginEnd")){
+            let loginReceived:String = UserDefaults.standard.string(forKey: "loginEnd")!
+            if (loginReceived == "Si") {
+                mandarMapa()
+            } else if (loginReceived == "No") {
+                mandarLogin()
+            } else if (UserDefaults.standard.object(forKey: "loginEnd") == nil){
+                mandarRegistroUsuario()
+            }
+        }
+        
+        
+        /*if (dataAlreadyExist(dataKey: "dataUserUpdate")){
             //mandarLogin()
             mandarMapa()
         } else {
@@ -27,7 +36,7 @@ class ViewController: UIViewController {
             } else {
                 mandarLogin()
             }
-        }
+        }*/
     }
     
     func mandarLogin() {

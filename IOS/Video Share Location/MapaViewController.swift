@@ -67,10 +67,20 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.locationManager.startUpdatingLocation()
         self.mapContainer.delegate = self
         
+        let logoutButton:UIBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MapaViewController.searchTapped(sender:)))
+        self.navigationItem.setLeftBarButton(logoutButton, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func searchTapped(sender:UIButton) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = vc
+        print("Presionado")
     }
     
     @IBAction func limpiarLista(_ sender: Any) {
@@ -368,6 +378,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true, completion: nil)
     }
+    
+    //var rightSearchBarButtonItem:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: #selector(MapaViewController.searchTapped))
+    // 3
+    //self.navigationItem.setRightBarButtonItems([rightAddBarButtonItem,rightSearchBarButtonItem], animated: true)
+    
 }
 
 

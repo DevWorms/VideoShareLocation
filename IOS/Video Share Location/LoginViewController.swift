@@ -50,7 +50,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!){
         print("Usuario Logout")
         let guardarDatos = UserDefaults.standard
-        guardarDatos.set(nil, forKey: "loginEnd")
+        guardarDatos.setValue("No", forKey: "loginEnd")
     }
     
     func setInterfaz(result: NSDictionary){
@@ -67,7 +67,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         print("Genero: ", genero)
         
         let guardarDatos = UserDefaults.standard
-        guardarDatos.set("Si", forKey: "loginEnd")
+        guardarDatos.setValue("Si", forKey: "loginEnd")
         guardarDatos.set(idFace, forKey: "idFace")
         guardarDatos.set(nombre, forKey: "nombre")
         guardarDatos.set(apellido, forKey: "apellido")
