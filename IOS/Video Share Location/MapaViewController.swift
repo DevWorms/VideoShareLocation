@@ -229,12 +229,14 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     ////SUBIR VIDEO A API
     func SubirVideo() {
-        let parameters = ["name": "MyTestFile123321",
-                          "description": "My tutorial test file for MPFD uploads"]
+        let parameters = ["apikey": "$2y$10$CZJHEHGIxJiNSg6uMgkl8OiT0bj6Bb8Fijiz4k5SLA/ezKcSkDjX6",
+                          "id": "7",
+                          "lat": "12",
+                          "long": "-12"]
         
-        guard let mediaImage = Media(withImage: #imageLiteral(resourceName: "testImage"), forKey: "image") else { return }
+        //guard let mediaImage = Media(withImage: #imageLiteral(resourceName: "testImage"), forKey: "image") else { return }
         
-        guard let url = URL(string: "https://api.imgur.com/3/image") else { return }
+        guard let url = URL(string: "http://videoshare.devworms.com/api/video") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
@@ -243,7 +245,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.addValue("Client-ID f65203f7020dddc", forHTTPHeaderField: "Authorization")
         
-        let dataBody = createDataBody(withParameters: parameters, media: [mediaImage], boundary: boundary)
+        let dataBody = createDataBody(withParameters: parameters, media: "/Users/ariel/Desktop/videoPrueba.mov" , boundary: boundary)
         request.httpBody = dataBody
         
         let session = URLSession.shared
@@ -267,7 +269,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         return "Boundary-\(NSUUID().uuidString)"
     }
     
-    func createDataBody(withParameters params: Parameters?, media: [Media]?, boundary: String) -> Data {
+    func createDataBody(withParameters params: Parameters?, media: String?, boundary: String) -> Data {
         
         let lineBreak = "\r\n"
         var body = Data()
@@ -281,19 +283,25 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         }
         
         if let media = media {
-            for photo in media {
+            //for photo in media {
+            do{
                 body.append("--\(boundary + lineBreak)")
-                body.append("Content-Disposition: form-data; name=\"\(photo.key)\"; filename=\"\(photo.filename)\"\(lineBreak)")
-                body.append("Content-Type: \(photo.mimeType + lineBreak + lineBreak)")
-                body.append(photo.data)
+                body.append("Content-Disposition: form-data; name=archivo; filename=\"\("prueba")\"\(lineBreak)")
+                body.append("Content-Type: \("video/quicktime" + lineBreak + lineBreak)")
+                try body.append(NSData(contentsOfFile: media) as Data)
                 body.append(lineBreak)
+            }catch{
+                print("error Body:\(error)")
             }
+            
+            //}
         }
         
         body.append("--\(boundary)--\(lineBreak)")
         
         return body
     }
+    
     
     ////TERMINA SUBIR VIDEO A LA API
     
@@ -382,6 +390,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             print("OK camara")
         } else{
             print("Error camara")
+            SubirVideo()
         }
         let LatLong = [mlatitud,mlongitud]
         DataUserDefault.set(LatLong, forKey: "LatLong")
