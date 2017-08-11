@@ -228,11 +228,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     /////TERMINA JSON PARA RECUPERAR VIDESO DE API
     
     ////SUBIR VIDEO A API
-    func SubirVideo() {
-        let parameters = ["apikey": "$2y$10$CZJHEHGIxJiNSg6uMgkl8OiT0bj6Bb8Fijiz4k5SLA/ezKcSkDjX6",
-                          "id": "7",
-                          "lat": "12",
-                          "long": "-12"]
+    func SubirVideo(apikey: String, id : String, lat: String, long: String, path: String ) {
+        let parameters = ["apikey": apikey,
+                          "id": id,
+                          "lat": lat,
+                          "long": long]
         
         //guard let mediaImage = Media(withImage: #imageLiteral(resourceName: "testImage"), forKey: "image") else { return }
         
@@ -245,7 +245,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.addValue("Client-ID f65203f7020dddc", forHTTPHeaderField: "Authorization")
         
-        let dataBody = createDataBody(withParameters: parameters, media: "/Users/ariel/Desktop/videoPrueba.mov" , boundary: boundary)
+        let dataBody = createDataBody(withParameters: parameters, media: path , boundary: boundary)
         request.httpBody = dataBody
         
         let session = URLSession.shared
@@ -390,7 +390,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             print("OK camara")
         } else{
             print("Error camara")
-            SubirVideo()
+
         }
         let LatLong = [mlatitud,mlongitud]
         DataUserDefault.set(LatLong, forKey: "LatLong")
@@ -508,7 +508,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 alerta.addAction(UIAlertAction(title: "Subir video", style: UIAlertActionStyle.default, handler: { alertAction in
                     print("Subir al servidor")
                     self.DistanciaGuardarMarker()
-                    //Codigo subir a API
+                    let latitudd = "\(self.mlatitud)"
+                    let longitudd = "\(self.mlongitud)"
+                    self.SubirVideo(apikey: self.api, id: self.userid, lat: latitudd, long: longitudd, path: destinationPath)
                     alerta.dismiss(animated: true, completion: nil)
                 }))
                 alerta.addAction(UIAlertAction(title: "Guardar en el telefono", style: UIAlertActionStyle.default, handler: { alertAction in
