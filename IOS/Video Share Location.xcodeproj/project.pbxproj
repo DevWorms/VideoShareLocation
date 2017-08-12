@@ -42,6 +42,7 @@
 		94EAA7261EFD0EC800871095 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA7251EFD0EC800871095 /* SystemConfiguration.framework */; };
 		94EAA7281EFD0ED500871095 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA7271EFD0ED500871095 /* UIKit.framework */; };
 		94F62B5E1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */; };
+		B0EBEEDB1F3E865600BBBDEB /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0EBEEDA1F3E865600BBBDEB /* Users.swift */; };
 		B0F255451F3AEEAA00E83DAA /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F255441F3AEEAA00E83DAA /* Media.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +84,7 @@
 		94EAA7251EFD0EC800871095 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		94EAA7271EFD0ED500871095 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistroUsuarioViewController.swift; sourceTree = "<group>"; };
+		B0EBEEDA1F3E865600BBBDEB /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Users.swift; path = ../Users.swift; sourceTree = "<group>"; };
 		B0F255441F3AEEAA00E83DAA /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		CF8E3E42B54DC1C9B357E130 /* Pods-Video Share Location.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Video Share Location.release.xcconfig"; path = "Pods/Target Support Files/Pods-Video Share Location/Pods-Video Share Location.release.xcconfig"; sourceTree = "<group>"; };
 		D65F163D577443A6078FAADC /* Pods_Video_Share_Location.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Video_Share_Location.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,6 +166,7 @@
 				943EF85C1F3305F600453111 /* VideoDataCollectionViewCell.swift */,
 				145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */,
 				B0F255441F3AEEAA00E83DAA /* Media.swift */,
+				B0EBEEDA1F3E865600BBBDEB /* Users.swift */,
 			);
 			path = "Video Share Location";
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				145A18FB1F145165002BBFC3 /* LoginViewController.swift in Sources */,
 				94EAA6CF1EFCEFC400871095 /* ViewController.swift in Sources */,
 				9401E60A1F02425300AE0F4A /* MapaViewController.swift in Sources */,
+				B0EBEEDB1F3E865600BBBDEB /* Users.swift in Sources */,
 				943EF8571F33059600453111 /* SelectUserViewController.swift in Sources */,
 				943EF85D1F3305F600453111 /* VideoDataCollectionViewCell.swift in Sources */,
 				145A18F91F1438FC002BBFC3 /* ListaVideoViewController.swift in Sources */,

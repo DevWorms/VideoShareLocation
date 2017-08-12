@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Users.swift">
+   </FileRef>
+   <FileRef
       location = "group:Video Share Location.xcodeproj">
    </FileRef>
    <FileRef

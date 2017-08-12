@@ -9,7 +9,8 @@
 import UIKit
 
 class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-        
+    
+    
     @IBAction func cerrarUsuario(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -17,11 +18,15 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var collectionViewUser: UICollectionView!
     var images = ["one","two","three","four","five"]
     var usernames = ["Usuario 1","Usuario 2","Usuario 3","Usuario 4","Usuario 5"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //detectRoute.isHidden = false
         self.collectionViewUser.delegate = self
         self.collectionViewUser.dataSource = self
+        for i in 0..<usuariosg.count{
+            usernames[i] = usuariosg[i].nombre
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

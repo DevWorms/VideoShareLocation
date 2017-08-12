@@ -8,16 +8,12 @@ import SwiftyJSON
 import Alamofire
 import Foundation
 
+var usuariosg: [Users] = []
+
 class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
-    //CLASE USUARIOS
-    class Usuarios{
-        var nombre = ""
-        var videoinfo = [[String:Any]]()
-    }
-    //TERMINA CLASE USUARIOS
     typealias Parameters = [String: String]
-    var usuarios: [Usuarios] = []
+    var usuarios: [Users] = []
     let DataUserDefault = UserDefaults.standard
     var mlatitud: Double = 0.0
     var mlongitud: Double = 0.0
@@ -191,14 +187,14 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 //print(json)
                 if let jsonResult = json as? [String: Any] {
                     DispatchQueue.main.async {
-                        self.usuarios = [Usuarios]()
+                        self.usuarios = [Users]()
                         
                         if let result = jsonResult["users"] as?  [[String: Any]] {
                             //print(result)
                             for user in result{
                                 //print(user)
                                 //print(user["videos"])
-                                let usuario = Usuarios()
+                                let usuario = Users()
                                 if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]]{
                                     usuario.nombre = nombre
                                     for video in videos
@@ -211,6 +207,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                                     print("salto\n\n")
                                 }
                                 self.usuarios.append(usuario)
+                                usuariosg = self.usuarios
                             }
                         }
                      self.crearMarkerr()
