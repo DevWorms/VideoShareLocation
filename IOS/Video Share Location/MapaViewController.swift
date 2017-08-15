@@ -27,8 +27,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     var userid: String! = ""
     @IBOutlet weak var mapContainer: GMSMapView!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 8.0)
@@ -201,23 +199,18 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                                 let usuario = Usuarios()
                                 if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]]{
                                     usuario.nombre = nombre
-                                    for video in videos
-                                    {
+                                    for video in videos {
                                         usuario.videoinfo.append(video)
                                     }
                                     //usuario.videoinfo = [videos]
-                                    print(nombre)
-                                    print(usuario.videoinfo[0]["lat"])
-                                    print("salto\n\n")
+                                    print("Nombre: \(nombre) Latitud: \(usuario.videoinfo[0]["lat"] as! String) \(usuario.videoinfo[0]["long"] as! String)")
                                 }
                                 self.usuarios.append(usuario)
                             }
                         }
                      self.crearMarkerr()
                     }
-                    
                 }
-                
             } else {
                 print("HTTP Status Code: 200")
                 print("El JSON de respuesta es inválido.")
@@ -229,13 +222,12 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     ////SUBIR VIDEO A API
     func SubirVideo() {
-        let parameters = ["apikey": "$2y$10$CZJHEHGIxJiNSg6uMgkl8OiT0bj6Bb8Fijiz4k5SLA/ezKcSkDjX6",
-                          "id": "7",
-                          "lat": "12",
-                          "long": "-12"]
-        
+        let parameters = [
+            "apikey": "$2y$10$CZJHEHGIxJiNSg6uMgkl8OiT0bj6Bb8Fijiz4k5SLA/ezKcSkDjX6",
+            "id": "7",
+            "lat": "12",
+            "long": "-12"]
         //guard let mediaImage = Media(withImage: #imageLiteral(resourceName: "testImage"), forKey: "image") else { return }
-        
         guard let url = URL(string: "http://videoshare.devworms.com/api/video") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

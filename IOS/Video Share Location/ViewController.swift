@@ -19,27 +19,12 @@ class ViewController: UIViewController {
             let loginReceived:String = UserDefaults.standard.string(forKey: "loginEnd")!
             if (loginReceived == "Si") {
                 mandarMapa()
-                print("Estoy loggeado")
             } else if (loginReceived == "No") {
                 mandarLogin()
-                print("No estoy loggeado")
             } else if (UserDefaults.standard.object(forKey: "loginEnd") == nil){
                 mandarRegistroUsuario()
-                print("No estoy registrado")
             }
         }
-        
-        
-        /*if (dataAlreadyExist(dataKey: "dataUserUpdate")){
-            //mandarLogin()
-            mandarMapa()
-        } else {
-            if (dataAlreadyExist(dataKey: "loginEnd")){
-                mandarRegistroUsuario()
-            } else {
-                mandarLogin()
-            }
-        }*/
     }
     
     func mandarLogin() {

@@ -90,7 +90,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     // Conexion con api
-    
     func login(token:String, nombre:String) {
         
         let parameterString = "tokenfb=\(token)&name=\(nombre)"
