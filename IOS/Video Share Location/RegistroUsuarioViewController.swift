@@ -74,11 +74,27 @@ class RegistroUsuarioViewController: UIViewController {
                 //print(json)
                 if let jsonResult = json as? [String: Any] {
                     DispatchQueue.main.async {
+                        var usuarios = Users()
                         
-                        if let result = jsonResult["estado"]{
-                            print(result as! String)
+                        if let result = jsonResult["user"] as?  [[String: Any]] {
+                            //print(result)
+                            for user in result{
+                                //print(user)
+                                //print(user["videos"])
+                                let usuario = Users()
+                                if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]]{
+                                    usuario.nombre = nombre
+                                    for video in videos
+                                    {
+                                        usuario.videoinfo.append(video)
+                                    }
+                                    //usuario.videoinfo = [videos]
+                                    print(nombre)
+                                    print(usuario.videoinfo[0]["lat"])
+                                    print("salto\n\n")
+                                }
+                            }
                         }
-                        
                     }
                 }
                 

@@ -8,16 +8,12 @@ import SwiftyJSON
 import Alamofire
 import Foundation
 
+var usuariosg: [Users] = []
+
 class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
-    //CLASE USUARIOS
-    class Usuarios{
-        var nombre = ""
-        var videoinfo = [[String:Any]]()
-    }
-    //TERMINA CLASE USUARIOS
     typealias Parameters = [String: String]
-    var usuarios: [Usuarios] = []
+    var usuarios: [Users] = []
     let DataUserDefault = UserDefaults.standard
     var mlatitud: Double = 0.0
     var mlongitud: Double = 0.0
@@ -189,14 +185,14 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 //print(json)
                 if let jsonResult = json as? [String: Any] {
                     DispatchQueue.main.async {
-                        self.usuarios = [Usuarios]()
+                        self.usuarios = [Users]()
                         
                         if let result = jsonResult["users"] as?  [[String: Any]] {
                             //print(result)
                             for user in result{
                                 //print(user)
                                 //print(user["videos"])
-                                let usuario = Usuarios()
+                                let usuario = Users()
                                 if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]]{
                                     usuario.nombre = nombre
                                     for video in videos {
@@ -206,6 +202,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                                     print("Nombre: \(nombre) Latitud: \(usuario.videoinfo[0]["lat"] as! String) \(usuario.videoinfo[0]["long"] as! String)")
                                 }
                                 self.usuarios.append(usuario)
+                                usuariosg = self.usuarios
                             }
                         }
                      self.crearMarkerr()
@@ -221,12 +218,12 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     /////TERMINA JSON PARA RECUPERAR VIDESO DE API
     
     ////SUBIR VIDEO A API
-    func SubirVideo() {
-        let parameters = [
-            "apikey": "$2y$10$CZJHEHGIxJiNSg6uMgkl8OiT0bj6Bb8Fijiz4k5SLA/ezKcSkDjX6",
-            "id": "7",
-            "lat": "12",
-            "long": "-12"]
+    func SubirVideo(apikey: String, id : String, lat: String, long: String, path: String ) {
+        let parameters = ["apikey": apikey,
+                          "id": id,
+                          "lat": lat,
+                          "long": long]
+        
         //guard let mediaImage = Media(withImage: #imageLiteral(resourceName: "testImage"), forKey: "image") else { return }
         guard let url = URL(string: "http://videoshare.devworms.com/api/video") else { return }
         var request = URLRequest(url: url)
@@ -237,7 +234,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.addValue("Client-ID f65203f7020dddc", forHTTPHeaderField: "Authorization")
         
-        let dataBody = createDataBody(withParameters: parameters, media: "/Users/ariel/Desktop/videoPrueba.mov" , boundary: boundary)
+        let dataBody = createDataBody(withParameters: parameters, media: path , boundary: boundary)
         request.httpBody = dataBody
         
         let session = URLSession.shared
@@ -382,7 +379,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             print("OK camara")
         } else{
             print("Error camara")
-            SubirVideo()
+
         }
         let LatLong = [mlatitud,mlongitud]
         DataUserDefault.set(LatLong, forKey: "LatLong")
@@ -500,7 +497,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 alerta.addAction(UIAlertAction(title: "Subir video", style: UIAlertActionStyle.default, handler: { alertAction in
                     print("Subir al servidor")
                     self.DistanciaGuardarMarker()
-                    //Codigo subir a API
+                    let latitudd = "\(self.mlatitud)"
+                    let longitudd = "\(self.mlongitud)"
+                    self.SubirVideo(apikey: self.api, id: self.userid, lat: latitudd, long: longitudd, path: destinationPath)
                     alerta.dismiss(animated: true, completion: nil)
                 }))
                 alerta.addAction(UIAlertAction(title: "Guardar en el telefono", style: UIAlertActionStyle.default, handler: { alertAction in
