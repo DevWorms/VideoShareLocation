@@ -24,6 +24,8 @@ class ViewController: UIViewController {
             } else if (UserDefaults.standard.object(forKey: "loginEnd") == nil){
                 mandarRegistroUsuario()
             }
+        } else {
+            mandarLogin()
         }
     }
     
