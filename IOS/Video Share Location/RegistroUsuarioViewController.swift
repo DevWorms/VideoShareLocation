@@ -74,7 +74,7 @@ class RegistroUsuarioViewController: UIViewController {
                 //print(json)
                 if let jsonResult = json as? [String: Any] {
                     DispatchQueue.main.async {
-                        var usuarios = Users()
+                        //var usuarios = Users()
                         
                         if let result = jsonResult["user"] as?  [[String: Any]] {
                             //print(result)
@@ -89,9 +89,7 @@ class RegistroUsuarioViewController: UIViewController {
                                         usuario.videoinfo.append(video)
                                     }
                                     //usuario.videoinfo = [videos]
-                                    print(nombre)
-                                    print(usuario.videoinfo[0]["lat"])
-                                    print("salto\n\n")
+                                    print("Nombre: \(nombre) Lat: \(usuario.videoinfo[0]["lat"] as! String) Long: \(usuario.videoinfo[0]["long"] as! String))")
                                 }
                             }
                         }

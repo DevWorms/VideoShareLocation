@@ -186,10 +186,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 if let jsonResult = json as? [String: Any] {
                     DispatchQueue.main.async {
                         self.usuarios = [Users]()
-                        
                         if let result = jsonResult["users"] as?  [[String: Any]] {
                             //print(result)
-                            for user in result{
+                            for user in result {
                                 //print(user)
                                 //print(user["videos"])
                                 let usuario = Users()
@@ -199,7 +198,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                                         usuario.videoinfo.append(video)
                                     }
                                     //usuario.videoinfo = [videos]
-                                    print("Nombre: \(nombre) Latitud: \(usuario.videoinfo[0]["lat"] as! String) \(usuario.videoinfo[0]["long"] as! String)")
+                                    print("Nombre: \(nombre) Latitud: \(usuario.videoinfo[0]["lat"] as! String) Longitud: \(usuario.videoinfo[0]["long"] as! String)")
                                 }
                                 self.usuarios.append(usuario)
                                 usuariosg = self.usuarios
@@ -427,6 +426,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
         print("InfoWindow Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+        DataUserDefault.set(marker.position.latitude, forKey: "LatSelected")
+        DataUserDefault.set(marker.position.longitude, forKey: "LongSelected")
         showModalUsuarios()
     }
     
@@ -477,7 +478,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 let sourcePath = (info[UIImagePickerControllerMediaURL] as! URL).path;
                 let fileManger = FileManager.default
                 let doumentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
-                let destinationPath = doumentDirectoryPath.appendingPathComponent("Video_\(temp4).MOV")
+                let destinationPath = doumentDirectoryPath.appendingPathComponent("Video_\(temp4).mp4")
                 do{
                     try fileManger.copyItem(atPath: sourcePath, toPath: destinationPath)
                 }catch let error as NSError {

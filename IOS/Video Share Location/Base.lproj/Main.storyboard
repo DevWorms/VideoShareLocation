@@ -163,7 +163,7 @@
             <objects>
                 <navigationController storyboardIdentifier="MapaViewController" automaticallyAdjustsScrollViewInsets="NO" id="qNj-Al-e8c" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="h3D-S5-tSP">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="h3D-S5-tSP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -292,7 +292,6 @@
                                                 <connections>
                                                     <outlet property="imageViewUser" destination="fVI-Wy-61h" id="WY2-5O-3PJ"/>
                                                     <outlet property="labelUser" destination="oit-qv-rd1" id="Mva-zS-FAy"/>
-                                                    <segue destination="a6k-Wx-jzu" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="jOj-pc-ZdD"/>
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>
