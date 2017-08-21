@@ -35,20 +35,18 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
             for h in 0..<usuariosg[i].videoinfo.count {
                 let LatCurrent : Double = Double(usuariosg[i].videoinfo[h]["lat"] as! String)!
                 let LongCurrent : Double = Double(usuariosg[i].videoinfo[h]["long"] as! String)!
-                print("Lat: \(LatCurrent) Long: \(LongCurrent)")
+                //print("Lat: \(LatCurrent) Long: \(LongCurrent)")
                 
                 let Punto1 = CLLocation(latitude: LatSelected, longitude: LongSelected)
                 let Punto2 = CLLocation(latitude: LatCurrent, longitude: LongCurrent)
                 let distancia = Punto1.distance(from: Punto2)
                 
-                print("Distancia = \(distancia)")
-                if(distancia<=1000000){
+                //print("Distancia = \(distancia)")
+                if(distancia<=UserDefaults.standard.double(forKey: "Distance")){
                     if (!usernames.contains(usuariosg[i].nombre)) {
                         usernames.append(usuariosg[i].nombre)
                         print("Add: \(usuariosg[i].nombre)")
                     }
-                } else {
-                    print("No Add: \(usuariosg[i].nombre)")
                 }
             }
         }
