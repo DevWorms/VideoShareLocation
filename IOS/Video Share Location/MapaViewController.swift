@@ -92,9 +92,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         print("Total = ", totalLista)
         for var m in 0..<listaVideos.count {
             if (!FileManager.default.fileExists(atPath: listaVideos[m])){
-                print("No existe el indice: ", m)
+                //print("No existe el indice: ", m)
             } else {
-                print("Si existe el indice: ", m)
+                //print("Si existe el indice: ", m)
                 listaNuevaVideos.append(listaVideos[m])
                 y+=1
             }
@@ -108,7 +108,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     ////FUNCION CREAR MARKERS PARA LOS VIDEOS EXISTENTES
     func crearMarker(){
-        print(usuarios.count)
+        //print(usuarios.count)
         for i in 0 ..< usuarios.count {
             for c in 0 ..< usuarios[i].videoinfo.count {
                 let marker = GMSMarker()
@@ -127,7 +127,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error obteniendo ubicacion: \(error)")
+        //print("Error obteniendo ubicacion: \(error)")
     }
     
     func drawPath(startLocation: CLLocation, endLocation: CLLocation) {
@@ -136,10 +136,10 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let destination = "\(endLocation.coordinate.latitude),\(endLocation.coordinate.longitude)"
         let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving"
         Alamofire.request(url).responseJSON { response in
-            print(response.request as Any)  // original URL request
-            print(response.response as Any) // HTTP URL response
-            print(response.data as Any)     // server data
-            print(response.result as Any)   // result of response serialization
+            //print(response.request as Any)  // original URL request
+            //print(response.response as Any) // HTTP URL response
+            //print(response.data as Any)     // server data
+            //print(response.result as Any)   // result of response serialization
             let json = JSON(data: response.data!)
             let routes = json["routes"].arrayValue
             for route in routes {
@@ -162,7 +162,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         let parameterString = "apikey=\(apikey)&id=\(id)"
         
-        print(parameterString)
+        //print(parameterString)
         
         let strUrl = "http://videoshare.devworms.com/api/videos"
         
@@ -172,25 +172,25 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             
             URLSession.shared.uploadTask(with: urlRequest, from: httpBody, completionHandler: parseJsonLogin).resume()
         } else {
-            print("Error de codificación de caracteres.")
+            //print("Error de codificación de caracteres.")
         }
     }
     
     ////////RECOGE VIDEOS DE API
     func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
         if error != nil {
-            print(error!)
+            //print(error!)
         } else if urlResponse != nil {
             if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
-                //print(json)
+                ////print(json)
                 if let jsonResult = json as? [String: Any] {
                     DispatchQueue.main.async {
                         self.usuarios = [Users]()
                         if let result = jsonResult["users"] as?  [[String: Any]] {
-                            //print(result)
+                            ////print(result)
                             for user in result {
-                                //print(user)
-                                //print(user["videos"])
+                                ////print(user)
+                                ////print(user["videos"])
                                 let usuario = Users()
                                 if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]]{
                                     usuario.nombre = nombre
@@ -198,7 +198,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                                         usuario.videoinfo.append(video)
                                     }
                                     //usuario.videoinfo = [videos]
-                                    print("Nombre: \(nombre) Latitud: \(usuario.videoinfo[0]["lat"] as! String) Longitud: \(usuario.videoinfo[0]["long"] as! String)")
+                                    //print("Nombre: \(nombre) Latitud: \(usuario.videoinfo[0]["lat"] as! String) Longitud: \(usuario.videoinfo[0]["long"] as! String)")
                                 }
                                 self.usuarios.append(usuario)
                                 usuariosg = self.usuarios
@@ -208,8 +208,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                     }
                 }
             } else {
-                print("HTTP Status Code: 200")
-                print("El JSON de respuesta es inválido.")
+                //print("HTTP Status Code: 200")
+                //print("El JSON de respuesta es inválido.")
             }
             
         }
@@ -235,7 +235,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         let dataBody = createDataBody(withParameters: parameters, media: path , boundary: boundary)
         request.httpBody = dataBody
-        print("Solicitud: \(request)")
+        //print("Solicitud: \(request)")
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
             if let response = response {
@@ -247,7 +247,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     print(json)
                 } catch {
-                    print(error)
+                    //print(error)
                 }
             }
             }.resume()
@@ -279,14 +279,14 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 try body.append(NSData(contentsOfFile: media) as Data)
                 body.append(lineBreak)
             }catch{
-                print("error Body:\(error)")
+                //print("error Body:\(error)")
             }
             
             //}
         }
         
         body.append("--\(boundary)--\(lineBreak)")
-        print("Este es el texto enviado \n \(body)")
+        //print("Este es el texto enviado \n \(body)")
         return body
     }
     
@@ -308,7 +308,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         if (arrayAlreadyExist(dataKey: "LatVideo")){
             var LatVideo = DataUserDefault.array(forKey: "LatVideo") ?? [Double]()
             var LongVideo = DataUserDefault.array(forKey: "LongVideo") ?? [Double]()
-            print("La lista tiene ", LatVideo.count, "indices")
+            //print("La lista tiene ", LatVideo.count, "indices")
             for var c in 0..<LatVideo.count {
                 /////////////Calcular distancia///////////////
                 let Punto1 = CLLocation(latitude: LatLong[0] as! Double, longitude: LatLong[1] as! Double)
@@ -317,15 +317,15 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 /////////////Calcular distancia///////////////
                 /////////////Verifica cercania de otros markers///////////////
                 if (distancia<=10) {
-                    print("Distancia dentro del rango")
+                    //print("Distancia dentro del rango")
                     ponerMarker = false //Indicador para poner marker en mapa
                     c=9999  //Existe algun video dentro del rango, sale del ciclo
                 } else {
                     //Termino el recorrido sin ninguna coincidencia
-                    print("Distancia fuera del rango")
+                    //print("Distancia fuera del rango")
                     ponerMarker = true
                 }
-                print("Distancia = ", distancia, " metros")
+                //print("Distancia = ", distancia, " metros")
                 /////////////Verifica cercania de otros markers///////////////
             }
             if (ponerMarker){
@@ -368,16 +368,16 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 marker.map = mapContainer
             }
         } else {
-            print("¡No existen markers almacenados!")
+            //print("¡No existen markers almacenados!")
         }
     }
     
     @IBAction func Grabar(_ sender: Any) {
         let res : Bool = startCameraFromViewController(self, withDelegate: self)
         if (res){
-            print("Camara iniciada...")
+            //print("Camara iniciada...")
         } else{
-            print("Error camara")
+            //print("Error camara")
 
         }
         let LatLong = [mlatitud,mlongitud]
@@ -413,14 +413,14 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        print("Marker Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+        //print("Marker Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
         DataUserDefault.set(marker.position.latitude, forKey: "LatSelected")
         DataUserDefault.set(marker.position.longitude, forKey: "LongSelected")
         camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 20.0)
         mapContainer.camera = camera
         
         self.obtenerUsuariosMarker()
-        print(usernames.count)
+        //print(usernames.count)
         if (usernames.count==1) {
             marker.snippet = "\(usernames[0])"
         } else if (usernames.count==2) {
@@ -428,11 +428,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         } else if (usernames.count>=3) {
             marker.snippet = "\(usernames[0])\n\(usernames[1])\n\(usernames[2])..."
         }
-        
-        for h in 0..<usernames.count {
-            print("\(usernames[h])")
-        }
-        
+    
         let numVideos : Int = self.obtenerNumVideos()
         if numVideos == 1 {
             marker.title = "Video: \(numVideos)"
@@ -445,18 +441,18 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
-        print("InfoWindow Cerrado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+        //print("InfoWindow Cerrado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
-        print("InfoWindow Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+        //print("InfoWindow Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
         DataUserDefault.set(marker.position.latitude, forKey: "LatSelected")
         DataUserDefault.set(marker.position.longitude, forKey: "LongSelected")
         showModalUsuarios()
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressInfoWindowOf marker: GMSMarker) {
-        print("Mantener presionado")
+        //print("Mantener presionado")
         let location1 = CLLocation(latitude: mlatitud, longitude: mlongitud)
         let location2 = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
         mapContainer.clear()
@@ -477,17 +473,17 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let LatSelected : Double = UserDefaults.standard.double(forKey: "LatSelected")
         let LongSelected : Double = UserDefaults.standard.double(forKey: "LongSelected")
         for i in 0..<usuariosg.count{
-            print(usuariosg[i].nombre)
+            //print(usuariosg[i].nombre)
             for h in 0..<usuariosg[i].videoinfo.count {
                 let LatCurrent : Double = Double(usuariosg[i].videoinfo[h]["lat"] as! String)!
                 let LongCurrent : Double = Double(usuariosg[i].videoinfo[h]["long"] as! String)!
-                //print("Lat: \(LatCurrent) Long: \(LongCurrent)")
+                ////print("Lat: \(LatCurrent) Long: \(LongCurrent)")
                 
                 let Punto1 = CLLocation(latitude: LatSelected, longitude: LongSelected)
                 let Punto2 = CLLocation(latitude: LatCurrent, longitude: LongCurrent)
                 let distancia = Punto1.distance(from: Punto2)
                 
-                //print("Distancia = \(distancia)")
+                ////print("Distancia = \(distancia)")
                 if(distancia<=UserDefaults.standard.double(forKey: "Distance")){
                     if (!usernames.contains(usuariosg[i].nombre)) {
                         
@@ -564,10 +560,10 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                     noArray.append(destinationPath)
                     UserDefaults.standard.set(noArray, forKey: "VideoPath")
                 }
-                print("Destino: ", destinationPath)
+                //print("Destino: ", destinationPath)
                 let alerta = UIAlertController(title: "¿Que desea hacer?", message: "Elija una opción para continuar", preferredStyle: UIAlertControllerStyle.alert)
                 alerta.addAction(UIAlertAction(title: "Subir video", style: UIAlertActionStyle.default, handler: { alertAction in
-                    print("Subir al servidor")
+                    //print("Subir al servidor")
                     self.DistanciaGuardarMarker()
                     let UploadLat = "\(self.mlatitud)"
                     let UploadLong = "\(self.mlongitud)"
@@ -595,7 +591,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             DispatchQueue.main.asyncAfter(deadline: when) {
             }
             do {
-                print("Iniciar borrado")
+                //print("Iniciar borrado")
                 try FileManager.default.removeItem(atPath: destinationPath)
             } catch let error as NSError {
                 print("¡Error! Ha ocurrido un error: \(error)")
