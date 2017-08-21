@@ -113,13 +113,18 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             for c in 0 ..< usuarios[i].videoinfo.count {
                 let marker = GMSMarker()
                 let result = usuarios[i].videoinfo[c] as [String:Any]
-                if let lat = result["lat"] as? String, let long = result["long"] as? String{
+                if let lat = result["lat"] as? String, let long = result["long"] as? String, let usuario = result["user_id"] as? String{
                     marker.tracksInfoWindowChanges = true
                     marker.position = CLLocationCoordinate2D(latitude: Double(lat)!, longitude: Double(long)!)
                     //marker.title = usuarios[i].nombre
                     //marker.snippet = "Videos de \(usuarios[i].nombre)"
                     marker.snippet = "Videos"
-                    marker.icon = GMSMarker.markerImage(with: .brown)
+                    if (usuario == self.userid){
+                        marker.icon = GMSMarker.markerImage(with: .blue)
+                    }else{
+                        marker.icon = GMSMarker.markerImage(with: .brown)
+                    }
+                    
                     marker.map = mapContainer
                 }
             }
@@ -192,13 +197,12 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                                 ////print(user)
                                 ////print(user["videos"])
                                 let usuario = Users()
-                                if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]]{
+                                if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]], let idd = user["id"] as? Int{
                                     usuario.nombre = nombre
+                                    usuario.idusuario = "\(idd)"
                                     for video in videos {
                                         usuario.videoinfo.append(video)
                                     }
-                                    //usuario.videoinfo = [videos]
-                                    //print("Nombre: \(nombre) Latitud: \(usuario.videoinfo[0]["lat"] as! String) Longitud: \(usuario.videoinfo[0]["long"] as! String)")
                                 }
                                 self.usuarios.append(usuario)
                                 usuariosg = self.usuarios

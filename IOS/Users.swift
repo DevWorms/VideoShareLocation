@@ -11,4 +11,6 @@ import UIKit
 class Users{
     var nombre = ""
     var videoinfo = [[String:Any]]()
+    var idusuario = ""
+    //////// En video info, para acceder al id del usuario se accede así: users.videoinfo[0]["user_id"]
 }
