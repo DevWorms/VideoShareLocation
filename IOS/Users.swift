@@ -12,4 +12,3 @@ class Users{
     var nombre = ""
     var videoinfo = [[String:Any]]()
 }
-

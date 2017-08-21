@@ -91,24 +91,19 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     // Conexion con api
     func login(token:String, nombre:String) {
-        
-        let parameterString = "tokenfb=\(token)&name=\(nombre)"
-        
+        let parameterString = "TokenFB=\(token)&name=\(nombre)"
         print(parameterString)
-        
         let strUrl = "http://videoshare.devworms.com/api/login"
-        
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
             var urlRequest = URLRequest(url: URL(string: strUrl)!)
             urlRequest.httpMethod = "POST"
-            
             URLSession.shared.uploadTask(with: urlRequest, from: httpBody, completionHandler: parseJsonLogin).resume()
         } else {
             print("Error de codificación de caracteres.")
         }
     }
     
-    //recoge apikey del JSon
+    //Recoge ApiKey del JSON
    func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
         if error != nil {
             print(error!)
@@ -127,21 +122,15 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                                 }
                                 UserDefaults.standard.set(gkey, forKey: globalkey)
                                 UserDefaults.standard.set(gid, forKey: globalid)
-                                print(gkey)
-                                print(gid)
+                                //print(gkey)
+                                //print(gid)
                             }
-                            
                         }
                     }
-                    
                 } else {
                     print("HTTP Status Code: 200")
                     print("El JSON de respuesta es inválido.")
                 }
-                
             }
         }
     }
-    
-
-

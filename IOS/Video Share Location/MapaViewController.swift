@@ -62,7 +62,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.locationManager.startUpdatingLocation()
         self.mapContainer.delegate = self
         
-        let logoutButton:UIBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MapaViewController.searchTapped(sender:)))
+        let logoutButton:UIBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MapaViewController.logout(sender:)))
         self.navigationItem.setLeftBarButton(logoutButton, animated: true)
     }
     
@@ -70,12 +70,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         super.didReceiveMemoryWarning()
     }
     
-    func searchTapped(sender:UIButton) {
+    func logout(sender:UIButton) {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = vc
-        print("Presionado")
     }
     
     @IBAction func limpiarLista(_ sender: Any) {
@@ -235,7 +234,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         let dataBody = createDataBody(withParameters: parameters, media: path , boundary: boundary)
         request.httpBody = dataBody
-        
+        print("Solicitud: \(request)")
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
             if let response = response {
@@ -286,7 +285,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         }
         
         body.append("--\(boundary)--\(lineBreak)")
-        
+        print("Este es el texto enviado \n \(body)")
         return body
     }
     
@@ -375,7 +374,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     @IBAction func Grabar(_ sender: Any) {
         let res : Bool = startCameraFromViewController(self, withDelegate: self)
         if (res){
-            print("OK camara")
+            print("Camara iniciada...")
         } else{
             print("Error camara")
 
@@ -447,11 +446,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true, completion: nil)
     }
-    
-    //var rightSearchBarButtonItem:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: #selector(MapaViewController.searchTapped))
-    // 3
-    //self.navigationItem.setRightBarButtonItems([rightAddBarButtonItem,rightSearchBarButtonItem], animated: true)
-    
 }
 
 
@@ -476,11 +470,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 let temp4 = temp3.replacingOccurrences(of: " ", with: "_")
                 ///////Obtener la fecha para el nombre del video/////////
                 let sourcePath = (info[UIImagePickerControllerMediaURL] as! URL).path;
-                let fileManger = FileManager.default
+                let fileManager = FileManager.default
                 let doumentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
                 let destinationPath = doumentDirectoryPath.appendingPathComponent("Video_\(temp4).mp4")
                 do{
-                    try fileManger.copyItem(atPath: sourcePath, toPath: destinationPath)
+                    try fileManager.moveItem(atPath: sourcePath, toPath: destinationPath)
                 }catch let error as NSError {
                     print("Error encontrado, Detalles: \(error)")
                 }
@@ -498,20 +492,34 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 alerta.addAction(UIAlertAction(title: "Subir video", style: UIAlertActionStyle.default, handler: { alertAction in
                     print("Subir al servidor")
                     self.DistanciaGuardarMarker()
-                    let latitudd = "\(self.mlatitud)"
-                    let longitudd = "\(self.mlongitud)"
-                    self.SubirVideo(apikey: self.api, id: self.userid, lat: latitudd, long: longitudd, path: destinationPath)
+                    let UploadLat = "\(self.mlatitud)"
+                    let UploadLong = "\(self.mlongitud)"
+                    self.SubirVideo(apikey: self.api, id: self.userid, lat: UploadLat , long: UploadLong, path: destinationPath)
+                    //self.eliminarVideo(destinationPath: destinationPath)
                     alerta.dismiss(animated: true, completion: nil)
                 }))
                 alerta.addAction(UIAlertAction(title: "Guardar en el telefono", style: UIAlertActionStyle.default, handler: { alertAction in
-                    if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(sourcePath) {
-                        UISaveVideoAtPathToSavedPhotosAlbum(sourcePath, self, #selector(MapaViewController.video(_:    didFinishSavingWithError:contextInfo:)), nil)
-                    }
+                    self.moverVideoGaleria(destinationPath: destinationPath)
                     self.DistanciaGuardarMarker()
-                    print("Guardado en el telefono")
+                    self.eliminarVideo(destinationPath: destinationPath)
+
                     alerta.dismiss(animated: true, completion: nil)
                 }))
                 self.present(alerta, animated: true, completion: nil)
+            }
+        }
+        
+        func eliminarVideo(destinationPath : String){
+            do {
+                try FileManager.default.removeItem(atPath: destinationPath)
+            } catch let error as NSError {
+                print("¡Error! Ha ocurrido un error: \(error)")
+            }
+        }
+        
+        func moverVideoGaleria(destinationPath: String){
+            if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(destinationPath) {
+                UISaveVideoAtPathToSavedPhotosAlbum(destinationPath, self, #selector(MapaViewController.video(_:    didFinishSavingWithError:contextInfo:)), nil)
             }
         }
         

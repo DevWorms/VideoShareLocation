@@ -75,7 +75,6 @@ class RegistroUsuarioViewController: UIViewController {
                 if let jsonResult = json as? [String: Any] {
                     DispatchQueue.main.async {
                         //var usuarios = Users()
-                        
                         if let result = jsonResult["user"] as?  [[String: Any]] {
                             //print(result)
                             for user in result{
@@ -100,7 +99,6 @@ class RegistroUsuarioViewController: UIViewController {
                 print("HTTP Status Code: 200")
                 print("El JSON de respuesta es inválido.")
             }
-            
         }
     }
 }
