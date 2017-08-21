@@ -69,7 +69,7 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
         print("Seleccionaste video ", indexPath.row+1)
     }
     
-    @IBAction func cerrarModalVideo(_ sender: Any) {
+    @IBAction func regresarModal(_ sender: Any) {
         dismiss(animated: true, completion: nil)
-    }    
+    }
 }
