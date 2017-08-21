@@ -13,4 +13,5 @@ class Users{
     var videoinfo = [[String:Any]]()
     var idusuario = ""
     //////// En video info, para acceder al id del usuario se accede así: users.videoinfo[0]["user_id"]
+    //////// En video info, para acceder al url del video se accede así: users.videoinfo[0]["url"]
 }
