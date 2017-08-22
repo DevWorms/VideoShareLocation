@@ -91,7 +91,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func login(token:String, nombre:String) {
         print("Entra metodo login")
         let parameterString = "tokenfb=\(token)&name=\(nombre)"
-        print(parameterString)
         let strUrl = "http://videoshare.devworms.com/api/login"
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
             var urlRequest = URLRequest(url: URL(string: strUrl)!)

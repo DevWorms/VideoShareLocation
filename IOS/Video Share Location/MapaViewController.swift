@@ -422,18 +422,18 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.obtenerUsuariosMarker()
         //print(usernames.count)
         if (usernames.count==1) {
-            marker.snippet = "\(usernames[0])"
+            marker.title = "\(usernames[0])"
         } else if (usernames.count==2) {
-            marker.snippet = "\(usernames[0])\n\(usernames[1])"
+            marker.title = "\(usernames[0]), \(usernames[1])"
         } else if (usernames.count>=3) {
-            marker.snippet = "\(usernames[0])\n\(usernames[1])\n\(usernames[2])..."
+            marker.title = "\(usernames[0]), \(usernames[1]), \(usernames[2])..."
         }
     
         let numVideos : Int = self.obtenerNumVideos()
         if numVideos == 1 {
-            marker.title = "Video: \(numVideos)"
+            marker.snippet = "Video: \(numVideos)"
         } else {
-            marker.title = "Videos: \(numVideos)"
+            marker.snippet = "Videos: \(numVideos)"
         }
         mapContainer.selectedMarker = marker
         marker.map = mapContainer
