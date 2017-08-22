@@ -74,12 +74,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         guardarDatos.set(correo, forKey: "correo")
         guardarDatos.set(genero, forKey: "genero")
         print("¡Datos guardados!")
-    
+        
         
         //ejecuta conexion con api
-    
         login(token:idFace, nombre:nombre)
-        
         
         let siguienteViewController = storyBoard.instantiateViewController(withIdentifier: "RegistroUsuarioViewController")
         self.present(siguienteViewController, animated: true, completion: nil)
@@ -91,7 +89,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     // Conexion con api
     func login(token:String, nombre:String) {
-        let parameterString = "TokenFB=\(token)&name=\(nombre)"
+        print("Entra metodo login")
+        let parameterString = "tokenfb=\(token)&name=\(nombre)"
         print(parameterString)
         let strUrl = "http://videoshare.devworms.com/api/login"
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
@@ -105,6 +104,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     //Recoge ApiKey del JSON
    func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
+        print("Entra metodo parse")
         if error != nil {
             print(error!)
         } else if urlResponse != nil {
@@ -122,8 +122,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                                 }
                                 UserDefaults.standard.set(gkey, forKey: globalkey)
                                 UserDefaults.standard.set(gid, forKey: globalid)
-                                //print(gkey)
-                                //print(gid)
+                                print("El ApiKey: \(gkey)")
+                                print("El ID: \(gid)")
                             }
                         }
                     }

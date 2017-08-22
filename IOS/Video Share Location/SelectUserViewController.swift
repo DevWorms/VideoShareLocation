@@ -31,7 +31,7 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
         //print(usuariosg.count)
         //print(usuariosg[8].videoinfo.count)
         for i in 0..<usuariosg.count{
-            print(usuariosg[i].nombre)
+            //print(usuariosg[i].nombre)
             for h in 0..<usuariosg[i].videoinfo.count {
                 let LatCurrent : Double = Double(usuariosg[i].videoinfo[h]["lat"] as! String)!
                 let LongCurrent : Double = Double(usuariosg[i].videoinfo[h]["long"] as! String)!
@@ -45,7 +45,7 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
                 if(distancia<=UserDefaults.standard.double(forKey: "Distance")){
                     if (!usernames.contains(usuariosg[i].nombre)) {
                         usernames.append(usuariosg[i].nombre)
-                        print("Add: \(usuariosg[i].nombre)")
+                        //print("Add: \(usuariosg[i].nombre)")
                     }
                 }
             }
@@ -64,7 +64,7 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Seleccionaste usuario ", indexPath.row)
+        //print("Seleccionaste usuario ", indexPath.row)
         diccionario.setValue(usernames,forKey: "ArrayUserSelected")
         diccionario.set(indexPath.row,forKey: "NumUserSelected")
         showModalVideos()

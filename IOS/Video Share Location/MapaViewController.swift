@@ -9,6 +9,7 @@ import Alamofire
 import Foundation
 
 var usuariosg: [Users] = []
+var destinationPath : String = ""
 
 class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
@@ -19,8 +20,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     var mlongitud: Double = 0.0
     var locationManager = CLLocationManager()
     var camera: GMSCameraPosition!
-    var api: String = ""
-    var userid: String! = ""
+    var apikey : String! = ""
+    var userid : String! = ""
     @IBOutlet weak var mapContainer: GMSMapView!
     var usernames = [String]()
     
@@ -28,15 +29,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         super.viewDidLoad()
         camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 8.0)
         mapContainer.camera = camera
-        if let apikey = UserDefaults.standard.value(forKey: globalkey) {
-            api = apikey as! String
-        }
-        
-        if let id = UserDefaults.standard.value(forKey: globalid) {
-            userid = id as! String
-        }
+        apikey = DataUserDefault.string(forKey: "globalkey")
+        userid = DataUserDefault.string(forKey: "globalid")
+            
         DataUserDefault.set(1000000, forKey: "Distance") //Para test
-        videos(apikey: api, id: userid)
+        videos(apikey: apikey, id: userid)
         /*
         ================================================================================================
         Configuracion de controles del mapa
@@ -117,7 +114,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                     marker.tracksInfoWindowChanges = true
                     marker.position = CLLocationCoordinate2D(latitude: Double(lat)!, longitude: Double(long)!)
                     //marker.title = usuarios[i].nombre
-                    //marker.snippet = "Videos de \(usuarios[i].nombre)"
+                    marker.snippet = "Videos de \(usuarios[i].nombre)"
                     marker.snippet = "Videos"
                     if (usuario == self.userid){
                         marker.icon = GMSMarker.markerImage(with: .blue)
@@ -167,7 +164,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         let parameterString = "apikey=\(apikey)&id=\(id)"
         
-        //print(parameterString)
+        print(parameterString)
         
         let strUrl = "http://videoshare.devworms.com/api/videos"
         
@@ -290,7 +287,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         }
         
         body.append("--\(boundary)--\(lineBreak)")
-        //print("Este es el texto enviado \n \(body)")
         return body
     }
     
@@ -460,7 +456,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let location1 = CLLocation(latitude: mlatitud, longitude: mlongitud)
         let location2 = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
         mapContainer.clear()
-        videos(apikey: api, id: userid)
+        videos(apikey: apikey, id: userid)
         self.drawPath(startLocation: location1, endLocation: location2)
     }
     
@@ -524,8 +520,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         return numVideos
     }
 }
-
-
 /*
  ================================================================================================
  Comienzan extensiones de clases para grabar videos y almacenar
@@ -549,7 +543,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 let sourcePath = (info[UIImagePickerControllerMediaURL] as! URL).path;
                 let fileManager = FileManager.default
                 let doumentDirectoryPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
-                let destinationPath = doumentDirectoryPath.appendingPathComponent("Video_\(temp4).mov")
+                destinationPath = doumentDirectoryPath.appendingPathComponent("Video_\(temp4).mov")
                 do{
                     try fileManager.copyItem(atPath: sourcePath, toPath: destinationPath)
                 }catch let error as NSError {
@@ -571,7 +565,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                     self.DistanciaGuardarMarker()
                     let UploadLat = "\(self.mlatitud)"
                     let UploadLong = "\(self.mlongitud)"
-                    self.SubirVideo(apikey: self.api, id: self.userid, lat: UploadLat , long: UploadLong, path: destinationPath)
+                    self.SubirVideo(apikey: self.apikey, id: self.userid, lat: UploadLat , long: UploadLong, path: destinationPath)
                     alerta.dismiss(animated: true, completion: nil)
                 }))
                 alerta.addAction(UIAlertAction(title: "Guardar en el telefono", style: UIAlertActionStyle.default, handler: { alertAction in

@@ -91,8 +91,8 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rv1-gr-Y7c">
                                 <rect key="frame" x="242" y="37" width="62" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="62" id="4MG-QT-Z1X"/>
-                                    <constraint firstAttribute="height" constant="30" id="yXO-xx-8NS"/>
+                                    <constraint firstAttribute="width" constant="62" id="AQz-Nk-3O3"/>
+                                    <constraint firstAttribute="height" constant="30" id="IyV-Ah-6Sv"/>
                                 </constraints>
                                 <state key="normal" title="Guardar"/>
                                 <connections>
@@ -120,15 +120,14 @@
                             <constraint firstItem="EeS-8x-eX5" firstAttribute="trailing" secondItem="WmM-dK-H8W" secondAttribute="trailingMargin" id="NUm-3q-Moh"/>
                             <constraint firstItem="vPg-Ve-qzg" firstAttribute="leading" secondItem="WmM-dK-H8W" secondAttribute="leadingMargin" id="TTU-Bn-Rgj"/>
                             <constraint firstItem="x6c-9v-p9m" firstAttribute="leading" secondItem="WmM-dK-H8W" secondAttribute="leadingMargin" id="YQR-7m-lUX"/>
-                            <constraint firstItem="Xww-C7-aHB" firstAttribute="top" secondItem="rv1-gr-Y7c" secondAttribute="bottom" constant="8" id="Ygz-wn-TPp"/>
-                            <constraint firstItem="rv1-gr-Y7c" firstAttribute="top" secondItem="j2f-NS-6Kc" secondAttribute="bottom" constant="17" id="g8B-nR-x3g"/>
+                            <constraint firstItem="Xww-C7-aHB" firstAttribute="top" secondItem="rv1-gr-Y7c" secondAttribute="bottom" constant="8" id="bPk-O5-ExX"/>
                             <constraint firstItem="vPg-Ve-qzg" firstAttribute="top" secondItem="Xww-C7-aHB" secondAttribute="bottom" constant="21" id="gFR-Np-4B5"/>
                             <constraint firstItem="x6c-9v-p9m" firstAttribute="trailing" secondItem="WmM-dK-H8W" secondAttribute="trailingMargin" id="jFW-by-xr8"/>
                             <constraint firstItem="TAo-13-k1I" firstAttribute="leading" secondItem="WmM-dK-H8W" secondAttribute="leadingMargin" id="o8z-ZV-95F"/>
                             <constraint firstAttribute="trailing" secondItem="Xww-C7-aHB" secondAttribute="trailing" id="tRm-OJ-Rbe"/>
+                            <constraint firstItem="rv1-gr-Y7c" firstAttribute="trailing" secondItem="WmM-dK-H8W" secondAttribute="trailingMargin" id="tZo-mO-PLj"/>
                             <constraint firstItem="EeS-8x-eX5" firstAttribute="leading" secondItem="WmM-dK-H8W" secondAttribute="leadingMargin" id="tam-i7-6cA"/>
                             <constraint firstItem="Xww-C7-aHB" firstAttribute="top" secondItem="WmM-dK-H8W" secondAttribute="top" constant="75" id="wRZ-Kq-GvF"/>
-                            <constraint firstItem="rv1-gr-Y7c" firstAttribute="trailing" secondItem="WmM-dK-H8W" secondAttribute="trailingMargin" id="yfB-Bz-lbD"/>
                         </constraints>
                     </view>
                     <connections>
@@ -374,7 +373,7 @@
                                     <constraint firstAttribute="width" constant="35" id="5zw-LL-c77"/>
                                     <constraint firstAttribute="height" constant="35" id="sms-PV-8gc"/>
                                 </constraints>
-                                <state key="normal" image="equis" backgroundImage="009688"/>
+                                <state key="normal" image="equis"/>
                                 <connections>
                                     <action selector="cerrarUsuario:" destination="VMt-vz-ypa" eventType="touchUpInside" id="9W7-QK-2lp"/>
                                 </connections>
@@ -476,7 +475,7 @@
                                     <constraint firstAttribute="width" constant="35" id="3Tg-IJ-8Rw"/>
                                     <constraint firstAttribute="height" constant="35" id="omh-GN-A6V"/>
                                 </constraints>
-                                <state key="normal" image="regresar" backgroundImage="009688"/>
+                                <state key="normal" image="regresar"/>
                                 <connections>
                                     <action selector="regresarModal:" destination="a6k-Wx-jzu" eventType="touchUpInside" id="Yyt-io-3h8"/>
                                 </connections>
@@ -501,7 +500,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="009688" width="16" height="16"/>
         <image name="equis" width="626" height="626"/>
         <image name="regresar" width="512" height="512"/>
     </resources>

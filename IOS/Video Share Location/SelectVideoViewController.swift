@@ -8,12 +8,17 @@
 
 import UIKit
 import CoreLocation
+import AVKit
+import AVFoundation
 
 class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var collectionViewVideo: UICollectionView!
     //var images = ["six","seven","eight","nine","ten"]
-    var video = [String]()
+    var nombreVideo = [String]()
+    var urlVideo = [String]()
+    var IdUserSelected = -1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionViewVideo.delegate = self
@@ -21,13 +26,12 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
         view.backgroundColor = UIColor.clear
         view.isOpaque = false
         
-        
+        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: [])
         let ArrayUserSelected = UserDefaults.standard.stringArray(forKey: "ArrayUserSelected") ?? [String]()
         let NumUserSelected : Int = UserDefaults.standard.integer(forKey: "NumUserSelected")
         let UserSelected : String = ArrayUserSelected[NumUserSelected]
         let LatSelected : Double = UserDefaults.standard.double(forKey: "LatSelected")
         let LongSelected : Double = UserDefaults.standard.double(forKey: "LongSelected")
-        var IdUserSelected = -1
         for i in 0..<usuariosg.count{
             if (usuariosg[i].nombre.contains(UserSelected)) {
                 IdUserSelected = i
@@ -42,31 +46,35 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
             let Punto1 = CLLocation(latitude: LatSelected, longitude: LongSelected)
             let Punto2 = CLLocation(latitude: LatCurrent, longitude: LongCurrent)
             let distancia = Punto1.distance(from: Punto2)
-            
-            print("Distancia = \(distancia)")
+
             if(distancia <= UserDefaults.standard.double(forKey: "Distance")){
-                print("Video: \(usuariosg[IdUserSelected].nombre)")
-                video.append("Video \(distancia)")
-            } else {
-                print("No Video: \(usuariosg[IdUserSelected].nombre)")
+                //print("Video: \(usuariosg[IdUserSelected].nombre)")
+                nombreVideo.append("Video \(distancia)")
+                urlVideo.append(usuariosg[IdUserSelected].videoinfo[h]["url"] as! String)
             }
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return video.count
+        return nombreVideo.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellVideo = collectionViewVideo.dequeueReusableCell(withReuseIdentifier: "collectionVideoData", for: indexPath) as! VideoDataCollectionViewCell
         //cellVideo.imageViewVideo.image = UIImage(named: images[indexPath.row])
         cellVideo.imageViewVideo.image = UIImage(named: "video_icon")
-        cellVideo.labelVideo.text = video[indexPath.row]
+        cellVideo.labelVideo.text = nombreVideo[indexPath.row]
         return cellVideo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Seleccionaste video ", indexPath.row+1)
+        let videoURL = URL(string: usuariosg[IdUserSelected].videoinfo[(indexPath.row+1)]["url"] as! String) //por URL externo
+        let player = AVPlayer(url: videoURL!)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
     }
     
     @IBAction func regresarModal(_ sender: Any) {
