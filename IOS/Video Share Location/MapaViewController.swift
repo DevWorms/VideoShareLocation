@@ -48,20 +48,17 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         /*
         ================================================================================================
         */
-        //let marker = GMSMarker()
-        //marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        //marker.title = "Sydney"
-        //marker.snippet = "Australia"
-        //marker.map = mapContainer
         llenarMapaMarkers()
         //LLENAR MARKERS DE USUSARIOS DE LA API///
-        //crearMarkerr()
         self.locationManager.delegate = self
         self.locationManager.startUpdatingLocation()
         self.mapContainer.delegate = self
         
-        let logoutButton:UIBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MapaViewController.logout(sender:)))
-        self.navigationItem.setLeftBarButton(logoutButton, animated: true)
+        let logout:UIBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MapaViewController.logout(sender:)))
+        //let refresh:UIBarButtonItem = UIBarButtonItem(title: "Refresh", style: UIBarButtonSystemItem.refresh, target: self, action: #selector(MapaViewController.refresh(sender:)))
+        let refresh:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: #selector(MapaViewController.refresh))
+        self.navigationItem.setLeftBarButton(logout, animated: true)
+        self.navigationItem.setRightBarButton(refresh, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -73,6 +70,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = vc
+    }
+    func refresh(sender:UIButton) {
+        videos(apikey: apikey, id: userid)
     }
     
     @IBAction func limpiarLista(_ sender: Any) {
@@ -163,15 +163,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func videos(apikey: String, id: String) {
         
         let parameterString = "apikey=\(apikey)&id=\(id)"
-        
-        print(parameterString)
-        
         let strUrl = "http://videoshare.devworms.com/api/videos"
         
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
             var urlRequest = URLRequest(url: URL(string: strUrl)!)
             urlRequest.httpMethod = "POST"
-            
             URLSession.shared.uploadTask(with: urlRequest, from: httpBody, completionHandler: parseJsonLogin).resume()
         } else {
             //print("Error de codificación de caracteres.")
@@ -236,19 +232,18 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         let dataBody = createDataBody(withParameters: parameters, media: path , boundary: boundary)
         request.httpBody = dataBody
-        //print("Solicitud: \(request)")
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
             if let response = response {
-                print(response)
+                print("Respuesta: \(response)")
             }
-            
             if let data = data {
+                print("Data JSON: \(data)")
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print(json)
+                    print("JSON resultante: \(json)")
                 } catch {
-                    //print(error)
+                    print("Error formando JSON: \(error)")
                 }
             }
             }.resume()
@@ -268,6 +263,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 body.append("--\(boundary + lineBreak)")
                 body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
                 body.append("\(value + lineBreak)")
+                print("Key: \(key)")
+                print("Value: \(value)")
             }
         }
         
@@ -279,8 +276,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 body.append("Content-Type: \("video/quicktime" + lineBreak + lineBreak)")
                 try body.append(NSData(contentsOfFile: media) as Data)
                 body.append(lineBreak)
+                print("Media: \(media)")
             }catch{
-                //print("error Body:\(error)")
+                print("Error Media:\(error)")
             }
             
             //}
