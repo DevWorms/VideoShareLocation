@@ -275,7 +275,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             //for photo in media {
             do{
                 body.append("--\(boundary + lineBreak)")
-                body.append("Content-Disposition: form-data; name=archivo; filename=\"\("prueba")\"\(lineBreak)")
+                body.append("Content-Disposition: form-data; name=archivo; filename=\"\(media)\"\(lineBreak)")
                 body.append("Content-Type: \("video/quicktime" + lineBreak + lineBreak)")
                 try body.append(NSData(contentsOfFile: media) as Data)
                 body.append(lineBreak)
