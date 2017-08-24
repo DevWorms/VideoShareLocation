@@ -48,7 +48,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         /*
         ================================================================================================
         */
-        llenarMapaMarkers()
+        //llenarMapaMarkers()
         //LLENAR MARKERS DE USUSARIOS DE LA API///
         self.locationManager.delegate = self
         self.locationManager.startUpdatingLocation()
@@ -72,6 +72,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         appDelegate.window?.rootViewController = vc
     }
     func refresh(sender:UIButton) {
+        mapContainer.clear()
         videos(apikey: apikey, id: userid)
     }
     
@@ -86,7 +87,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         var y: Int = 0
         var totalLista: Int = 0
         totalLista = listaVideos.count
-        print("Total = ", totalLista)
         for var m in 0..<listaVideos.count {
             if (!FileManager.default.fileExists(atPath: listaVideos[m])){
                 //print("No existe el indice: ", m)
@@ -170,7 +170,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             urlRequest.httpMethod = "POST"
             URLSession.shared.uploadTask(with: urlRequest, from: httpBody, completionHandler: parseJsonLogin).resume()
         } else {
-            //print("Error de codificación de caracteres.")
+            print("Error de codificación de caracteres.")
         }
     }
     
@@ -238,10 +238,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 print("Respuesta: \(response)")
             }
             if let data = data {
-                print("Data JSON: \(data)")
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print("JSON resultante: \(json)")
+                    print("Respuesta JSON: \(json)")
                 } catch {
                     print("Error formando JSON: \(error)")
                 }
@@ -263,8 +262,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 body.append("--\(boundary + lineBreak)")
                 body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
                 body.append("\(value + lineBreak)")
-                print("Key: \(key)")
-                print("Value: \(value)")
             }
         }
         
@@ -276,7 +273,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 body.append("Content-Type: \("video/quicktime" + lineBreak + lineBreak)")
                 try body.append(NSData(contentsOfFile: media) as Data)
                 body.append(lineBreak)
-                print("Media: \(media)")
             }catch{
                 print("Error Media:\(error)")
             }
@@ -298,7 +294,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         //self.locationManager.stopUpdatingLocation()
     }
     
-    func DistanciaGuardarMarker() {
+    /*func DistanciaGuardarMarker() {
         let LatLong = DataUserDefault.array(forKey: "LatLong") ?? [Double]()
         var ponerMarker: Bool = false
         let marker = GMSMarker()
@@ -306,7 +302,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         if (arrayAlreadyExist(dataKey: "LatVideo")){
             var LatVideo = DataUserDefault.array(forKey: "LatVideo") ?? [Double]()
             var LongVideo = DataUserDefault.array(forKey: "LongVideo") ?? [Double]()
-            //print("La lista tiene ", LatVideo.count, "indices")
             for var c in 0..<LatVideo.count {
                 /////////////Calcular distancia///////////////
                 let Punto1 = CLLocation(latitude: LatLong[0] as! Double, longitude: LatLong[1] as! Double)
@@ -314,8 +309,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 let distancia = Punto1.distance(from: Punto2)
                 /////////////Calcular distancia///////////////
                 /////////////Verifica cercania de otros markers///////////////
-                if (distancia<=10) {
-                    //print("Distancia dentro del rango")
+                if (distancia<=UserDefaults.standard.double(forKey: "Distance")) {
                     ponerMarker = false //Indicador para poner marker en mapa
                     c=9999  //Existe algun video dentro del rango, sale del ciclo
                 } else {
@@ -368,7 +362,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         } else {
             //print("¡No existen markers almacenados!")
         }
-    }
+    }*/
     
     @IBAction func Grabar(_ sender: Any) {
         let res : Bool = startCameraFromViewController(self, withDelegate: self)
@@ -560,7 +554,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 let alerta = UIAlertController(title: "¿Que desea hacer?", message: "Elija una opción para continuar", preferredStyle: UIAlertControllerStyle.alert)
                 alerta.addAction(UIAlertAction(title: "Subir video", style: UIAlertActionStyle.default, handler: { alertAction in
                     //print("Subir al servidor")
-                    self.DistanciaGuardarMarker()
+                    //self.DistanciaGuardarMarker()
                     let UploadLat = "\(self.mlatitud)"
                     let UploadLong = "\(self.mlongitud)"
                     self.SubirVideo(apikey: self.apikey, id: self.userid, lat: UploadLat , long: UploadLong, path: destinationPath)
@@ -568,7 +562,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 }))
                 alerta.addAction(UIAlertAction(title: "Guardar en el telefono", style: UIAlertActionStyle.default, handler: { alertAction in
                     self.moverVideo(destinationPath: sourcePath)
-                    self.DistanciaGuardarMarker()
+                    //self.DistanciaGuardarMarker()
                     self.eliminarVideo(destinationPath: destinationPath)
                     alerta.dismiss(animated: true, completion: nil)
                 }))
