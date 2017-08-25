@@ -8,7 +8,6 @@ var globalid = "globalid"
 var gkey = ""
 var gid = ""
 
-
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     var datos = [[String : Any]]()
@@ -59,24 +58,15 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         let apellido = result.value(forKey: "last_name") as! String
         let correo = result.value(forKey: "email") as! String
         let genero = result.value(forKey: "gender") as! String
-        
-        print("Id Facebook: ", idFace)
-        print("Nombre: ", nombre)
-        print("Apellido: ", apellido)
-        print("Correo: ", correo)
-        print("Genero: ", genero)
-        
         let guardarDatos = UserDefaults.standard
+        
         guardarDatos.setValue("Si", forKey: "loginEnd")
         guardarDatos.set(idFace, forKey: "idFace")
         guardarDatos.set(nombre, forKey: "nombre")
         guardarDatos.set(apellido, forKey: "apellido")
         guardarDatos.set(correo, forKey: "correo")
         guardarDatos.set(genero, forKey: "genero")
-        print("¡Datos guardados!")
         
-        
-        //ejecuta conexion con api
         login(token:idFace, nombre:nombre)
         
         let siguienteViewController = storyBoard.instantiateViewController(withIdentifier: "RegistroUsuarioViewController")
@@ -86,10 +76,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func dataAlreadyExist(userKey: String) -> Bool {
         return UserDefaults.standard.object(forKey: userKey) != nil
     }
-    
-    // Conexion con api
+
     func login(token:String, nombre:String) {
-        print("Entra metodo login")
         let parameterString = "tokenfb=\(token)&name=\(nombre)"
         let strUrl = "http://videoshare.devworms.com/api/login"
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
@@ -101,9 +89,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         }
     }
     
-    //Recoge ApiKey del JSON
    func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
-        print("Entra metodo parse")
         if error != nil {
             print(error!)
         } else if urlResponse != nil {
@@ -111,7 +97,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                     //print(json)
                     if let jsonResult = json as? [String: Any] {
                         DispatchQueue.main.async {
-                            
                             if let result = jsonResult["user"] as? [String: Any]{
                                 gkey = result["apikey"] as! String
                                 let idd = result["id"]
@@ -121,8 +106,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                                 }
                                 UserDefaults.standard.set(gkey, forKey: globalkey)
                                 UserDefaults.standard.set(gid, forKey: globalid)
-                                print("El ApiKey: \(gkey)")
-                                print("El ID: \(gid)")
                             }
                         }
                     }

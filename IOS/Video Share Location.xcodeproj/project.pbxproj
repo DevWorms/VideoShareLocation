@@ -151,6 +151,7 @@
 		94EAA6CB1EFCEFC400871095 /* Video Share Location */ = {
 			isa = PBXGroup;
 			children = (
+				B0EBEEDA1F3E865600BBBDEB /* Users.swift */,
 				94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */,
 				94EAA6D81EFCEFC400871095 /* Info.plist */,
 				94EAA6D01EFCEFC400871095 /* Main.storyboard */,
@@ -166,7 +167,6 @@
 				943EF85C1F3305F600453111 /* VideoDataCollectionViewCell.swift */,
 				145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */,
 				B0F255441F3AEEAA00E83DAA /* Media.swift */,
-				B0EBEEDA1F3E865600BBBDEB /* Users.swift */,
 			);
 			path = "Video Share Location";
 			sourceTree = "<group>";
@@ -474,7 +474,7 @@
 				INFOPLIST_FILE = "Video Share Location/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.devworms.VideoShareLocation;
+				PRODUCT_BUNDLE_IDENTIFIER = com.devworms.WeShick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
@@ -496,7 +496,7 @@
 				INFOPLIST_FILE = "Video Share Location/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.devworms.VideoShareLocation;
+				PRODUCT_BUNDLE_IDENTIFIER = com.devworms.WeShick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;

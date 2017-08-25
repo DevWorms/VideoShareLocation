@@ -68,7 +68,7 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let videoURL = URL(string: usuariosg[IdUserSelected].videoinfo[(indexPath.row+1)]["url"] as! String) //por URL externo
+        let videoURL = URL(string: usuariosg[IdUserSelected].videoinfo[(indexPath.row)]["url"] as! String)
         let player = AVPlayer(url: videoURL!)
         let playerViewController = AVPlayerViewController()
         playerViewController.player = player
