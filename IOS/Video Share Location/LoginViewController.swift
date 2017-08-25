@@ -7,6 +7,7 @@ var globalkey = "globalkey"
 var globalid = "globalid"
 var gkey = ""
 var gid = ""
+var gidd : Int = 0
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
@@ -103,9 +104,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                                 if idd != nil{
                                     let r = idd as! Int
                                     gid = "\(r)"
+                                    gidd = r
+                                    print("idd: \(idd as! Int)")
+                                    print("r: \(r)")
                                 }
                                 UserDefaults.standard.set(gkey, forKey: globalkey)
                                 UserDefaults.standard.set(gid, forKey: globalid)
+                                UserDefaults.standard.set(gidd, forKey: "globalidd")
                             }
                         }
                     }

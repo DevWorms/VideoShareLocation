@@ -22,6 +22,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     var camera: GMSCameraPosition!
     var apikey : String! = ""
     var userid : String! = ""
+    var useridd : Int = 0
+    
     @IBOutlet weak var mapContainer: GMSMapView!
     var usernames = [String]()
     
@@ -29,8 +31,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         super.viewDidLoad()
         apikey = DataUserDefault.string(forKey: "globalkey")
         userid = DataUserDefault.string(forKey: "globalid")
-            
-        DataUserDefault.set(10, forKey: "Distance") //Para test
+        useridd = DataUserDefault.integer(forKey: "globalidd")
+        
+        DataUserDefault.set(1000000, forKey: "Distance")
         videos(apikey: apikey, id: userid)
         
         camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 8.0)
@@ -67,21 +70,22 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         videos(apikey: apikey, id: userid)
     }
     
-    ////FUNCION CREAR MARKERS PARA LOS VIDEOS EXISTENTES
+    //FUNCION CREAR MARKERS PARA LOS VIDEOS EXISTENTES
     func crearMarker(){
         for i in 0 ..< usuarios.count {
             for c in 0 ..< usuarios[i].videoinfo.count {
                 let marker = GMSMarker()
                 let result = usuarios[i].videoinfo[c] as [String:Any]
-                if let lat = result["lat"] as? String, let long = result["long"] as? String, let usuario = result["user_id"] as? String{
+                if let lat = result["lat"] as? String, let long = result["long"] as? String, let usuario = result["user_id"] as? String {
                     marker.tracksInfoWindowChanges = true
                     marker.position = CLLocationCoordinate2D(latitude: Double(lat)!, longitude: Double(long)!)
                     //marker.title = usuarios[i].nombre
                     marker.snippet = "Videos de \(usuarios[i].nombre)"
                     marker.snippet = "Videos"
-                    if (usuario == self.userid){
+                    let usuarioString : String = String(useridd)
+                    if (usuario == usuarioString) {
                         marker.icon = GMSMarker.markerImage(with: .blue)
-                    }else{
+                    } else {
                         marker.icon = GMSMarker.markerImage(with: .brown)
                     }
                     marker.map = mapContainer
@@ -399,7 +403,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 alerta.addAction(UIAlertAction(title: "Subir video", style: UIAlertActionStyle.default, handler: { alertAction in
                     let UploadLat = "\(self.mlatitud)"
                     let UploadLong = "\(self.mlongitud)"
-                    self.SubirVideo(apikey: self.apikey, id: self.userid, lat: UploadLat , long: UploadLong, path: sourcePath)
+                    self.SubirVideo(apikey: self.apikey, id: String(self.userid), lat: UploadLat , long: UploadLong, path: sourcePath)
                     alerta.dismiss(animated: true, completion: nil)
                 }))
                 alerta.addAction(UIAlertAction(title: "Guardar en el telefono", style: UIAlertActionStyle.default, handler: { alertAction in
