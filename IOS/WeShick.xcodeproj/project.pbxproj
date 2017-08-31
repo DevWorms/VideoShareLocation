@@ -1,0 +1,468 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		145A18F91F1438FC002BBFC3 /* ListaVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */; };
+		145A18FB1F145165002BBFC3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145A18FA1F145165002BBFC3 /* LoginViewController.swift */; };
+		40E90C8FC239F110065E799B /* Pods_Video_Share_Location.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D65F163D577443A6078FAADC /* Pods_Video_Share_Location.framework */; };
+		9401E60A1F02425300AE0F4A /* MapaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401E6091F02425300AE0F4A /* MapaViewController.swift */; };
+		943EF8571F33059600453111 /* SelectUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EF8561F33059600453111 /* SelectUserViewController.swift */; };
+		943EF8591F3305C100453111 /* UserDataCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EF8581F3305C100453111 /* UserDataCollectionViewCell.swift */; };
+		943EF85B1F3305E000453111 /* SelectVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EF85A1F3305E000453111 /* SelectVideoViewController.swift */; };
+		943EF85D1F3305F600453111 /* VideoDataCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EF85C1F3305F600453111 /* VideoDataCollectionViewCell.swift */; };
+		949DE8FA1F57E0D400EA7461 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949DE8F91F57E0D400EA7461 /* Users.swift */; };
+		949DE8FD1F57ED5F00EA7461 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949DE8FC1F57ED5F00EA7461 /* MenuViewController.swift */; };
+		94EAA6CD1EFCEFC400871095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */; };
+		94EAA6CF1EFCEFC400871095 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EAA6CE1EFCEFC400871095 /* ViewController.swift */; };
+		94EAA6D21EFCEFC400871095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94EAA6D01EFCEFC400871095 /* Main.storyboard */; };
+		94EAA6D41EFCEFC400871095 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94EAA6D31EFCEFC400871095 /* Assets.xcassets */; };
+		94EAA6D71EFCEFC400871095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94EAA6D51EFCEFC400871095 /* LaunchScreen.storyboard */; };
+		94EAA7011EFCF80B00871095 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA6FD1EFCF80B00871095 /* Bolts.framework */; };
+		94EAA7021EFCF80B00871095 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA6FE1EFCF80B00871095 /* FBSDKCoreKit.framework */; };
+		94EAA7031EFCF80B00871095 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA6FF1EFCF80B00871095 /* FBSDKLoginKit.framework */; };
+		94EAA7041EFCF80B00871095 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA7001EFCF80B00871095 /* FBSDKShareKit.framework */; };
+		94F62B5E1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */; };
+		B0F255451F3AEEAA00E83DAA /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F255441F3AEEAA00E83DAA /* Media.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListaVideoViewController.swift; sourceTree = "<group>"; };
+		145A18FA1F145165002BBFC3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		275498916D6A30EBF99F3C73 /* Pods-Video Share Location.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Video Share Location.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Video Share Location/Pods-Video Share Location.debug.xcconfig"; sourceTree = "<group>"; };
+		9401E6091F02425300AE0F4A /* MapaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapaViewController.swift; sourceTree = "<group>"; };
+		943EF8561F33059600453111 /* SelectUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectUserViewController.swift; sourceTree = "<group>"; };
+		943EF8581F3305C100453111 /* UserDataCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataCollectionViewCell.swift; sourceTree = "<group>"; };
+		943EF85A1F3305E000453111 /* SelectVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectVideoViewController.swift; sourceTree = "<group>"; };
+		943EF85C1F3305F600453111 /* VideoDataCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoDataCollectionViewCell.swift; sourceTree = "<group>"; };
+		949DE8F91F57E0D400EA7461 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		949DE8FC1F57ED5F00EA7461 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		94EAA6C91EFCEFC400871095 /* WeShick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeShick.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		94EAA6CE1EFCEFC400871095 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		94EAA6D11EFCEFC400871095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		94EAA6D31EFCEFC400871095 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		94EAA6D61EFCEFC400871095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		94EAA6D81EFCEFC400871095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94EAA6FD1EFCF80B00871095 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		94EAA6FE1EFCF80B00871095 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		94EAA6FF1EFCF80B00871095 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		94EAA7001EFCF80B00871095 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistroUsuarioViewController.swift; sourceTree = "<group>"; };
+		B0F255441F3AEEAA00E83DAA /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		CF8E3E42B54DC1C9B357E130 /* Pods-Video Share Location.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Video Share Location.release.xcconfig"; path = "Pods/Target Support Files/Pods-Video Share Location/Pods-Video Share Location.release.xcconfig"; sourceTree = "<group>"; };
+		D65F163D577443A6078FAADC /* Pods_Video_Share_Location.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Video_Share_Location.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		94EAA6C61EFCEFC400871095 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94EAA7011EFCF80B00871095 /* Bolts.framework in Frameworks */,
+				94EAA7041EFCF80B00871095 /* FBSDKShareKit.framework in Frameworks */,
+				94EAA7021EFCF80B00871095 /* FBSDKCoreKit.framework in Frameworks */,
+				94EAA7031EFCF80B00871095 /* FBSDKLoginKit.framework in Frameworks */,
+				40E90C8FC239F110065E799B /* Pods_Video_Share_Location.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		94EAA6C01EFCEFC400871095 = {
+			isa = PBXGroup;
+			children = (
+				94EAA6CB1EFCEFC400871095 /* WeShick */,
+				94EAA6CA1EFCEFC400871095 /* Products */,
+				94EAA6DE1EFCEFDC00871095 /* Frameworks */,
+				F803AB63011D90F227C189AC /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		94EAA6CA1EFCEFC400871095 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				94EAA6C91EFCEFC400871095 /* WeShick.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		94EAA6CB1EFCEFC400871095 /* WeShick */ = {
+			isa = PBXGroup;
+			children = (
+				94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */,
+				94EAA6D81EFCEFC400871095 /* Info.plist */,
+				94EAA6D01EFCEFC400871095 /* Main.storyboard */,
+				94EAA6D51EFCEFC400871095 /* LaunchScreen.storyboard */,
+				94EAA6D31EFCEFC400871095 /* Assets.xcassets */,
+				94EAA6CE1EFCEFC400871095 /* ViewController.swift */,
+				145A18FA1F145165002BBFC3 /* LoginViewController.swift */,
+				94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */,
+				9401E6091F02425300AE0F4A /* MapaViewController.swift */,
+				943EF8561F33059600453111 /* SelectUserViewController.swift */,
+				943EF8581F3305C100453111 /* UserDataCollectionViewCell.swift */,
+				943EF85A1F3305E000453111 /* SelectVideoViewController.swift */,
+				943EF85C1F3305F600453111 /* VideoDataCollectionViewCell.swift */,
+				145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */,
+				B0F255441F3AEEAA00E83DAA /* Media.swift */,
+				949DE8F91F57E0D400EA7461 /* Users.swift */,
+				949DE8FC1F57ED5F00EA7461 /* MenuViewController.swift */,
+			);
+			name = WeShick;
+			path = "Video Share Location";
+			sourceTree = "<group>";
+		};
+		94EAA6DE1EFCEFDC00871095 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				94EAA6FD1EFCF80B00871095 /* Bolts.framework */,
+				94EAA6FE1EFCF80B00871095 /* FBSDKCoreKit.framework */,
+				94EAA6FF1EFCF80B00871095 /* FBSDKLoginKit.framework */,
+				94EAA7001EFCF80B00871095 /* FBSDKShareKit.framework */,
+				D65F163D577443A6078FAADC /* Pods_Video_Share_Location.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F803AB63011D90F227C189AC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				275498916D6A30EBF99F3C73 /* Pods-Video Share Location.debug.xcconfig */,
+				CF8E3E42B54DC1C9B357E130 /* Pods-Video Share Location.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		94EAA6C81EFCEFC400871095 /* WeShick */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94EAA6DB1EFCEFC400871095 /* Build configuration list for PBXNativeTarget "WeShick" */;
+			buildPhases = (
+				FA7D8CB00DC905958EA29A9D /* [CP] Check Pods Manifest.lock */,
+				94EAA6C51EFCEFC400871095 /* Sources */,
+				94EAA6C61EFCEFC400871095 /* Frameworks */,
+				94EAA6C71EFCEFC400871095 /* Resources */,
+				A77D39E285993BBBD6A723CE /* [CP] Embed Pods Frameworks */,
+				E93C3DC01F302E82F618D1D1 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WeShick;
+			productName = "Video Share Location";
+			productReference = 94EAA6C91EFCEFC400871095 /* WeShick.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		94EAA6C11EFCEFC400871095 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Bani Azarael Mejia Flores";
+				TargetAttributes = {
+					94EAA6C81EFCEFC400871095 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = F24CFYA69H;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 94EAA6C41EFCEFC400871095 /* Build configuration list for PBXProject "WeShick" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 94EAA6C01EFCEFC400871095;
+			productRefGroup = 94EAA6CA1EFCEFC400871095 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				94EAA6C81EFCEFC400871095 /* WeShick */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		94EAA6C71EFCEFC400871095 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94EAA6D71EFCEFC400871095 /* LaunchScreen.storyboard in Resources */,
+				94EAA6D41EFCEFC400871095 /* Assets.xcassets in Resources */,
+				94EAA6D21EFCEFC400871095 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A77D39E285993BBBD6A723CE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Video Share Location/Pods-Video Share Location-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E93C3DC01F302E82F618D1D1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Video Share Location/Pods-Video Share Location-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FA7D8CB00DC905958EA29A9D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		94EAA6C51EFCEFC400871095 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0F255451F3AEEAA00E83DAA /* Media.swift in Sources */,
+				145A18FB1F145165002BBFC3 /* LoginViewController.swift in Sources */,
+				94EAA6CF1EFCEFC400871095 /* ViewController.swift in Sources */,
+				9401E60A1F02425300AE0F4A /* MapaViewController.swift in Sources */,
+				949DE8FA1F57E0D400EA7461 /* Users.swift in Sources */,
+				943EF8571F33059600453111 /* SelectUserViewController.swift in Sources */,
+				943EF85D1F3305F600453111 /* VideoDataCollectionViewCell.swift in Sources */,
+				949DE8FD1F57ED5F00EA7461 /* MenuViewController.swift in Sources */,
+				145A18F91F1438FC002BBFC3 /* ListaVideoViewController.swift in Sources */,
+				94F62B5E1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift in Sources */,
+				943EF8591F3305C100453111 /* UserDataCollectionViewCell.swift in Sources */,
+				94EAA6CD1EFCEFC400871095 /* AppDelegate.swift in Sources */,
+				943EF85B1F3305E000453111 /* SelectVideoViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		94EAA6D01EFCEFC400871095 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94EAA6D11EFCEFC400871095 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		94EAA6D51EFCEFC400871095 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94EAA6D61EFCEFC400871095 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		94EAA6D91EFCEFC400871095 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		94EAA6DA1EFCEFC400871095 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		94EAA6DC1EFCEFC400871095 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 275498916D6A30EBF99F3C73 /* Pods-Video Share Location.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = F24CFYA69H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = "Video Share Location/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.devworms.WeShick;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		94EAA6DD1EFCEFC400871095 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CF8E3E42B54DC1C9B357E130 /* Pods-Video Share Location.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = F24CFYA69H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = "Video Share Location/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.devworms.WeShick;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		94EAA6C41EFCEFC400871095 /* Build configuration list for PBXProject "WeShick" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94EAA6D91EFCEFC400871095 /* Debug */,
+				94EAA6DA1EFCEFC400871095 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94EAA6DB1EFCEFC400871095 /* Build configuration list for PBXNativeTarget "WeShick" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94EAA6DC1EFCEFC400871095 /* Debug */,
+				94EAA6DD1EFCEFC400871095 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 94EAA6C11EFCEFC400871095 /* Project object */;
+}

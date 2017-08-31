@@ -9,7 +9,6 @@ import Alamofire
 import Foundation
 
 var usuariosg: [Users] = []
-//var destinationPath : String = ""
 
 class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
@@ -33,7 +32,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         userid = DataUserDefault.string(forKey: "globalid")
         useridd = DataUserDefault.integer(forKey: "globalidd")
         
-        DataUserDefault.set(1000000, forKey: "Distance")
+        DataUserDefault.set(7, forKey: "Distance")
         videos(apikey: apikey, id: userid)
         
         camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 8.0)
@@ -49,19 +48,19 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.locationManager.startUpdatingLocation()
         self.mapContainer.delegate = self
         
-        let logout:UIBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MapaViewController.logout(sender:)))
         let refresh:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: #selector(MapaViewController.refresh))
-        self.navigationItem.setLeftBarButton(logout, animated: true)
-        self.navigationItem.setRightBarButton(refresh, animated: true)
+        let menu:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.compose, target: self, action: #selector(MapaViewController.menu))
+        self.navigationItem.setLeftBarButton(refresh, animated: true)
+        self.navigationItem.setRightBarButton(menu, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    func logout(sender:UIButton) {
+    func menu(sender:UIButton) {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+        let vc = storyboard.instantiateViewController(withIdentifier: "MenuViewController")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = vc
     }
@@ -89,18 +88,74 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                         marker.icon = GMSMarker.markerImage(with: .brown)
                     }
                     marker.map = mapContainer
+                    
+                    let circulo = CLLocationCoordinate2D(latitude: Double(lat)!, longitude: Double(long)!)
+                    let radio = GMSCircle(position: circulo, radius: 10)
+                    radio.map = mapContainer
                 }
             }
         }
     }
     
+    func DistanciaGuardarMarker() {
+        let LatLong = DataUserDefault.array(forKey: "LatLong") ?? [Double]()
+        var ponerMarker: Bool = false
+        let marker = GMSMarker()
+        if (arrayAlreadyExist(dataKey: "LatVideo")){
+            var LatVideo = DataUserDefault.array(forKey: "LatVideo") ?? [Double]()
+            var LongVideo = DataUserDefault.array(forKey: "LongVideo") ?? [Double]()
+            for var c in 0..<LatVideo.count {
+                /////////////Calcular distancia///////////////
+                let Punto1 = CLLocation(latitude: LatLong[0] as! Double, longitude: LatLong[1] as! Double)
+                let Punto2 = CLLocation(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
+                let distancia = Punto1.distance(from: Punto2)
+                /////////////Calcular distancia///////////////
+                /////////////Verifica cercania de otros markers///////////////
+                if (distancia<=UserDefaults.standard.double(forKey: "Distance")) {
+                    ponerMarker = false //Indicador para poner marker en mapa
+                    c=9999  //Existe algun video dentro del rango, sale del ciclo
+                } else {
+                    //Termino el recorrido sin ninguna coincidencia
+                    //print("Distancia fuera del rango")
+                    ponerMarker = true
+                }
+                //print("Distancia = ", distancia, " metros")
+                /////////////Verifica cercania de otros markers///////////////
+            }
+            if (ponerMarker){
+                marker.position = CLLocationCoordinate2D(latitude: LatLong[0] as! Double, longitude: LatLong[1] as! Double)
+                marker.title = "Bani Azarael"
+                //marker.snippet = "Videos de \(usuarios[i].nombre"
+                marker.icon = GMSMarker.markerImage(with: .blue)
+                marker.map = mapContainer
+                LatVideo.append(LatLong[0] as! Double)
+                LongVideo.append(LatLong[1] as! Double)
+                DataUserDefault.set(LatVideo, forKey: "LatVideo")
+                DataUserDefault.set(LongVideo, forKey: "LongVideo")
+            }
+        } else {
+            //Si no existe LatVideo, es el primer marker y lo agrega al mapa sin recorrer diccionario
+            marker.position = CLLocationCoordinate2D(latitude: LatLong[0] as! Double, longitude: LatLong[1] as! Double)
+            marker.title = "Bani Azarael"
+            //marker.snippet = "Videos de \(usuarios[i].nombre"
+            marker.icon = GMSMarker.markerImage(with: .blue)
+            marker.map = mapContainer
+            var LatDouble = [Double]()
+            var LongDouble = [Double]()
+            LatDouble.append(LatLong[0] as! Double)
+            LongDouble.append(LatLong[1] as! Double)
+            DataUserDefault.set(LatDouble, forKey: "LatVideo")
+            DataUserDefault.set(LongDouble, forKey: "LongVideo")
+        }
+    }
+ 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error obteniendo ubicacion: \(error)")
     }
-    
-    func drawPath(startLocation: CLLocation, endLocation: CLLocation) {
-        let origin = "\(startLocation.coordinate.latitude),\(startLocation.coordinate.longitude)"
-        let destination = "\(endLocation.coordinate.latitude),\(endLocation.coordinate.longitude)"
+ 
+    func mostrarRuta(inicio: CLLocation, destino: CLLocation) {
+        let origin = "\(inicio.coordinate.latitude),\(inicio.coordinate.longitude)"
+        let destination = "\(destino.coordinate.latitude),\(destino.coordinate.longitude)"
         let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving"
         Alamofire.request(url).responseJSON { response in
             let json = JSON(data: response.data!)
@@ -240,7 +295,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         if (res){
             print("Inciando camara...")
         } else{
-            print("Error al inciar camara...")
+            print("Error al iniciar camara...")
         }
         let LatLong = [mlatitud,mlongitud]
         DataUserDefault.set(LatLong, forKey: "LatLong")
@@ -262,7 +317,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
         var title = "Guardado"
-        var message = "Exito al guardar"
+        var message = "Guardado correctamente"
         if let _ = error {
             title = "Error"
             message = "Error al guardar"
@@ -312,11 +367,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func mapView(_ mapView: GMSMapView, didLongPressInfoWindowOf marker: GMSMarker) {
         print("InfoWindow fue mantenido presionado")
-        let location1 = CLLocation(latitude: mlatitud, longitude: mlongitud)
-        let location2 = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
+        let ubicacionInicio = CLLocation(latitude: mlatitud, longitude: mlongitud)
+        let ubicacionDestino = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
         mapContainer.clear()
         videos(apikey: apikey, id: userid)
-        self.drawPath(startLocation: location1, endLocation: location2)
+        self.mostrarRuta(inicio: ubicacionInicio, destino: ubicacionDestino)
     }
     
     func showModalUsuarios() {

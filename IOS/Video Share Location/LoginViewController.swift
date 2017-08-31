@@ -69,9 +69,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         guardarDatos.set(genero, forKey: "genero")
         
         login(token:idFace, nombre:nombre)
-        
-        let siguienteViewController = storyBoard.instantiateViewController(withIdentifier: "RegistroUsuarioViewController")
-        self.present(siguienteViewController, animated: true, completion: nil)
     }
     
     func dataAlreadyExist(userKey: String) -> Bool {
@@ -90,34 +87,37 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         }
     }
     
-   func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
+    func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
         if error != nil {
             print(error!)
         } else if urlResponse != nil {
-                if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
-                    //print(json)
-                    if let jsonResult = json as? [String: Any] {
-                        DispatchQueue.main.async {
-                            if let result = jsonResult["user"] as? [String: Any]{
-                                gkey = result["apikey"] as! String
-                                let idd = result["id"]
-                                if idd != nil{
-                                    let r = idd as! Int
-                                    gid = "\(r)"
-                                    gidd = r
-                                    print("idd: \(idd as! Int)")
-                                    print("r: \(r)")
-                                }
-                                UserDefaults.standard.set(gkey, forKey: globalkey)
-                                UserDefaults.standard.set(gid, forKey: globalid)
-                                UserDefaults.standard.set(gidd, forKey: "globalidd")
+            if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
+                //print(json)
+                if let jsonResult = json as? [String: Any] {
+                    DispatchQueue.main.async {
+                        if let result = jsonResult["user"] as? [String: Any]{
+                            gkey = result["apikey"] as! String
+                            let idd = result["id"]
+                            if idd != nil{
+                                let r = idd as! Int
+                                gid = "\(r)"
+                                gidd = r
+                                print("idd: \(idd as! Int)")
+                                print("r: \(r)")
                             }
+                            UserDefaults.standard.set(gkey, forKey: globalkey)
+                            UserDefaults.standard.set(gid, forKey: globalid)
+                            UserDefaults.standard.set(gidd, forKey: "globalidd")
+                            
+                            let mMapaViewController = self.storyBoard.instantiateViewController(withIdentifier: "MapaViewController")
+                            self.present(mMapaViewController, animated: true, completion: nil)
                         }
                     }
-                } else {
-                    print("HTTP Status Code: 200")
-                    print("El JSON de respuesta es inválido.")
                 }
+            } else {
+                print("HTTP Status Code: 200")
+                print("El JSON de respuesta es inválido.")
             }
         }
     }
+}

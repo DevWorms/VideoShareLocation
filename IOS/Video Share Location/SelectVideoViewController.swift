@@ -55,6 +55,27 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
         }
     }
     
+    func videoPreviewUiimage(fileName:String) -> UIImage? {
+        let filePath = NSString(string: "~/").expandingTildeInPath.appending("/Documents/").appending(fileName)
+        
+        let vidURL = NSURL(fileURLWithPath:filePath)
+        let asset = AVURLAsset(url: vidURL as URL)
+        let generator = AVAssetImageGenerator(asset: asset)
+        generator.appliesPreferredTrackTransform = true
+        
+        let timestamp = CMTime(seconds: 1, preferredTimescale: 60)
+        
+        do {
+            let imageRef = try generator.copyCGImage(at: timestamp, actualTime: nil)
+            return UIImage(cgImage: imageRef)
+        }
+        catch let error as NSError
+        {
+            print("Image generation failed with error \(error)")
+            return nil
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return nombreVideo.count
     }
@@ -63,7 +84,7 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
         let cellVideo = collectionViewVideo.dequeueReusableCell(withReuseIdentifier: "collectionVideoData", for: indexPath) as! VideoDataCollectionViewCell
         //cellVideo.imageViewVideo.image = UIImage(named: images[indexPath.row])
         cellVideo.imageViewVideo.image = UIImage(named: "video_icon")
-        cellVideo.labelVideo.text = nombreVideo[indexPath.row]
+        //cellVideo.labelVideo.text = nombreVideo[indexPath.row]
         return cellVideo
     }
     

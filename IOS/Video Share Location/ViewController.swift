@@ -20,8 +20,6 @@ class ViewController: UIViewController {
                 mandarMapa()
             } else if (loginReceived == "No") {
                 mandarLogin()
-            } else if (UserDefaults.standard.object(forKey: "loginEnd") == nil){
-                mandarRegistroUsuario()
             }
         } else {
             mandarLogin()
@@ -34,14 +32,6 @@ class ViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = vc
         print("El Login no ha sido terminado")
-    }
-    
-    func mandarRegistroUsuario() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "RegistroUsuarioViewController")
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = vc
-        print("El Registro de usuario no ha sido terminado")
     }
     
     func mandarMapa(){
