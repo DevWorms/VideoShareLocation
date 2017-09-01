@@ -9,24 +9,20 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    @IBAction func iniciar(_ sender: Any) {
-
-    }
-    
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (dataAlreadyExist(dataKey: "dataUserUpdate")){
-            //mandarLogin()
-            mandarMapa()
-        } else {
-            if (dataAlreadyExist(dataKey: "loginEnd")){
-                mandarRegistroUsuario()
-            } else {
+        
+        if (dataAlreadyExist(dataKey: "loginEnd")){
+            let loginReceived:String = UserDefaults.standard.string(forKey: "loginEnd")!
+            if (loginReceived == "Si") {
+                mandarMapa()
+            } else if (loginReceived == "No") {
                 mandarLogin()
             }
+        } else {
+            mandarLogin()
         }
     }
     
@@ -36,14 +32,6 @@ class ViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = vc
         print("El Login no ha sido terminado")
-    }
-    
-    func mandarRegistroUsuario() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "RegistroUsuarioViewController")
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = vc
-        print("El Registro de usuario no ha sido terminado")
     }
     
     func mandarMapa(){

@@ -1,7 +1,5 @@
 
 import UIKit
-import MediaPlayer
-import MobileCoreServices
 import AVKit
 import AVFoundation
 

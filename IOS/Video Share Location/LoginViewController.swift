@@ -1,13 +1,12 @@
 import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
-import FBSDKShareKit
 
 var globalkey = "globalkey"
 var globalid = "globalid"
 var gkey = ""
 var gid = ""
-
+var gidd : Int = 0
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
@@ -50,7 +49,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!){
         print("Usuario Logout")
         let guardarDatos = UserDefaults.standard
-        guardarDatos.set(nil, forKey: "loginEnd")
+        guardarDatos.setValue("No", forKey: "loginEnd")
     }
     
     func setInterfaz(result: NSDictionary){
@@ -59,90 +58,65 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         let apellido = result.value(forKey: "last_name") as! String
         let correo = result.value(forKey: "email") as! String
         let genero = result.value(forKey: "gender") as! String
-        
-        print("Id Facebook: ", idFace)
-        print("Nombre: ", nombre)
-        print("Apellido: ", apellido)
-        print("Correo: ", correo)
-        print("Genero: ", genero)
-        
         let guardarDatos = UserDefaults.standard
-        guardarDatos.set("Si", forKey: "loginEnd")
+        
+        guardarDatos.setValue("Si", forKey: "loginEnd")
         guardarDatos.set(idFace, forKey: "idFace")
         guardarDatos.set(nombre, forKey: "nombre")
         guardarDatos.set(apellido, forKey: "apellido")
         guardarDatos.set(correo, forKey: "correo")
         guardarDatos.set(genero, forKey: "genero")
-        print("¡Datos guardados!")
-    
         
-        //ejecuta conexion con api
-    
         login(token:idFace, nombre:nombre)
-        
-        
-        let siguienteViewController = storyBoard.instantiateViewController(withIdentifier: "RegistroUsuarioViewController")
-        self.present(siguienteViewController, animated: true, completion: nil)
     }
     
     func dataAlreadyExist(userKey: String) -> Bool {
         return UserDefaults.standard.object(forKey: userKey) != nil
     }
-    
-    // Conexion con api
-    
+
     func login(token:String, nombre:String) {
-        
         let parameterString = "tokenfb=\(token)&name=\(nombre)"
-        
-        print(parameterString)
-        
         let strUrl = "http://videoshare.devworms.com/api/login"
-        
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
             var urlRequest = URLRequest(url: URL(string: strUrl)!)
             urlRequest.httpMethod = "POST"
-            
             URLSession.shared.uploadTask(with: urlRequest, from: httpBody, completionHandler: parseJsonLogin).resume()
         } else {
             print("Error de codificación de caracteres.")
         }
     }
     
-    //recoge apikey del JSon
-   func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
+    func parseJsonLogin(data: Data?, urlResponse: URLResponse?, error: Error?) {
         if error != nil {
             print(error!)
         } else if urlResponse != nil {
-                if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
-                    //print(json)
-                    if let jsonResult = json as? [String: Any] {
-                        DispatchQueue.main.async {
-                            
-                            if let result = jsonResult["user"] as? [String: Any]{
-                                gkey = result["apikey"] as! String
-                                let idd = result["id"]
-                                if idd != nil{
-                                    let r = idd as! Int
-                                    gid = "\(r)"
-                                }
-                                UserDefaults.standard.set(gkey, forKey: globalkey)
-                                UserDefaults.standard.set(gid, forKey: globalid)
-                                print(gkey)
-                                print(gid)
+            if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
+                //print(json)
+                if let jsonResult = json as? [String: Any] {
+                    DispatchQueue.main.async {
+                        if let result = jsonResult["user"] as? [String: Any]{
+                            gkey = result["apikey"] as! String
+                            let idd = result["id"]
+                            if idd != nil{
+                                let r = idd as! Int
+                                gid = "\(r)"
+                                gidd = r
+                                print("idd: \(idd as! Int)")
+                                print("r: \(r)")
                             }
+                            UserDefaults.standard.set(gkey, forKey: globalkey)
+                            UserDefaults.standard.set(gid, forKey: globalid)
+                            UserDefaults.standard.set(gidd, forKey: "globalidd")
                             
+                            let mMapaViewController = self.storyBoard.instantiateViewController(withIdentifier: "MapaViewController")
+                            self.present(mMapaViewController, animated: true, completion: nil)
                         }
                     }
-                    
-                } else {
-                    print("HTTP Status Code: 200")
-                    print("El JSON de respuesta es inválido.")
                 }
-                
+            } else {
+                print("HTTP Status Code: 200")
+                print("El JSON de respuesta es inválido.")
             }
         }
     }
-    
-
-
+}
