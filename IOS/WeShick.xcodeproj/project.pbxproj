@@ -15,6 +15,7 @@
 		943EF8591F3305C100453111 /* UserDataCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EF8581F3305C100453111 /* UserDataCollectionViewCell.swift */; };
 		943EF85B1F3305E000453111 /* SelectVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EF85A1F3305E000453111 /* SelectVideoViewController.swift */; };
 		943EF85D1F3305F600453111 /* VideoDataCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943EF85C1F3305F600453111 /* VideoDataCollectionViewCell.swift */; };
+		949B7BF51F5874DB00A91A9B /* TerminosyCondicionesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B7BF41F5874DA00A91A9B /* TerminosyCondicionesViewController.swift */; };
 		949DE8FA1F57E0D400EA7461 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949DE8F91F57E0D400EA7461 /* Users.swift */; };
 		949DE8FD1F57ED5F00EA7461 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949DE8FC1F57ED5F00EA7461 /* MenuViewController.swift */; };
 		94EAA6CD1EFCEFC400871095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */; };
@@ -39,6 +40,7 @@
 		943EF8581F3305C100453111 /* UserDataCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataCollectionViewCell.swift; sourceTree = "<group>"; };
 		943EF85A1F3305E000453111 /* SelectVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectVideoViewController.swift; sourceTree = "<group>"; };
 		943EF85C1F3305F600453111 /* VideoDataCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoDataCollectionViewCell.swift; sourceTree = "<group>"; };
+		949B7BF41F5874DA00A91A9B /* TerminosyCondicionesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerminosyCondicionesViewController.swift; sourceTree = "<group>"; };
 		949DE8F91F57E0D400EA7461 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		949DE8FC1F57ED5F00EA7461 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		94EAA6C91EFCEFC400871095 /* WeShick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeShick.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +114,7 @@
 				B0F255441F3AEEAA00E83DAA /* Media.swift */,
 				949DE8F91F57E0D400EA7461 /* Users.swift */,
 				949DE8FC1F57ED5F00EA7461 /* MenuViewController.swift */,
+				949B7BF41F5874DA00A91A9B /* TerminosyCondicionesViewController.swift */,
 			);
 			name = WeShick;
 			path = "Video Share Location";
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				949B7BF51F5874DB00A91A9B /* TerminosyCondicionesViewController.swift in Sources */,
 				B0F255451F3AEEAA00E83DAA /* Media.swift in Sources */,
 				145A18FB1F145165002BBFC3 /* LoginViewController.swift in Sources */,
 				94EAA6CF1EFCEFC400871095 /* ViewController.swift in Sources */,

@@ -1,7 +1,6 @@
 import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
-import FBSDKShareKit
 
 var globalkey = "globalkey"
 var globalid = "globalid"

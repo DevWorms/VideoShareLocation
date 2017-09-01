@@ -49,9 +49,15 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.mapContainer.delegate = self
         
         let refresh:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: #selector(MapaViewController.refresh))
-        let menu:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.compose, target: self, action: #selector(MapaViewController.menu))
+        
+        let menu = UIButton(type: .custom)
+        menu.setImage(UIImage(named: "icon_menu"), for: .normal)
+        menu.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        menu.addTarget(self, action: #selector(MapaViewController.menu), for: .touchUpInside)
+        let menuItem = UIBarButtonItem(customView: menu)
+
         self.navigationItem.setLeftBarButton(refresh, animated: true)
-        self.navigationItem.setRightBarButton(menu, animated: true)
+        self.navigationItem.setRightBarButtonItems([menuItem], animated: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -61,8 +67,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func menu(sender:UIButton) {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "MenuViewController")
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = vc
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     func refresh(sender:UIButton) {
         mapContainer.clear()
