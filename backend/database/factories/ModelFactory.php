@@ -22,6 +22,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'phone' => $faker->phoneNumber,
         'tokenfb' => str_random(20),
         'apikey' => str_random(10),
+        'url_img' => $faker->imageUrl(),
         'remember_token' => str_random(10),
     ];
 });

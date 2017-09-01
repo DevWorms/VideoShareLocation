@@ -31,23 +31,26 @@ class UserController extends Controller
                 $apikey = Hash::make($request->get('tokenfb'));
                 $name = $request->get("name");
                 $tokenfb = $request->get("tokenfb");
+                $imagen = $request ->get ("url_img");
 
                 if ($name == null || $name == "") {
 
                     $usuario = User::firstOrCreate([//busca el usuario y lo crea
                         'tokenfb' => $tokenfb,
-                    ], ['apikey' => $apikey, "name" => $name]);
+                    ], ['apikey' => $apikey, "name" => $name, 'url_img' => $imagen]);
 
                 } else {
                     $usuario = User::where("tokenfb", $tokenfb)->first();
                     if ($usuario) {
                         $usuario->name = $name;
+                        $usuario ->url_img = $imagen;
                         $usuario->save();
                     }else {
                         $usuario = User::create([
                             'tokenfb' => $tokenfb,
-                             "name" => $name,
+                            'name' => $name,
                             'apikey' => $apikey,
+                            'url_img' => $imagen,
                         ]);
                     }
                    /** por pruebas $usuario  $usuario = User::updateOrCreate([//busca el usuario y lo actaliza

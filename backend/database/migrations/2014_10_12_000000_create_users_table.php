@@ -20,7 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('phone')->nullable();
             $table ->string('tokenfb')->unique();
-                $table->string('apikey',64)->unique();
+            $table ->string('url_img',255)->nullable();
+            $table->string('apikey',64)->unique();
             $table->rememberToken();
             $table->timestamps();
         });

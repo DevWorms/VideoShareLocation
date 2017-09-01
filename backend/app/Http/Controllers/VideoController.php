@@ -122,7 +122,8 @@ class VideoController extends Controller
 
             if ($lat == null || $long == null) {
 
-                $usarios = User::whereHas('videos')->with('videos')->select("id", "name")->get();
+                $usarios = User::where('id','!=',$request->get("id"))->whereHas('videos')->with('videos')->select("id", "name","url_img")->get();
+
                 foreach ($usarios as $user){
                     foreach ($user->videos as $video) {
                         $video= $this->returnVideo($video);
@@ -137,7 +138,7 @@ class VideoController extends Controller
             } else {
                 $boundaries = $this->getBoundaries($lat, $long);
                 $horamin = Carbon::now()->subHour(3);
-                $allusers = User::whereHas("videos", function ($uv) use ($horamin, $boundaries, $lat, $long) {
+                $allusers = User::where('id','!=',$request->get("id"))->whereHas("videos", function ($uv) use ($horamin, $boundaries, $lat, $long) {
                     $uv->where('created_at', '>=', $horamin)
                         ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
                         ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
