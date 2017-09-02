@@ -2,9 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/Akula/Desktop/Proyetos IOS/VideoShareLocation/IOS/WeShick.xcodeproj">
+      location = "group:/Users/Akula/Desktop/Proyetos IOS/VideoShareLocation/IOS/Video Share Location.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Video Share Location.xcodeproj">
    </FileRef>
 </Workspace>

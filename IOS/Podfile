@@ -10,5 +10,8 @@ target 'Video Share Location' do
   pod 'GooglePlaces'
   pod 'GooglePlacesAPI'
   pod 'SwiftyJSON'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKShareKit'
+  pod 'FBSDKLoginKit'
   # Pods for Video Share Location
 end

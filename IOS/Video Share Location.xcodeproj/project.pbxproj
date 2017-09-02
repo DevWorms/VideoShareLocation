@@ -23,10 +23,6 @@
 		94EAA6D21EFCEFC400871095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94EAA6D01EFCEFC400871095 /* Main.storyboard */; };
 		94EAA6D41EFCEFC400871095 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94EAA6D31EFCEFC400871095 /* Assets.xcassets */; };
 		94EAA6D71EFCEFC400871095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94EAA6D51EFCEFC400871095 /* LaunchScreen.storyboard */; };
-		94EAA7011EFCF80B00871095 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA6FD1EFCF80B00871095 /* Bolts.framework */; };
-		94EAA7021EFCF80B00871095 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA6FE1EFCF80B00871095 /* FBSDKCoreKit.framework */; };
-		94EAA7031EFCF80B00871095 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA6FF1EFCF80B00871095 /* FBSDKLoginKit.framework */; };
-		94EAA7041EFCF80B00871095 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EAA7001EFCF80B00871095 /* FBSDKShareKit.framework */; };
 		94F62B5E1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */; };
 		B0F255451F3AEEAA00E83DAA /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F255441F3AEEAA00E83DAA /* Media.swift */; };
 /* End PBXBuildFile section */
@@ -43,7 +39,7 @@
 		949B7BF41F5874DA00A91A9B /* TerminosyCondicionesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerminosyCondicionesViewController.swift; sourceTree = "<group>"; };
 		949DE8F91F57E0D400EA7461 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		949DE8FC1F57ED5F00EA7461 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
-		94EAA6C91EFCEFC400871095 /* WeShick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeShick.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		94EAA6C91EFCEFC400871095 /* Video Share Location.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Video Share Location.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94EAA6CE1EFCEFC400871095 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		94EAA6D11EFCEFC400871095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -65,10 +61,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94EAA7011EFCF80B00871095 /* Bolts.framework in Frameworks */,
-				94EAA7041EFCF80B00871095 /* FBSDKShareKit.framework in Frameworks */,
-				94EAA7021EFCF80B00871095 /* FBSDKCoreKit.framework in Frameworks */,
-				94EAA7031EFCF80B00871095 /* FBSDKLoginKit.framework in Frameworks */,
 				40E90C8FC239F110065E799B /* Pods_Video_Share_Location.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,7 +71,7 @@
 		94EAA6C01EFCEFC400871095 = {
 			isa = PBXGroup;
 			children = (
-				94EAA6CB1EFCEFC400871095 /* WeShick */,
+				94EAA6CB1EFCEFC400871095 /* Video Share Location */,
 				94EAA6CA1EFCEFC400871095 /* Products */,
 				94EAA6DE1EFCEFDC00871095 /* Frameworks */,
 				F803AB63011D90F227C189AC /* Pods */,
@@ -89,12 +81,12 @@
 		94EAA6CA1EFCEFC400871095 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				94EAA6C91EFCEFC400871095 /* WeShick.app */,
+				94EAA6C91EFCEFC400871095 /* Video Share Location.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		94EAA6CB1EFCEFC400871095 /* WeShick */ = {
+		94EAA6CB1EFCEFC400871095 /* Video Share Location */ = {
 			isa = PBXGroup;
 			children = (
 				94EAA6CC1EFCEFC400871095 /* AppDelegate.swift */,
@@ -116,7 +108,6 @@
 				949DE8FC1F57ED5F00EA7461 /* MenuViewController.swift */,
 				949B7BF41F5874DA00A91A9B /* TerminosyCondicionesViewController.swift */,
 			);
-			name = WeShick;
 			path = "Video Share Location";
 			sourceTree = "<group>";
 		};
@@ -144,9 +135,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		94EAA6C81EFCEFC400871095 /* WeShick */ = {
+		94EAA6C81EFCEFC400871095 /* Video Share Location */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 94EAA6DB1EFCEFC400871095 /* Build configuration list for PBXNativeTarget "WeShick" */;
+			buildConfigurationList = 94EAA6DB1EFCEFC400871095 /* Build configuration list for PBXNativeTarget "Video Share Location" */;
 			buildPhases = (
 				FA7D8CB00DC905958EA29A9D /* [CP] Check Pods Manifest.lock */,
 				94EAA6C51EFCEFC400871095 /* Sources */,
@@ -159,9 +150,9 @@
 			);
 			dependencies = (
 			);
-			name = WeShick;
+			name = "Video Share Location";
 			productName = "Video Share Location";
-			productReference = 94EAA6C91EFCEFC400871095 /* WeShick.app */;
+			productReference = 94EAA6C91EFCEFC400871095 /* Video Share Location.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -181,7 +172,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 94EAA6C41EFCEFC400871095 /* Build configuration list for PBXProject "WeShick" */;
+			buildConfigurationList = 94EAA6C41EFCEFC400871095 /* Build configuration list for PBXProject "Video Share Location" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -194,7 +185,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				94EAA6C81EFCEFC400871095 /* WeShick */,
+				94EAA6C81EFCEFC400871095 /* Video Share Location */,
 			);
 		};
 /* End PBXProject section */
@@ -448,7 +439,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		94EAA6C41EFCEFC400871095 /* Build configuration list for PBXProject "WeShick" */ = {
+		94EAA6C41EFCEFC400871095 /* Build configuration list for PBXProject "Video Share Location" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				94EAA6D91EFCEFC400871095 /* Debug */,
@@ -457,7 +448,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		94EAA6DB1EFCEFC400871095 /* Build configuration list for PBXNativeTarget "WeShick" */ = {
+		94EAA6DB1EFCEFC400871095 /* Build configuration list for PBXNativeTarget "Video Share Location" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				94EAA6DC1EFCEFC400871095 /* Debug */,

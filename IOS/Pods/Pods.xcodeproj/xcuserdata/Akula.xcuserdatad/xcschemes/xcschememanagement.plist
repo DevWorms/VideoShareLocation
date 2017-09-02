@@ -9,6 +9,26 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Bolts.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+		<key>FBSDKCoreKit.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>FBSDKLoginKit.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>FBSDKShareKit.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>GooglePlacesAPI.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -32,6 +52,16 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>44CAD6CE523055ED339E87154473A254</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4FA029B653FA3BA471A077E89C48CB86</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>88ACB4E8E0FCBA6305260D177DE18A26</key>
 		<dict>
 			<key>primary</key>
@@ -47,12 +77,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>BC5000D645EEAF961C85907CDC796FE1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BEF7E6E85DB5CDE5D7A18F4F2EB8494B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D82432A8B6F8DD4EE7EF779662BB6361</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>E396A93E4C79B22B7816E9F02F62ECED</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>FE6750D78FF16624027DFD559ACCFFEC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FFB783512015AA65AE34E0187F37060B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
