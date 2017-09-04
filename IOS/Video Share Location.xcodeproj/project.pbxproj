@@ -46,10 +46,6 @@
 		94EAA6D31EFCEFC400871095 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94EAA6D61EFCEFC400871095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		94EAA6D81EFCEFC400871095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		94EAA6FD1EFCF80B00871095 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		94EAA6FE1EFCF80B00871095 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		94EAA6FF1EFCF80B00871095 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		94EAA7001EFCF80B00871095 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistroUsuarioViewController.swift; sourceTree = "<group>"; };
 		B0F255441F3AEEAA00E83DAA /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		CF8E3E42B54DC1C9B357E130 /* Pods-Video Share Location.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Video Share Location.release.xcconfig"; path = "Pods/Target Support Files/Pods-Video Share Location/Pods-Video Share Location.release.xcconfig"; sourceTree = "<group>"; };
@@ -114,10 +110,6 @@
 		94EAA6DE1EFCEFDC00871095 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				94EAA6FD1EFCF80B00871095 /* Bolts.framework */,
-				94EAA6FE1EFCF80B00871095 /* FBSDKCoreKit.framework */,
-				94EAA6FF1EFCF80B00871095 /* FBSDKLoginKit.framework */,
-				94EAA7001EFCF80B00871095 /* FBSDKShareKit.framework */,
 				D65F163D577443A6078FAADC /* Pods_Video_Share_Location.framework */,
 			);
 			name = Frameworks;

@@ -10,9 +10,11 @@ var gidd : Int = 0
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
+    let guardarDatos = UserDefaults.standard
     var datos = [[String : Any]]()
     var dict : [String : AnyObject]!
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+    var alertController = UIAlertController()
     
     let loginButton: FBSDKLoginButton = {
         let button = FBSDKLoginButton()
@@ -33,7 +35,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             print("¡Login completado!")
             if let accessToken = FBSDKAccessToken.current() {
                 print("Token de usuario ", accessToken)
-                FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, gender"]).start(completionHandler: { (connection, result, error) -> Void in
+                FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"]).start(completionHandler: { (connection, result, error) -> Void in
+                    guard let userInfo = result as? [String: Any] else { return }
+                    if let imageURL = ((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String {
+                        self.guardarDatos.setValue(imageURL, forKey: "picture")
+                    } else {
+                        print("Error al obtener foto de perfil")
+                    }
                     if (error == nil){
                         self.dict = result as! [String : AnyObject]
                         self.setInterfaz(result: self.dict as NSDictionary)
@@ -58,7 +66,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         let apellido = result.value(forKey: "last_name") as! String
         let correo = result.value(forKey: "email") as! String
         let genero = result.value(forKey: "gender") as! String
-        let guardarDatos = UserDefaults.standard
+        
         
         guardarDatos.setValue("Si", forKey: "loginEnd")
         guardarDatos.set(idFace, forKey: "idFace")
@@ -67,6 +75,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         guardarDatos.set(correo, forKey: "correo")
         guardarDatos.set(genero, forKey: "genero")
         
+        alertController = UIAlertController(title: nil, message: "Por favor espere...\n\n", preferredStyle: .alert)
+        let spinnerIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        spinnerIndicator.center = CGPoint(x: 135.0, y: 65.5)
+        spinnerIndicator.color = UIColor.black
+        spinnerIndicator.startAnimating()
+        
+        alertController.view.addSubview(spinnerIndicator)
+        self.present(alertController, animated: false, completion: nil)
         login(token:idFace, nombre:nombre)
     }
     
@@ -101,14 +117,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                                 let r = idd as! Int
                                 gid = "\(r)"
                                 gidd = r
-                                print("idd: \(idd as! Int)")
-                                print("r: \(r)")
+                                //print("idd: \(idd as! Int)")
+                                //print("r: \(r)")
                             }
                             UserDefaults.standard.set(gkey, forKey: globalkey)
                             UserDefaults.standard.set(gid, forKey: globalid)
                             UserDefaults.standard.set(gidd, forKey: "globalidd")
-                            
                             let mMapaViewController = self.storyBoard.instantiateViewController(withIdentifier: "MapaViewController")
+                            self.alertController.dismiss(animated: true, completion: nil)
                             self.present(mMapaViewController, animated: true, completion: nil)
                         }
                     }
