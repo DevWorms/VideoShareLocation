@@ -48,30 +48,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="mapContainer" translatesAutoresizingMaskIntoConstraints="NO" id="ICa-QL-Z85" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="64" width="321" height="357"/>
+                                <rect key="frame" x="0.0" y="64" width="321" height="333"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVh-g9-vsY">
-                                <rect key="frame" x="0.0" y="420" width="320" height="60"/>
-                                <color key="backgroundColor" red="0.3154376264972315" green="0.86725278251233084" blue="1" alpha="0.44686429794520549" colorSpace="custom" customColorSpace="sRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AR5-A4-Ll2">
+                                <rect key="frame" x="0.0" y="405" width="320" height="75"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="barra" translatesAutoresizingMaskIntoConstraints="NO" id="OsB-Ao-2em">
+                                        <rect key="frame" x="0.0" y="-86" width="320" height="219"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVh-g9-vsY">
+                                        <rect key="frame" x="125" y="-3" width="70" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="70" id="EN7-NO-5UQ"/>
+                                            <constraint firstAttribute="height" constant="70" id="mxT-ib-SjO"/>
+                                        </constraints>
+                                        <state key="normal" image="grabar">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="Grabar:" destination="Tni-bA-Rtq" eventType="touchUpInside" id="dSS-cJ-pEH"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="V6S-cf-d2Q"/>
+                                    <constraint firstAttribute="bottom" secondItem="hVh-g9-vsY" secondAttribute="bottom" constant="8" id="392-im-ez0"/>
+                                    <constraint firstItem="hVh-g9-vsY" firstAttribute="centerX" secondItem="AR5-A4-Ll2" secondAttribute="centerX" id="g4h-Iu-lt6"/>
+                                    <constraint firstAttribute="height" constant="75" id="ujW-Nf-3sl"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Grabar video">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="Grabar:" destination="Tni-bA-Rtq" eventType="touchUpInside" id="dSS-cJ-pEH"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hVh-g9-vsY" firstAttribute="leading" secondItem="zVo-QS-GRi" secondAttribute="leading" id="P4d-LE-Ncd"/>
-                            <constraint firstAttribute="trailing" secondItem="hVh-g9-vsY" secondAttribute="trailing" id="YeC-g7-ae6"/>
-                            <constraint firstItem="hUe-h5-CE6" firstAttribute="top" secondItem="hVh-g9-vsY" secondAttribute="bottom" id="jX4-MK-QO7"/>
+                            <constraint firstAttribute="trailing" secondItem="AR5-A4-Ll2" secondAttribute="trailing" id="8xb-z8-jse"/>
+                            <constraint firstItem="hUe-h5-CE6" firstAttribute="top" secondItem="AR5-A4-Ll2" secondAttribute="bottom" id="LsB-Uq-8Aa"/>
+                            <constraint firstItem="AR5-A4-Ll2" firstAttribute="leading" secondItem="zVo-QS-GRi" secondAttribute="leading" id="Zq7-4X-bDM"/>
+                            <constraint firstItem="AR5-A4-Ll2" firstAttribute="width" secondItem="zVo-QS-GRi" secondAttribute="width" id="aY5-oJ-5x0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="WeShick" id="Xzm-Zm-V5X" userLabel="WeShick"/>
@@ -81,7 +96,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cnW-tZ-bAL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7248.75" y="95"/>
+            <point key="canvasLocation" x="7246.875" y="93.75"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="pxW-TJ-ALu">
@@ -206,7 +221,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWU-3g-xan" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6427.5" y="-586.25"/>
+            <point key="canvasLocation" x="6426" y="-586"/>
         </scene>
         <!--Select Video View Controller-->
         <scene sceneID="Tef-WZ-M4J">
@@ -313,7 +328,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n65-z3-0HX">
-                                <rect key="frame" x="0.0" y="128" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="84" width="320" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="3Vr-Xd-pXr"/>
                                 </constraints>
@@ -324,7 +339,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YqE-nC-m6e">
-                                <rect key="frame" x="0.0" y="193" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="149" width="320" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Fol-kT-Rkq"/>
                                 </constraints>
@@ -413,11 +428,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G5A-Ve-Jzd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6428" y="97"/>
+            <point key="canvasLocation" x="6426" y="94"/>
         </scene>
     </scenes>
     <resources>
+        <image name="barra" width="600" height="300"/>
         <image name="equis" width="626" height="626"/>
+        <image name="grabar" width="128" height="128"/>
         <image name="regresar" width="512" height="512"/>
         <image name="weshick" width="1280" height="720"/>
     </resources>

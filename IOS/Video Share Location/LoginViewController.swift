@@ -117,8 +117,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                                 let r = idd as! Int
                                 gid = "\(r)"
                                 gidd = r
-                                //print("idd: \(idd as! Int)")
-                                //print("r: \(r)")
                             }
                             UserDefaults.standard.set(gkey, forKey: globalkey)
                             UserDefaults.standard.set(gid, forKey: globalid)

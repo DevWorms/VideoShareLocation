@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina3_5" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,30 +18,38 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weshick" translatesAutoresizingMaskIntoConstraints="NO" id="hfq-Ml-KwK">
-                                <rect key="frame" x="0.0" y="120" width="320" height="239"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DevWorms S.A de C.V." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBw-xP-1aj">
+                                <rect key="frame" x="0.0" y="607" width="375" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="239" id="I3h-bY-21s"/>
+                                    <constraint firstAttribute="height" constant="40" id="eG9-bU-8O4"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="hfq-Ml-KwK">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hfq-Ml-KwK" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="Gvd-Jh-10X"/>
-                            <constraint firstItem="hfq-Ml-KwK" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="100" id="oOx-U7-2JS"/>
-                            <constraint firstAttribute="trailing" secondItem="hfq-Ml-KwK" secondAttribute="trailing" id="xMC-ye-qf8"/>
+                            <constraint firstAttribute="trailing" secondItem="WBw-xP-1aj" secondAttribute="trailing" id="3kP-2g-V7R"/>
+                            <constraint firstItem="WBw-xP-1aj" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="BWq-KZ-uOG"/>
+                            <constraint firstItem="WBw-xP-1aj" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="i0c-rE-ac7"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="WBw-xP-1aj" secondAttribute="bottom" constant="20" id="s7v-KG-8UK"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="49.275362318840585" y="373.36956521739131"/>
+            <point key="canvasLocation" x="45.5" y="370.5"/>
         </scene>
     </scenes>
     <resources>
-        <image name="weshick" width="1280" height="720"/>
+        <image name="splash" width="800" height="1280"/>
     </resources>
 </document>
