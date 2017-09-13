@@ -30,23 +30,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="hfq-Ml-KwK">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="KYm-BE-phW">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="599"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="WBw-xP-1aj" secondAttribute="trailing" id="3kP-2g-V7R"/>
+                            <constraint firstItem="WBw-xP-1aj" firstAttribute="top" secondItem="KYm-BE-phW" secondAttribute="bottom" constant="8" id="41F-1h-LhO"/>
                             <constraint firstItem="WBw-xP-1aj" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="BWq-KZ-uOG"/>
+                            <constraint firstAttribute="trailing" secondItem="KYm-BE-phW" secondAttribute="trailing" id="RD5-w8-2Bq"/>
+                            <constraint firstItem="KYm-BE-phW" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="cRC-0D-Bp2"/>
                             <constraint firstItem="WBw-xP-1aj" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="i0c-rE-ac7"/>
+                            <constraint firstItem="KYm-BE-phW" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="naR-Vf-ULL"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="WBw-xP-1aj" secondAttribute="bottom" constant="20" id="s7v-KG-8UK"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="45.5" y="370.5"/>
+            <point key="canvasLocation" x="44" y="369.26536731634184"/>
         </scene>
     </scenes>
     <resources>

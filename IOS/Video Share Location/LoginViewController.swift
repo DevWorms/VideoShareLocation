@@ -7,6 +7,7 @@ var globalid = "globalid"
 var gkey = ""
 var gid = ""
 var gidd : Int = 0
+var imageURL : String  = ""
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
@@ -37,11 +38,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 print("Token de usuario ", accessToken)
                 FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"]).start(completionHandler: { (connection, result, error) -> Void in
                     guard let userInfo = result as? [String: Any] else { return }
-                    if let imageURL = ((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String {
-                        self.guardarDatos.setValue(imageURL, forKey: "picture")
-                    } else {
-                        print("Error al obtener foto de perfil")
-                    }
+                    imageURL = (((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
+                    self.guardarDatos.setValue(imageURL, forKey: "picture")
                     if (error == nil){
                         self.dict = result as! [String : AnyObject]
                         self.setInterfaz(result: self.dict as NSDictionary)
@@ -67,13 +65,19 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         let correo = result.value(forKey: "email") as! String
         let genero = result.value(forKey: "gender") as! String
         
+        let name = "\(nombre) \(apellido)"
         
         guardarDatos.setValue("Si", forKey: "loginEnd")
         guardarDatos.set(idFace, forKey: "idFace")
-        guardarDatos.set(nombre, forKey: "nombre")
-        guardarDatos.set(apellido, forKey: "apellido")
+        guardarDatos.set(name, forKey: "nombre")
         guardarDatos.set(correo, forKey: "correo")
         guardarDatos.set(genero, forKey: "genero")
+        
+        print("ID Facebook: \(idFace)")
+        print("Nombre: \(name)")
+        print("Correo electronico: \(correo)")
+        print("Genero: \(genero)")
+        print("URL Foto: \(imageURL)")
         
         alertController = UIAlertController(title: nil, message: "Por favor espere...\n\n", preferredStyle: .alert)
         let spinnerIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -83,15 +87,15 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         alertController.view.addSubview(spinnerIndicator)
         self.present(alertController, animated: false, completion: nil)
-        login(token:idFace, nombre:nombre)
+        login(token:idFace, name:name, imageURL: imageURL)
     }
     
     func dataAlreadyExist(userKey: String) -> Bool {
         return UserDefaults.standard.object(forKey: userKey) != nil
     }
 
-    func login(token:String, nombre:String) {
-        let parameterString = "tokenfb=\(token)&name=\(nombre)"
+    func login(token:String, name:String, imageURL: String) {
+        let parameterString = "tokenfb=\(token)&name=\(name)&url_img=\(imageURL)"
         let strUrl = "http://videoshare.devworms.com/api/login"
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
             var urlRequest = URLRequest(url: URL(string: strUrl)!)
@@ -121,6 +125,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                             UserDefaults.standard.set(gkey, forKey: globalkey)
                             UserDefaults.standard.set(gid, forKey: globalid)
                             UserDefaults.standard.set(gidd, forKey: "globalidd")
+                            
+                            print("API Key: \(gkey)")
+                            print("ID Usuario: \(gidd)")
+                            
                             let mMapaViewController = self.storyBoard.instantiateViewController(withIdentifier: "MapaViewController")
                             self.alertController.dismiss(animated: true, completion: nil)
                             self.present(mMapaViewController, animated: true, completion: nil)

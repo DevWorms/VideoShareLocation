@@ -24,6 +24,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     var useridd : Int = 0
     var LatVideo = [Double]()
     var LongVideo = [Double]()
+    var marker = GMSMarker()
     
     @IBOutlet weak var mapContainer: GMSMapView!
     var usernames = [String]()
@@ -34,21 +35,19 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         userid = DataUserDefault.string(forKey: "globalid")
         useridd = DataUserDefault.integer(forKey: "globalidd")
         DataUserDefault.set(7, forKey: "Distance")
-        LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [Double]
-        LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [Double]
-        LatVideo.removeAll()
-        LongVideo.removeAll()
         DataUserDefault.set(LatVideo, forKey: "LatVideo")
         DataUserDefault.set(LongVideo, forKey: "LongVideo")
+        LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [Double]
+        LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [Double]
         
-        //videos(apikey: apikey, id: "0")
-        let marker = GMSMarker()
-        marker.tracksInfoWindowChanges = true
-        marker.icon = UIImage(named: "marker")
-        marker.position = CLLocationCoordinate2D(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!)
-        marker.title = "Cargando usuarios..."
-        marker.snippet = "Cargando usuarios..."
-        marker.map = mapContainer
+        videos(apikey: apikey, id: "0")
+        //let marker = GMSMarker()
+        //marker.tracksInfoWindowChanges = true
+        //marker.icon = UIImage(named: "marker")
+        //marker.position = CLLocationCoordinate2D(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!)
+        //marker.title = "Cargando usuarios..."
+        //marker.snippet = "Cargando usuarios..."
+        //marker.map = mapContainer
         
         camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 8.0)
         mapContainer.camera = camera
@@ -93,63 +92,97 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         videos(apikey: apikey, id: userid)
     }
     
-    //FUNCION CREAR MARKERS PARA LOS VIDEOS EXISTENTES
-    
-    func crearMarker(){
+    func crearMarker() {
         //Para videos del usuario
-        let marker = GMSMarker()
+        for _ in 0 ..< 4 {
+            print("\n")
+        }
+        LatVideo.removeAll()
+        LongVideo.removeAll()
+        LatVideo.append(0.00000)
+        LongVideo.append(0.00000)
+        
         marker.tracksInfoWindowChanges = true
-        marker.icon = UIImage(named: "marker")
+        //marker.icon = UIImage(named: "marker")
         //marker.icon = GMSMarker.markerImage(with: .blue)
         var lat : Double
         var long : Double
-        let IndiceUsuario : Int = DataUserDefault.integer(forKey: "IndiceUsuario")
+        let IndiceUsuario : Int = DataUserDefault.integer(forKey: "IndiceUsuario") - 1
+        //print("Existen: \(usuarios.count) usuarios")
+        //print("Eres el usuario: \(IndiceUsuario)")
+        //print("Numero de videos de tu usuario: \(usuarios[IndiceUsuario].videoinfo.count)")
         
         for nVideo in 0 ..< usuarios[IndiceUsuario].videoinfo.count {
+            print("Video \(nVideo)")
             let result = usuarios[IndiceUsuario].videoinfo[nVideo] as [String:Any]
             lat = Double(result["lat"] as! String)!
             long = Double(result["long"] as! String)!
-            print(lat)
-            print(long)
-            if(arrayAlreadyExist(dataKey: "LatVideo")){
-                print("Ya no es el primer video")
-                LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [Double]
-                LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [Double]
-                for nCoord in 0 ..< LatVideo.count {
-                    let Punto1 = CLLocation(latitude: LatVideo[nCoord] , longitude: LongVideo[nCoord]) //Almacenado
-                    let Punto2 = CLLocation(latitude: lat , longitude: long)
+
+            for nCoord in 0 ..< LatVideo.count {
+                let Punto1 = CLLocation(latitude: lat , longitude: long)
+                let Punto2 = CLLocation(latitude: LatVideo[nCoord] , longitude: LongVideo[nCoord]) //Almacenado
+                print("Lat: \(LatVideo[nCoord]), Long: \(LongVideo[nCoord]) vs Lat: \(lat), Long: \(long)")
+                let distancia = Punto1.distance(from: Punto2)
+                print("Distancia: \(distancia)")
+                if (distancia>=(UserDefaults.standard.double(forKey: "Distance"))) {
+                    print("Fuera de rango\n")
+                    LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [Double]
+                    LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [Double]
+                    LatVideo.append(lat)
+                    LongVideo.append(long)
+                    DataUserDefault.set(LatVideo, forKey: "LatVideo")
+                    DataUserDefault.set(LongVideo, forKey: "LongVideo")
+                } else {
+                    print("Dentro del rango\n")
+                }
+            }
+            /*
+            //print("Latitud: \(lat), Longitud: \(long)")
+            LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [Double]
+            LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [Double]
+            //print("Contienes \(LatVideo.count) ubicaciones")
+            if(LatVideo.count > 0) {
+                print("2. Resto de videos")
+                print("Ubicacion: \(LatVideo.count)")
+                for nCoord in 0 ... LatVideo.count {
+                    let Punto1 = CLLocation(latitude: lat , longitude: long)
+                    let Punto2 = CLLocation(latitude: LatVideo[nCoord] , longitude: LongVideo[nCoord]) //Almacenado
+                    print("Lat: \(LatVideo[nCoord]), Long: \(LongVideo[nCoord]) vs Lat: \(lat), Long: \(long)")
                     let distancia = Punto1.distance(from: Punto2)
                     print("Distancia: \(distancia)")
-                    if (distancia<=UserDefaults.standard.double(forKey: "Distance")) {
-                        print("Dentro del rango")
-                    } else {
-                        print("Fuera de rango, Id: \(nVideo)")
+                    if (distancia>=UserDefaults.standard.double(forKey: "Distance")) {
+                        print("Fuera de rango\n")
+                        LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [Double]
+                        LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [Double]
                         LatVideo.append(lat)
                         LongVideo.append(long)
                         DataUserDefault.set(LatVideo, forKey: "LatVideo")
                         DataUserDefault.set(LongVideo, forKey: "LongVideo")
+                    } else {
+                        print("Dentro del rango\n")
                     }
                 }
             } else {
-                print("Primer video propio")
+                print("1. Primer video propio\n")
                 LatVideo.append(lat)
                 LongVideo.append(long)
+                print("1. Add Latitud: \(lat), Longitud: \(long)")
                 DataUserDefault.set(LatVideo, forKey: "LatVideo")
                 DataUserDefault.set(LongVideo, forKey: "LongVideo")
-            }
+            }*/
         }
-        if(arrayAlreadyExist(dataKey: "LatVideo")){
-            LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [Double]
-            LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [Double]
-            for nCoord in 0 ..< LatVideo.count {
-                marker.position = CLLocationCoordinate2D(latitude: LatVideo[nCoord] , longitude: LongVideo[nCoord])
-                marker.title = "Cargando usuarios..."
-                marker.snippet = "Cargando usuarios..."
-                marker.map = mapContainer
-                let circulo = CLLocationCoordinate2D(latitude: LatVideo[nCoord], longitude: LongVideo[nCoord])
-                let radio = GMSCircle(position: circulo, radius: 3.5)
-                radio.map = mapContainer
-            }
+        LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [Double]
+        LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [Double]
+        print("Contienes \(LatVideo.count) videos en el mapa")
+        for nCoord in 0 ..< LatVideo.count {
+            marker.position = CLLocationCoordinate2D(latitude: LatVideo[nCoord] , longitude: LongVideo[nCoord])
+            marker.icon = UIImage(named: "marker")
+            //marker.title = "Cargando usuarios..."
+            marker.snippet = "Cargando usuarios..."
+            marker.map = mapContainer
+            let circulo = CLLocationCoordinate2D(latitude: LatVideo[nCoord], longitude: LongVideo[nCoord])
+            let radio = GMSCircle(position: circulo, radius: 3.5)
+            radio.map = mapContainer
         }
     }
     
@@ -290,14 +323,14 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             }
         }
     }
-    
-    ///Funcion crear markers termina
+    //Funcion crear markers termina
     
     ///// CONEXION POST URL CON API OBTENER VIDEOS
     func videos(apikey: String, id: String) {
-        let parameterString = "apikey=\(apikey)&id=\(id)"
+        //let parameterString = "apikey=\(apikey)&id=\(id)" -> Pasamos 0 para que devuelva todos los videos y obtenemos nuestro indice
+        let parameterString = "apikey=\(apikey)&id=0"
         let strUrl = "http://videoshare.devworms.com/api/videos"
-        
+        print("Pasamos los parametros: \(parameterString)")
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
             var urlRequest = URLRequest(url: URL(string: strUrl)!)
             urlRequest.httpMethod = "POST"
@@ -313,7 +346,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             print("Error al entrar Parse: \(error!)")
         } else if urlResponse != nil {
             if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
-                ////print(json)
+                //print(json)
                 if let jsonResult = json as? [String: Any] {
                     DispatchQueue.main.async {
                         self.usuarios = [Users]()
@@ -324,8 +357,10 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                                 if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]], let idd = user["id"] as? Int{
                                     if (idd==self.useridd){
                                         self.DataUserDefault.set(contador, forKey: "IndiceUsuario")
+                                        //print("Tu eres el IndiceUsuario: \(contador)")
                                     }
                                     contador+=1
+                                    //print("Usuario: \(idd), Nombre: \(nombre)")
                                     usuario.nombre = nombre
                                     usuario.idusuario = "\(idd)"
                                     for video in videos {
@@ -336,7 +371,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                                 usuariosg = self.usuarios
                             }
                         }
-                     self.crearMarker()
+                        self.crearMarker()
                     }
                 }
             }
