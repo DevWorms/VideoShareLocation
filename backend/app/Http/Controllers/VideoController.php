@@ -19,11 +19,13 @@ class VideoController extends Controller
     private $extensions;
     private $size;
     private $distance;
+    private $distance10Metros;
 
     function __construct()
     {
         $this->size = 100000000;
         $this->distance = 5;
+        $this->distance10Metros = 0.01;
         $this->extensions = [
             // extensiones de video
             "h263", "h264", "mp4", "mov", "m4v",
@@ -49,9 +51,9 @@ class VideoController extends Controller
             }
             $user = User::where(['id' => $request->get('id'), 'apikey' => $request->get("apikey")])->firstOrfail();
             $video = $request->file("archivo");
-            $validator = Validator::make(['file' => $video], ['file' => 'required']);
+            //$validator = Validator::make(['file' => $video], ['file' => 'required']);
             // Si el archivo tiene extensión valida
-            if ($validator->passes()) {
+            if ($video != null) {
                 // Si el archivo es mayor a 100mb
                 if ($video->getSize() > $this->size) {
                     $response['estado'] = 0;
@@ -103,6 +105,68 @@ class VideoController extends Controller
         }
     }
 
+    public function videos5Metros(Request $request, $video_id) {
+        $user = null;
+        try {
+            $validator = Validator::make($request->all(), [
+                'id' => 'required',
+                'apikey' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                //Si los datos no estan completos, devuelve error
+                $errors = $validator->errors();
+                $res['estado'] = 0;
+                $res['mensaje'] = $errors->first();
+                return response()->json($res, 400);
+            }
+
+            $user = User::where(['id' => $request->get('id'), 'apikey' => $request->get('apikey')])->firstOrFail();
+            $video = Video::whereId($video_id)->firstOrFail();
+
+            $lat = $video->lat;
+            $long = $video->long;
+
+            $boundaries = $this->getBoundaries($lat, $long, $this->distance10Metros);
+            $horamin = Carbon::now()->subHour(3);
+
+            $allvideo = Video::where('created_at', '>=', $horamin)
+                ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
+                ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
+                ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
+                               cos( radians( `lat` ) )
+                               * cos( radians( `long` ) - radians(?)
+                               ) + sin( radians(?) ) *
+                               sin( radians( `lat` ) ) )
+                             ) AS distance', [$lat, $long, $lat])
+                //->havingRaw("distance < ?", [$this->distance10Metros])
+                ->orderBy('created_at')->get();
+
+            foreach ($allvideo as $v) {
+                $v = $this->returnVideo($v);
+            }
+
+            $res ['estado'] = 1;
+            $res ['videos'] = $allvideo;
+            $res ['mensaje'] = "Exito";
+            return response()->json($res, 200);
+
+        } catch (ModelNotFoundException $ex) {
+            if (!$user) {
+                $res['estado'] = 0;
+                $res['mensaje'] = "Usuario o contraseña incorrectos";
+            } else {
+                $res['estado'] = 0;
+                $res['mensaje'] = "Vídeo no encontrado";
+            }
+            return response()->json($res, 400);
+        } catch (Exception $error) {
+            $res['estado'] = 0;
+            $res['mensaje'] = $error->getMessage();
+            return response()->json($res, 500);
+        }
+    }
+
     public function allvideos(Request $request)
     {
         try {
@@ -122,11 +186,11 @@ class VideoController extends Controller
 
             if ($lat == null || $long == null) {
 
-                $usarios = User::where('id','!=',$request->get("id"))->whereHas('videos')->with('videos')->select("id", "name","url_img")->get();
+                $usarios = User::where('id', '!=', $request->get("id"))->whereHas('videos')->with('videos')->select("id", "name", "url_img")->get();
 
-                foreach ($usarios as $user){
+                foreach ($usarios as $user) {
                     foreach ($user->videos as $video) {
-                        $video= $this->returnVideo($video);
+                        $video = $this->returnVideo($video);
 
                     }
 
@@ -138,7 +202,7 @@ class VideoController extends Controller
             } else {
                 $boundaries = $this->getBoundaries($lat, $long);
                 $horamin = Carbon::now()->subHour(3);
-                $allusers = User::where('id','!=',$request->get("id"))->whereHas("videos", function ($uv) use ($horamin, $boundaries, $lat, $long) {
+                $allusers = User::where('id', '!=', $request->get("id"))->whereHas("videos", function ($uv) use ($horamin, $boundaries, $lat, $long) {
                     $uv->where('created_at', '>=', $horamin)
                         ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
                         ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
@@ -151,21 +215,21 @@ class VideoController extends Controller
                         ->havingRaw("distance < ?", [$this->distance]);
                 })->get();
                 /**
-                $allvideo = Video::where('created_at', '>=', $horamin)
-                    ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
-                    ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
-                    ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
-                               cos( radians( `lat` ) )
-                               * cos( radians( `long` ) - radians(?)
-                               ) + sin( radians(?) ) *
-                               sin( radians( `lat` ) ) )
-                             ) AS distance', [$lat, $long, $lat])
-                    ->havingRaw("distance < ?", [$this->distance])
-                    ->orderBy('created_at')->get();
-
-               foreach ($allusers as $video) {
-                    $video = $this->returnVideo($video);
-                }*/
+                 * $allvideo = Video::where('created_at', '>=', $horamin)
+                 * ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
+                 * ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
+                 * ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
+                 * cos( radians( `lat` ) )
+                 * cos( radians( `long` ) - radians(?)
+                 * ) + sin( radians(?) ) *
+                 * sin( radians( `lat` ) ) )
+                 * ) AS distance', [$lat, $long, $lat])
+                 * ->havingRaw("distance < ?", [$this->distance])
+                 * ->orderBy('created_at')->get();
+                 *
+                 * foreach ($allusers as $video) {
+                 * $video = $this->returnVideo($video);
+                 * }*/
                 foreach ($allusers as $user) {
                     $allvideo = Video::where('created_at', '>=', $horamin)
                         ->where("user_id", $user->id)
@@ -180,11 +244,11 @@ class VideoController extends Controller
                         ->havingRaw("distance < ?", [$this->distance])
                         ->orderBy('created_at')->get();
 
-                    foreach($allvideo as $v){
+                    foreach ($allvideo as $v) {
                         $v = $this->returnVideo($v);
                     }
 
-                    $user->videos= $allvideo;
+                    $user->videos = $allvideo;
                 }
 
                 $res ['estado'] = 1;
@@ -203,7 +267,6 @@ class VideoController extends Controller
             $res['mensaje'] = $error->getMessage();
             return response()->json($res, 500);
         }
-
     }
 
     /** public function videosusers(Request $request)
