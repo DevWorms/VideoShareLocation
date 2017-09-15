@@ -140,6 +140,9 @@ class VideoController extends Controller
                                sin( radians( `lat` ) ) )
                              ) AS distance', [$lat, $long, $lat])
                 //->havingRaw("distance < ?", [$this->distance10Metros])
+                ->with(['usuario' => function ($query) {
+                    $query->select('id', 'name', 'url_img');
+                }])
                 ->orderBy('created_at')->get();
 
             foreach ($allvideo as $v) {
