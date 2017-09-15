@@ -130,8 +130,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                             print("ID Usuario: \(gidd)")
                             
                             let mMapaViewController = self.storyBoard.instantiateViewController(withIdentifier: "MapaViewController")
-                            self.alertController.dismiss(animated: true, completion: nil)
                             self.present(mMapaViewController, animated: true, completion: nil)
+                            self.alertController.dismiss(animated: true, completion: nil)
                         }
                     }
                 }

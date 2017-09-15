@@ -16,8 +16,9 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     @IBOutlet weak var collectionViewUser: UICollectionView!
-    //var images = ["one","two","three","four","five"]
     var usernames = [String]()
+    var idUsers = [Int]()
+    var urlPhotos = [String]()
     let diccionario = UserDefaults.standard
     
     override func viewDidLoad() {
@@ -26,26 +27,27 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
         self.collectionViewUser.delegate = self
         self.collectionViewUser.dataSource = self
         
-        let LatSelected : Double = diccionario.double(forKey: "LatSelected")
-        let LongSelected : Double = diccionario.double(forKey: "LongSelected")
-        //print(usuariosg.count)
-        //print(usuariosg[8].videoinfo.count)
+        usernames = [String]()
+        idUsers = [Int]()
+        urlPhotos = [String]()
+        let LatSelected : Double = UserDefaults.standard.double(forKey: "LatSelected")
+        let LongSelected : Double = UserDefaults.standard.double(forKey: "LongSelected")
         for i in 0..<usuariosg.count{
-            //print(usuariosg[i].nombre)
             for h in 0..<usuariosg[i].videoinfo.count {
                 let LatCurrent : Double = Double(usuariosg[i].videoinfo[h]["lat"] as! String)!
                 let LongCurrent : Double = Double(usuariosg[i].videoinfo[h]["long"] as! String)!
-                //print("Lat: \(LatCurrent) Long: \(LongCurrent)")
-                
                 let Punto1 = CLLocation(latitude: LatSelected, longitude: LongSelected)
                 let Punto2 = CLLocation(latitude: LatCurrent, longitude: LongCurrent)
                 let distancia = Punto1.distance(from: Punto2)
-                
-                //print("Distancia = \(distancia)")
                 if(distancia<=UserDefaults.standard.double(forKey: "Distance")){
-                    if (!usernames.contains(usuariosg[i].nombre)) {
+                    if (!idUsers.contains(Int(usuariosg[i].idusuario)!)) {
                         usernames.append(usuariosg[i].nombre)
-                        //print("Add: \(usuariosg[i].nombre)")
+                        idUsers.append(Int(usuariosg[i].idusuario)!)
+                        let aString = usuariosg[i].url_img
+                        let bString = aString.replacingOccurrences(of: "http://", with: "https://", options: .literal, range: nil)
+                        urlPhotos.append(bString)
+                        print("\(bString)")
+                        print("En el modal Usuario -> Usuario: \(Int(usuariosg[i].idusuario)!), Nombre: \(usuariosg[i].nombre)")
                     }
                 }
             }
@@ -57,8 +59,16 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionViewUser.dequeueReusableCell(withReuseIdentifier: "collectionUserData", for: indexPath) as! UserDataCollectionViewCell
-        cell.imageViewUser.image = UIImage(named: "video_icon")
+        DispatchQueue.main.async {
+            let facebookProfileUrl = NSURL(string: self.urlPhotos[indexPath.row])
+            if let data = NSData(contentsOf: facebookProfileUrl! as URL) {
+                cell.imageViewUser.image = UIImage(data: data as Data)
+            } else {
+                cell.imageViewUser.image = UIImage(named: "icon_user")
+            }
+        }
         cell.labelUser.text = usernames[indexPath.row]
         return cell
     }

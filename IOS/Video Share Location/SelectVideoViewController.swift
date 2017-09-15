@@ -76,6 +76,7 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
         }
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return nombreVideo.count
     }
@@ -83,7 +84,7 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellVideo = collectionViewVideo.dequeueReusableCell(withReuseIdentifier: "collectionVideoData", for: indexPath) as! VideoDataCollectionViewCell
         //cellVideo.imageViewVideo.image = UIImage(named: images[indexPath.row])
-        cellVideo.imageViewVideo.image = UIImage(named: "video_icon")
+        cellVideo.imageViewVideo.image = UIImage(named: "icon_video")
         //cellVideo.labelVideo.text = nombreVideo[indexPath.row]
         return cellVideo
     }
