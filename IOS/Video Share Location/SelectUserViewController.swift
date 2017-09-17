@@ -35,7 +35,9 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
         for i in 0..<usuariosg.count{
             for h in 0..<usuariosg[i].videoinfo.count {
                 let LatCurrent : Double = Double(usuariosg[i].videoinfo[h]["lat"] as! String)!
-                let LongCurrent : Double = Double(usuariosg[i].videoinfo[h]["long"] as! String)!
+                let ant1 : String = usuariosg[i].videoinfo[h]["long"] as! String
+                let ant2 : String = ant1.replacingOccurrences(of: "\n", with: "", options: .literal, range: nil)
+                let LongCurrent : Double = Double(ant2)!
                 let Punto1 = CLLocation(latitude: LatSelected, longitude: LongSelected)
                 let Punto2 = CLLocation(latitude: LatCurrent, longitude: LongCurrent)
                 let distancia = Punto1.distance(from: Punto2)

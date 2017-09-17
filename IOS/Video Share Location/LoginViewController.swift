@@ -88,6 +88,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         alertController.view.addSubview(spinnerIndicator)
         self.present(alertController, animated: false, completion: nil)
         login(token:idFace, name:name, imageURL: imageURL)
+        
+        self.alertController.dismiss(animated: true, completion: nil)
     }
     
     func dataAlreadyExist(userKey: String) -> Bool {
@@ -130,8 +132,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                             print("ID Usuario: \(gidd)")
                             
                             let mMapaViewController = self.storyBoard.instantiateViewController(withIdentifier: "MapaViewController")
+                            
                             self.present(mMapaViewController, animated: true, completion: nil)
-                            self.alertController.dismiss(animated: true, completion: nil)
                         }
                     }
                 }

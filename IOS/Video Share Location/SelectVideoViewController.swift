@@ -35,12 +35,13 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
         for i in 0..<usuariosg.count{
             if (usuariosg[i].nombre.contains(UserSelected)) {
                 IdUserSelected = i
-                print(i)
             }
         }
         for h in 0..<usuariosg[IdUserSelected].videoinfo.count {
             let LatCurrent : Double = Double(usuariosg[IdUserSelected].videoinfo[h]["lat"] as! String)!
-            let LongCurrent : Double = Double(usuariosg[IdUserSelected].videoinfo[h]["long"] as! String)!
+            let ant1 : String = usuariosg[IdUserSelected].videoinfo[h]["long"] as! String
+            let ant2 : String = ant1.replacingOccurrences(of: "\n", with: "", options: .literal, range: nil)
+            let LongCurrent : Double = Double(ant2)!
             //print("Lat: \(LatCurrent) Long: \(LongCurrent)")
             
             let Punto1 = CLLocation(latitude: LatSelected, longitude: LongSelected)
