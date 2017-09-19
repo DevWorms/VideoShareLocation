@@ -37,8 +37,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 print("Token de usuario ", accessToken)
                 FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"]).start(completionHandler: { (connection, result, error) -> Void in
                     guard (result as? [String: Any]) != nil else { return }
-                    /*imageURL = (((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
-                    self.guardarDatos.setValue(imageURL, forKey: "picture")*/
                     if (error == nil){
                         self.dict = result as! [String : AnyObject]
                         self.setInterfaz(result: self.dict as NSDictionary)
@@ -63,7 +61,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         let apellido = result.value(forKey: "last_name") as! String
         let correo = result.value(forKey: "email") as! String
         let genero = result.value(forKey: "gender") as! String
-        let imageURL = ("http://graph.facebook.com/\(idFace)/picture?type=large")
+        let imageURL = ("https://graph.facebook.com/\(idFace)/picture?type=large")
         let name = "\(nombre) \(apellido)"
         
         guardarDatos.setValue("Si", forKey: "loginEnd")

@@ -134,7 +134,7 @@
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="G3k-yX-5Qp">
                                         <rect key="frame" x="8" y="43" width="296" height="136"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="136" id="tXY-4n-GwS"/>
                                         </constraints>
@@ -192,7 +192,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.71709281206130981" green="0.79869669675827026" blue="0.89876163005828857" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.71709281206130981" green="0.79869669675827026" blue="0.89876163005828857" alpha="0.49507170376712328" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="G3k-yX-5Qp" secondAttribute="trailing" constant="16" id="DAL-y4-974"/>
                                     <constraint firstItem="G3k-yX-5Qp" firstAttribute="leading" secondItem="FVe-Ub-zez" secondAttribute="leading" constant="8" id="M2C-VU-INa"/>
@@ -240,7 +240,7 @@
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Y7S-8k-Tbf">
                                         <rect key="frame" x="8" y="43" width="304" height="136"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="136" id="lHk-aD-nNe"/>
                                         </constraints>
@@ -288,7 +288,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.71709281206130981" green="0.79869669675827026" blue="0.89876163005828857" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.71709281206130981" green="0.79869669675827026" blue="0.89876163005828857" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Y7S-8k-Tbf" secondAttribute="bottom" id="AGP-VA-ANR"/>
                                     <constraint firstItem="g22-mX-APy" firstAttribute="trailing" secondItem="qon-1c-UmP" secondAttribute="trailingMargin" constant="-16" id="Fwq-Ja-F7L"/>

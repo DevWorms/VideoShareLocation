@@ -14,7 +14,6 @@ import AVFoundation
 class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var collectionViewVideo: UICollectionView!
-    //var images = ["six","seven","eight","nine","ten"]
     var nombreVideo = [String]()
     var numDeVideo = [Int]()
     var urlVideo = [String]()
@@ -54,7 +53,6 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
             let distancia = Punto1.distance(from: Punto2)
 
             if(distancia <= UserDefaults.standard.double(forKey: "Distance")){
-                //print("Video: \(usuariosg[IdUserSelected].nombre)")
                 nombreVideo.append("Video \(distancia)")
                 urlVideo.append(usuariosg[IdUserSelected].videoinfo[h]["url"] as! String)
                 numDeVideo.append(contador)
@@ -65,7 +63,6 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
             }
             contador+=1
         }
-        print("Numero de video: \(numDeVideo)")
     }
     
     func videoSnapshot(URLVideo: String) -> UIImage? {
@@ -98,7 +95,6 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Pulsaste \(indexPath.row)")
         let videoURL = URL(string: usuariosg[IdUserSelected].videoinfo[(numDeVideo[indexPath.row])]["url"] as! String)
         let player = AVPlayer(url: videoURL!)
         let playerViewController = AVPlayerViewController()

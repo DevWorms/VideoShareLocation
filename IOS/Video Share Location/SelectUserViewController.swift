@@ -23,7 +23,6 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //detectRoute.isHidden = false
         self.collectionViewUser.delegate = self
         self.collectionViewUser.dataSource = self
         
@@ -48,7 +47,6 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
                         let aString = usuariosg[i].url_img
                         let bString = aString.replacingOccurrences(of: "http://", with: "https://", options: .literal, range: nil)
                         urlPhotos.append(bString)
-                        //print("\(bString)")
                         print("En el modal Usuario -> Usuario: \(Int(usuariosg[i].idusuario)!), Nombre: \(usuariosg[i].nombre)")
                     }
                 }
@@ -76,7 +74,6 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //print("Seleccionaste usuario ", indexPath.row)
         diccionario.setValue(idUsers,forKey: "ArrayUserSelected")
         diccionario.set(indexPath.row,forKey: "NumUserSelected")
         showModalVideos()
