@@ -24,7 +24,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     var useridd : Int = 0
     var LatVideo = [Double]()
     var LongVideo = [Double]()
-    var alertController = UIAlertController()
     
     @IBOutlet weak var mapContainer: GMSMapView!
     var usernames = [String]()
@@ -32,6 +31,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         apikey = DataUserDefault.string(forKey: "globalkey")
         userid = DataUserDefault.string(forKey: "globalid")
         useridd = DataUserDefault.integer(forKey: "globalidd")
@@ -41,7 +41,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [Double]
         LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [Double]
         
-        videos(apikey: apikey, id: "0")
+        reloadMapData()
         
         camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 8.0) //Posicion de CDMX Centro
         mapContainer.camera = camera
@@ -82,13 +82,16 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.navigationController?.pushViewController(vc, animated: true)
     }
     func refresh(sender:UIButton) {
+        reloadMapData()
+    }
+    
+    func reloadMapData(){
         mapContainer.clear()
         videos(apikey: apikey, id: userid)
     }
     
     func crearMarker() {
-        //Para videos del usuario
-        for _ in 0 ..< 4 {
+        for _ in 0 ..< 5 {
             print("\n")
         }
         LatVideo.removeAll()
@@ -102,32 +105,31 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         var lat : Double
         var long : Double
         let IndiceUsuario : Int = DataUserDefault.integer(forKey: "IndiceUsuario") - 1
-        var ponerMarker: Bool = false
+        var ponerMarker: Bool = true
         var mContador:Int = 0
-        
         if(IndiceUsuario>0){
             for nVideo in 0 ..< usuarios[IndiceUsuario].videoinfo.count {
-                print("Videos actuales: \(nVideo)")
                 let result = usuarios[IndiceUsuario].videoinfo[nVideo] as [String:Any]
                 lat = Double(result["lat"] as! String)!
                 long = Double(result["long"] as! String)!
+                ponerMarker=true
                 for var nCoord in 0 ..< LatVideo.count {
                     let Punto1 = CLLocation(latitude: lat , longitude: long)
                     let Punto2 = CLLocation(latitude: LatVideo[nCoord] , longitude: LongVideo[nCoord]) //Almacenado
                     let distancia = Punto1.distance(from: Punto2)
-                    print("Lat: \(LatVideo[nCoord]), Long: \(LongVideo[nCoord]) vs Lat: \(lat), Long: \(long) Distancia = \(distancia)")
-                    print("Distancia: \(distancia)")
+                    //print("Almacenado (Lat: \(LatVideo[nCoord]), Long: \(LongVideo[nCoord])) vs Nuevo (Lat: \(lat), Long: \(long)) Distancia = \(distancia)")
                     if (distancia<=(UserDefaults.standard.double(forKey: "Distance"))) {
-                        print("vs No agregado\n")
+                        //print("vs No agregado\n")
                         ponerMarker = false //Indicador para poner marker en mapa
                         nCoord=9999  //Existe algun video dentro del rango, sale del ciclo
                     } else {
-                        print("vs Si agregado\n")
                         //Termino el recorrido sin ninguna coincidencia
-                        ponerMarker = true
+                        //ponerMarker = true
+                        //nCoord=9999
                     }
                 }
                 if (ponerMarker){
+                    //print("vs Si agregado\n")
                     if (mContador==0){
                         LatVideo.removeAll()
                         LongVideo.removeAll()
@@ -140,7 +142,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 }
                 var cont:Int = 0
                 for _ in LatVideo {
-                    print("LAT: \(LatVideo[cont]), LONG: \(LongVideo[cont])")
+                    //print("LAT: \(LatVideo[cont]), LONG: \(LongVideo[cont])")
                     cont+=1
                 }
             }
@@ -150,35 +152,37 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             
             //INICIA COLOCACION DE MARCADORES DE OTROS USUARIOS
             for nUsuario in 0 ..< usuarios.count {
-                print("Ahora Usuario \(usuarios[nUsuario].nombre)")
+                print("Siguiente usuario: \(usuarios[nUsuario].nombre)")
                 if(IndiceUsuario != nUsuario){
-                    print("IndiceUsuario \(IndiceUsuario)")
-                    print("nUsuario \(nUsuario)")
+                    //print("IndiceUsuario \(IndiceUsuario)")
+                    //print("nUsuario \(nUsuario)")
                     for nVideo in 0 ..< usuarios[nUsuario].videoinfo.count {
-                        print("Videos actuales: \(nVideo)")
+                        //print("Videos actuales: \(nVideo)")
                         let result = usuarios[nUsuario].videoinfo[nVideo] as [String:Any]
                         lat = Double(result["lat"] as! String)!
                         let ant1 : String = result["long"] as! String
                         let ant2 : String = ant1.replacingOccurrences(of: "\n", with: "", options: .literal, range: nil)
                         long = Double(ant2)!
+                        ponerMarker=true
                         for var nCoord in 0 ..< LatVideo.count {
                             let Punto1 = CLLocation(latitude: lat , longitude: long)
                             let Punto2 = CLLocation(latitude: LatVideo[nCoord] , longitude: LongVideo[nCoord]) //Almacenado
-                            print("Lat: \(LatVideo[nCoord]), Long: \(LongVideo[nCoord]) vs Lat: \(lat), Long: \(long)")
                             let distancia = Punto1.distance(from: Punto2)
-                            print("Distancia: \(distancia)")
+                            //print("Almacenado (Lat: \(LatVideo[nCoord]), Long: \(LongVideo[nCoord])) vs Nuevo (Lat: \(lat), Long: \(long)) Distancia = \(distancia)")
+                            //print("Distancia: \(distancia)")
                             if (distancia<=(UserDefaults.standard.double(forKey: "Distance"))) {
-                                print("No agregado\n")
+                                //print("vs No agregado\n")
                                 ponerMarker = false //Indicador para poner marker en mapa
                                 nCoord=9999  //Existe algun video dentro del rango, sale del ciclo
                             } else {
-                                print("Si agregado\n")
-                                ponerMarker = true //Termino el recorrido sin ninguna coincidencia
+                                //Termino el recorrido sin ninguna coincidencia
+                                //ponerMarker = true
+                                //nCoord=9999
                             }
                         }
                         if (ponerMarker){
                             if (mContador==0){
-                                print("Eliminamos en todos los usuarios")
+                                //print("Eliminamos en todos los usuarios")
                                 LatVideo.removeAll()
                                 LongVideo.removeAll()
                             }
@@ -190,13 +194,13 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                         }
                         var cont:Int = 0
                         for _ in LatVideo {
-                            print("LAT: \(LatVideo[cont]), LONG: \(LongVideo[cont])")
+                            //print("LAT: \(LatVideo[cont]), LONG: \(LongVideo[cont])")
                             cont+=1
                         }
                     }
                     markerOtroUsuario()
                 }
-                print("Videos -> \(LatVideo.count) en el mapa")
+                //print("Videos -> \(LatVideo.count) en el mapa")
             }
         } else {
             print("El usuario no tiene videos")
@@ -212,11 +216,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 marker.position = CLLocationCoordinate2D(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
                 marker.title = "WeShick"
                 marker.snippet = "Videos: 0"
-                marker.icon = UIImage(named: "marker")
-                let circulo = CLLocationCoordinate2D(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
-                let radio = GMSCircle(position: circulo, radius: ((UserDefaults.standard.double(forKey: "Distance"))/2))
-                radio.map = mapContainer
-                //marker.map = mapContainer
+                marker.icon = UIImage(named: "marker1")
+                marker.map = mapContainer
+                //let circulo = CLLocationCoordinate2D(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
+                //let radio = GMSCircle(position: circulo, radius: (UserDefaults.standard.double(forKey: "Distance")))
+                //radio.map = mapContainer
             }
         }
     }
@@ -230,9 +234,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 marker.position = CLLocationCoordinate2D(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
                 marker.title = "WeShick"
                 marker.snippet = "Videos: 0"
-                marker.icon = UIImage(named: "marker_m")
+                marker.icon = UIImage(named: "marker2")
                 marker.map = mapContainer
-                print("En el array: \(LatVideo[c]), \(LongVideo[c])")
+                //let circulo = CLLocationCoordinate2D(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
+                //let radio = GMSCircle(position: circulo, radius: (UserDefaults.standard.double(forKey: "Distance")))
+                //radio.map = mapContainer
             }
         }
     }
@@ -244,7 +250,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func mostrarRuta(inicio: CLLocation, destino: CLLocation) {
         let origin = "\(inicio.coordinate.latitude),\(inicio.coordinate.longitude)"
         let destination = "\(destino.coordinate.latitude),\(destino.coordinate.longitude)"
-        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving"
+        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=walking"
         Alamofire.request(url).responseJSON { response in
             let json = JSON(data: response.data!)
             let routes = json["routes"].arrayValue
@@ -259,7 +265,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             }
         }
     }
-    //Funcion crear markers termina
     
     ///// CONEXION POST URL CON API OBTENER VIDEOS
     func videos(apikey: String, id: String) {
@@ -293,25 +298,28 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                                 if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]], let idd = user["id"] as? Int, let url_img = user["url_img"] as? String {
                                     if (idd==self.useridd){
                                         self.DataUserDefault.set(contador, forKey: "IndiceUsuario")
-                                        print("Tu eres el Usuario: \(contador)")
-                                    } else {
+                                        //print("Tu eres el Usuario: \(contador)")
+                                    } /*else {
                                         self.DataUserDefault.set(0, forKey: "IndiceUsuario")
-                                    }
+                                    }*/
                                     contador+=1
                                     print("En el servidor -> Usuario: \(idd), Nombre: \(nombre)")
                                     usuario.nombre = nombre
                                     usuario.url_img = url_img
                                     usuario.idusuario = "\(idd)"
+                                    var contVideo:Int = 0
                                     for video in videos {
                                         usuario.videoinfo.append(video)
-                                        //print("\tSu video -> Usuario: \(usuario[user].videoinfo[video]["url"])")
+                                        //print("\tSu video -> Video: \(usuario.videoinfo[contador]["url"])")
+                                        //print("\t\(usuario.videoinfo[contVideo]["url"]!)")
+                                        contVideo+=1
                                     }
                                 }
                                 self.usuarios.append(usuario)
-                                print("Total de usuarios: \(self.usuarios.count)")
                                 usuariosg = self.usuarios
                             }
                         }
+                        print("Total de usuarios: \(self.usuarios.count)")
                         self.crearMarker()
                     }
                 }
@@ -322,15 +330,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     ////SUBIR VIDEO A API
     func SubirVideo(apikey: String, id : String, lat: String, long: String, path: String ) {
-        self.alertController = UIAlertController(title: nil, message: "Por favor espere...\n\n", preferredStyle: .alert)
-        let spinnerIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-        spinnerIndicator.center = CGPoint(x: 135.0, y: 65.5)
-        spinnerIndicator.color = UIColor.black
-        spinnerIndicator.startAnimating()
-        
-        alertController.view.addSubview(spinnerIndicator)
-        self.present(alertController, animated: false, completion: nil)
-        
         let parameters = ["apikey": apikey,
                           "id": id,
                           "lat": lat,
@@ -353,12 +352,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     print("Respuesta JSON: \(json)")
-                    self.mapContainer.clear()
-                    self.videos(apikey: apikey, id: self.userid)
-                    self.alertController.dismiss(animated: true, completion: nil)
+                    self.reloadMapData()
                 } catch {
                     print("Error formando JSON: \(error)")
-                    self.alertController.dismiss(animated: true, completion: nil)
                     let alerta = UIAlertController(title: "Error de conexion a intenet", message: "Revisa tu conexion", preferredStyle: UIAlertControllerStyle.alert)
                     alerta.addAction(UIAlertAction(title: "Entendido", style: UIAlertActionStyle.default, handler: { alertAction in
                         alerta.dismiss(animated: true, completion: nil)
@@ -445,7 +441,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        print(marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+        //print(marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
         DataUserDefault.set(marker.position.latitude, forKey: "LatSelected")
         DataUserDefault.set(marker.position.longitude, forKey: "LongSelected")
         camera = GMSCameraPosition.camera(withLatitude: marker.position.latitude, longitude: marker.position.longitude, zoom: 20.0)
@@ -472,22 +468,21 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
-        print("InfoWindow Cerrado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+        //print("InfoWindow Cerrado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
-        print("InfoWindow Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
+        //print("InfoWindow Seleccionado, Titulo: ", marker.snippet!, "Latitud: ", marker.position.latitude, " Longitud: ", marker.position.longitude)
         DataUserDefault.set(marker.position.latitude, forKey: "LatSelected")
         DataUserDefault.set(marker.position.longitude, forKey: "LongSelected")
         showModalUsuarios()
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressInfoWindowOf marker: GMSMarker) {
-        print("InfoWindow fue mantenido presionado")
+        //print("InfoWindow fue mantenido presionado")
         let ubicacionInicio = CLLocation(latitude: mlatitud, longitude: mlongitud)
         let ubicacionDestino = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
-        mapContainer.clear()
-        videos(apikey: apikey, id: userid)
+        reloadMapData()
         self.mostrarRuta(inicio: ubicacionInicio, destino: ubicacionDestino)
     }
     
@@ -516,7 +511,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 if(distancia<=UserDefaults.standard.double(forKey: "Distance")){
                     if (!idUsers.contains(Int(usuariosg[i].idusuario)!)) {
                         usernames.append(usuariosg[i].nombre)
-                        print("En el mapa -> Usuario: \(Int(usuariosg[i].idusuario)!), Nombre: \(usuariosg[i].nombre)")
+                        print("En el mapa -> ID Usuario: \(Int(usuariosg[i].idusuario)!), Nombre: \(usuariosg[i].nombre)")
                         idUsers.append(Int(usuariosg[i].idusuario)!)
                     }
                 }
@@ -532,7 +527,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             for i in 0..<usuariosg.count {
                 //!idUsers.contains(Int(usuariosg[i].idusuario)!)
                 if (Int(usuariosg[i].idusuario)! == id){
-                    print("\(Int(usuariosg[i].idusuario)!)")
+                    //print("\(Int(usuariosg[i].idusuario)!)")
                     for h in 0..<usuariosg[i].videoinfo.count {
                         let LatCurrent : Double = Double(usuariosg[i].videoinfo[h]["lat"] as! String)!
                         let ant1 : String = usuariosg[i].videoinfo[h]["long"] as! String
@@ -543,38 +538,14 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                         let distancia = Punto1.distance(from: Punto2)
                         if(distancia<=UserDefaults.standard.double(forKey: "Distance")){
                             numVideos += 1
-                            print("\(Int(usuariosg[i].idusuario)!)")
+                            //print("\(Int(usuariosg[i].idusuario)!)")
+                            
                         }
                     }
                 }
             }
         }
         return numVideos
-        
-        /*
-         Original
-         
-         var numVideos : Int = 0
-         let LatSelected : Double = UserDefaults.standard.double(forKey: "LatSelected")
-         let LongSelected : Double = UserDefaults.standard.double(forKey: "LongSelected")
-         for nombre in usernames {
-         for i in 0..<usuariosg.count {
-         if (usuariosg[i].nombre.contains(nombre)){
-         for h in 0..<usuariosg[i].videoinfo.count {
-         let LatCurrent : Double = Double(usuariosg[i].videoinfo[h]["lat"] as! String)!
-         let LongCurrent : Double = Double(usuariosg[i].videoinfo[h]["long"] as! String)!
-         let Punto1 = CLLocation(latitude: LatSelected, longitude: LongSelected)
-         let Punto2 = CLLocation(latitude: LatCurrent, longitude: LongCurrent)
-         let distancia = Punto1.distance(from: Punto2)
-         if(distancia<=UserDefaults.standard.double(forKey: "Distance")){
-         numVideos += 1
-         }
-         }
-         }
-         }
-         }
-         return numVideos
-         */
     }
 }
     /*
@@ -594,6 +565,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                     let UploadLong = "\(self.mlongitud)"
                     self.SubirVideo(apikey: self.apikey, id: String(self.userid), lat: UploadLat , long: UploadLong, path: sourcePath)
                     alerta.dismiss(animated: true, completion: nil)
+                    self.reloadMapData()
                 }))
                 alerta.addAction(UIAlertAction(title: "Guardar en el telefono", style: UIAlertActionStyle.default, handler: { alertAction in
                     self.moverVideo(destinationPath: sourcePath)

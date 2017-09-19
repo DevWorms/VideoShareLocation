@@ -7,7 +7,6 @@ var globalid = "globalid"
 var gkey = ""
 var gid = ""
 var gidd : Int = 0
-var imageURL : String  = ""
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
@@ -15,7 +14,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     var datos = [[String : Any]]()
     var dict : [String : AnyObject]!
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-    var alertController = UIAlertController()
+    var loadingLogin = UIAlertController()
     
     let loginButton: FBSDKLoginButton = {
         let button = FBSDKLoginButton()
@@ -37,9 +36,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             if let accessToken = FBSDKAccessToken.current() {
                 print("Token de usuario ", accessToken)
                 FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"]).start(completionHandler: { (connection, result, error) -> Void in
-                    guard let userInfo = result as? [String: Any] else { return }
-                    imageURL = (((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
-                    self.guardarDatos.setValue(imageURL, forKey: "picture")
+                    guard (result as? [String: Any]) != nil else { return }
+                    /*imageURL = (((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
+                    self.guardarDatos.setValue(imageURL, forKey: "picture")*/
                     if (error == nil){
                         self.dict = result as! [String : AnyObject]
                         self.setInterfaz(result: self.dict as NSDictionary)
@@ -64,7 +63,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         let apellido = result.value(forKey: "last_name") as! String
         let correo = result.value(forKey: "email") as! String
         let genero = result.value(forKey: "gender") as! String
-        
+        let imageURL = ("http://graph.facebook.com/\(idFace)/picture?type=large")
         let name = "\(nombre) \(apellido)"
         
         guardarDatos.setValue("Si", forKey: "loginEnd")
@@ -72,6 +71,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         guardarDatos.set(name, forKey: "nombre")
         guardarDatos.set(correo, forKey: "correo")
         guardarDatos.set(genero, forKey: "genero")
+        guardarDatos.setValue(imageURL, forKey: "picture")
         
         print("ID Facebook: \(idFace)")
         print("Nombre: \(name)")
@@ -79,17 +79,17 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         print("Genero: \(genero)")
         print("URL Foto: \(imageURL)")
         
-        alertController = UIAlertController(title: nil, message: "Por favor espere...\n\n", preferredStyle: .alert)
+        loadingLogin = UIAlertController(title: nil, message: "Por favor espere...\n\n", preferredStyle: .alert)
         let spinnerIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         spinnerIndicator.center = CGPoint(x: 135.0, y: 65.5)
         spinnerIndicator.color = UIColor.black
         spinnerIndicator.startAnimating()
         
-        alertController.view.addSubview(spinnerIndicator)
-        self.present(alertController, animated: false, completion: nil)
+        loadingLogin.view.addSubview(spinnerIndicator)
+        self.present(loadingLogin, animated: false, completion: nil)
         login(token:idFace, name:name, imageURL: imageURL)
         
-        self.alertController.dismiss(animated: true, completion: nil)
+        loadingLogin.dismiss(animated: true, completion: nil)
     }
     
     func dataAlreadyExist(userKey: String) -> Bool {
