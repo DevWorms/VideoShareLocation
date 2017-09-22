@@ -105,8 +105,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let IndiceUsuario : Int = DataUserDefault.integer(forKey: "IndiceUsuario") - 1
         var ponerMarker: Bool = true
         var mContador:Int = 0
-        print(IndiceUsuario)
-        if(IndiceUsuario>0){
+        print("Recibe IndiceUsuario: \(IndiceUsuario)")
+        if(IndiceUsuario != -1){
             for nVideo in 0 ..< usuarios[IndiceUsuario].videoinfo.count {
                 let result = usuarios[IndiceUsuario].videoinfo[nVideo] as [String:Any]
                 lat = Double(result["lat"] as! String)!
@@ -135,46 +135,45 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             }
             markerUsuario()
             //TERMINA COLOCACION DE MARCADORES DE USUARIO
-            
-            //INICIA COLOCACION DE MARCADORES DE OTROS USUARIOS
-            for nUsuario in 0 ..< usuarios.count {
-                //print("Siguiente usuario: \(usuarios[nUsuario].nombre)")
-                if(IndiceUsuario != nUsuario){
-                    for nVideo in 0 ..< usuarios[nUsuario].videoinfo.count {
-                        //print("Videos actuales: \(nVideo)")
-                        let result = usuarios[nUsuario].videoinfo[nVideo] as [String:Any]
-                        lat = Double(result["lat"] as! String)!
-                        let ant1 : String = result["long"] as! String
-                        let ant2 : String = ant1.replacingOccurrences(of: "\n", with: "", options: .literal, range: nil)
-                        long = Double(ant2)!
-                        ponerMarker=true
-                        for var nCoord in 0 ..< LatVideo.count {
-                            let Punto1 = CLLocation(latitude: lat , longitude: long)
-                            let Punto2 = CLLocation(latitude: LatVideo[nCoord] , longitude: LongVideo[nCoord]) //Almacenado
-                            let distancia = Punto1.distance(from: Punto2)
-                            if (distancia<=(UserDefaults.standard.double(forKey: "Distance"))) {
-                                ponerMarker = false //Indicador para poner marker en mapa
-                                nCoord=9999  //Existe algun video dentro del rango, sale del ciclo
-                            }
-                        }
-                        if (ponerMarker){
-                            if (mContador==0){
-                                LatVideo.removeAll()
-                                LongVideo.removeAll()
-                            }
-                            LatVideo.append(lat)
-                            LongVideo.append(long)
-                            DataUserDefault.set(LatVideo, forKey: "LatVideo")
-                            DataUserDefault.set(LongVideo, forKey: "LongVideo")
-                            mContador+=1
-                        }
-                    }
-                    markerOtroUsuario()
-                }
-            }
         } else {
             print("El usuario no tiene videos")
         }
+        //INICIA COLOCACION DE MARCADORES DE OTROS USUARIOS
+        for nUsuario in 0 ..< usuarios.count {
+            //print("Siguiente usuario: \(usuarios[nUsuario].nombre)")
+            //if(IndiceUsuario != nUsuario){
+            for nVideo in 0 ..< usuarios[nUsuario].videoinfo.count {
+                //print("Videos actuales: \(nVideo)")
+                let result = usuarios[nUsuario].videoinfo[nVideo] as [String:Any]
+                lat = Double(result["lat"] as! String)!
+                let ant1 : String = result["long"] as! String
+                let ant2 : String = ant1.replacingOccurrences(of: "\n", with: "", options: .literal, range: nil)
+                long = Double(ant2)!
+                ponerMarker=true
+                for var nCoord in 0 ..< LatVideo.count {
+                    let Punto1 = CLLocation(latitude: lat , longitude: long)
+                    let Punto2 = CLLocation(latitude: LatVideo[nCoord] , longitude: LongVideo[nCoord]) //Almacenado
+                    let distancia = Punto1.distance(from: Punto2)
+                    if (distancia<=(UserDefaults.standard.double(forKey: "Distance"))) {
+                        ponerMarker = false //Indicador para poner marker en mapa
+                        nCoord=9999  //Existe algun video dentro del rango, sale del ciclo
+                    }
+                }
+                if (ponerMarker){
+                    if (mContador==0){
+                        LatVideo.removeAll()
+                        LongVideo.removeAll()
+                    }
+                    LatVideo.append(lat)
+                    LongVideo.append(long)
+                    DataUserDefault.set(LatVideo, forKey: "LatVideo")
+                    DataUserDefault.set(LongVideo, forKey: "LongVideo")
+                    mContador+=1
+                }
+                //}
+            }
+        }
+        markerOtroUsuario()
     }
     
     func markerUsuario() {
@@ -265,6 +264,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                                 if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]], let idd = user["id"] as? Int, let url_img = user["url_img"] as? String {
                                     if (idd==self.useridd){
                                         self.DataUserDefault.set(contador, forKey: "IndiceUsuario")
+                                        print("Envia IndiceUsuario \(contador)")
                                     }
                                     contador+=1
                                     print("En el servidor -> Usuario: \(idd), Nombre: \(nombre)")
@@ -355,6 +355,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         body.append("--\(boundary)--\(lineBreak)")
         return body
     }
+    
    /////////Aqui esta el progreso de subida
     func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64)
     {

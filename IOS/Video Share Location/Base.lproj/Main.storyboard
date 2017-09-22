@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bas-QM-q4T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bas-QM-q4T">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -55,8 +55,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AR5-A4-Ll2">
                                 <rect key="frame" x="0.0" y="405" width="320" height="75"/>
                                 <subviews>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ctx-j9-0Uk">
+                                        <rect key="frame" x="8" y="73" width="304" height="2"/>
+                                        <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="IJl-ZW-1j0"/>
+                                            <constraint firstAttribute="width" constant="304" id="ROv-CM-JQv"/>
+                                        </constraints>
+                                    </progressView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="barra" translatesAutoresizingMaskIntoConstraints="NO" id="OsB-Ao-2em">
-                                        <rect key="frame" x="0.0" y="-86" width="320" height="219"/>
+                                        <rect key="frame" x="0.0" y="-86" width="320" height="209"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVh-g9-vsY">
@@ -72,14 +80,11 @@
                                             <action selector="Grabar:" destination="Tni-bA-Rtq" eventType="touchUpInside" id="dSS-cJ-pEH"/>
                                         </connections>
                                     </button>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ctx-j9-0Uk">
-                                        <rect key="frame" x="8" y="73" width="304" height="2"/>
-                                        <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </progressView>
                                 </subviews>
                                 <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="hVh-g9-vsY" secondAttribute="bottom" constant="8" id="392-im-ez0"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ctx-j9-0Uk" secondAttribute="bottom" id="ERp-Xe-pa8"/>
                                     <constraint firstAttribute="trailing" secondItem="Ctx-j9-0Uk" secondAttribute="trailing" constant="8" id="F1K-d8-AuB"/>
                                     <constraint firstItem="Ctx-j9-0Uk" firstAttribute="leading" secondItem="AR5-A4-Ll2" secondAttribute="leading" constant="8" id="LTi-at-mqi"/>
                                     <constraint firstItem="hVh-g9-vsY" firstAttribute="centerX" secondItem="AR5-A4-Ll2" secondAttribute="centerX" id="g4h-Iu-lt6"/>
