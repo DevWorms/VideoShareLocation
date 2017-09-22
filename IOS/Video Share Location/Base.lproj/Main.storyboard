@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bas-QM-q4T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bas-QM-q4T">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -72,10 +72,16 @@
                                             <action selector="Grabar:" destination="Tni-bA-Rtq" eventType="touchUpInside" id="dSS-cJ-pEH"/>
                                         </connections>
                                     </button>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ctx-j9-0Uk">
+                                        <rect key="frame" x="8" y="73" width="304" height="2"/>
+                                        <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </progressView>
                                 </subviews>
                                 <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="hVh-g9-vsY" secondAttribute="bottom" constant="8" id="392-im-ez0"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ctx-j9-0Uk" secondAttribute="trailing" constant="8" id="F1K-d8-AuB"/>
+                                    <constraint firstItem="Ctx-j9-0Uk" firstAttribute="leading" secondItem="AR5-A4-Ll2" secondAttribute="leading" constant="8" id="LTi-at-mqi"/>
                                     <constraint firstItem="hVh-g9-vsY" firstAttribute="centerX" secondItem="AR5-A4-Ll2" secondAttribute="centerX" id="g4h-Iu-lt6"/>
                                     <constraint firstAttribute="height" constant="75" id="ujW-Nf-3sl"/>
                                 </constraints>
@@ -92,6 +98,7 @@
                     <navigationItem key="navigationItem" title="WeShick" id="Xzm-Zm-V5X" userLabel="WeShick"/>
                     <connections>
                         <outlet property="mapContainer" destination="ICa-QL-Z85" id="Vlf-yV-6Xj"/>
+                        <outlet property="progressBar" destination="Ctx-j9-0Uk" id="5zJ-vI-FpX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cnW-tZ-bAL" userLabel="First Responder" sceneMemberID="firstResponder"/>

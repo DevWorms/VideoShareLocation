@@ -10,8 +10,9 @@ import Foundation
 
 var usuariosg: [Users] = []
 
-class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
+class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, URLSessionTaskDelegate {
 
+    @IBOutlet weak var progressBar: UIProgressView!
     typealias Parameters = [String: String]
     var usuarios: [Users] = []
     let DataUserDefault = UserDefaults.standard
@@ -104,6 +105,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let IndiceUsuario : Int = DataUserDefault.integer(forKey: "IndiceUsuario") - 1
         var ponerMarker: Bool = true
         var mContador:Int = 0
+        print(IndiceUsuario)
         if(IndiceUsuario>0){
             for nVideo in 0 ..< usuarios[IndiceUsuario].videoinfo.count {
                 let result = usuarios[IndiceUsuario].videoinfo[nVideo] as [String:Any]
@@ -236,6 +238,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func videos(apikey: String, id: String) {
         let parameterString = "apikey=\(apikey)&id=0"
+        print(parameterString)
         let strUrl = "http://videoshare.devworms.com/api/videos"
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
             var urlRequest = URLRequest(url: URL(string: strUrl)!)
@@ -286,7 +289,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             }
         }
     }
- 
+ ////////Inicia Subir video a API
     func SubirVideo(apikey: String, id : String, lat: String, long: String, path: String ) {
         let parameters = ["apikey": apikey,
                           "id": id,
@@ -302,7 +305,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let dataBody = createDataBody(withParameters: parameters, media: path , boundary: boundary)
         request.httpBody = dataBody
         let session = URLSession.shared
-        session.dataTask(with: request) { (data, response, error) in
+        session.uploadTask(with: request, from: dataBody) { (data, response, error) in
             if let response = response {
                 print("Respuesta: \(response)")
             }
@@ -321,6 +324,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 }
             }
         }.resume()
+        
     }
     
     func generateBoundary() -> String {
@@ -350,6 +354,12 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         }
         body.append("--\(boundary)--\(lineBreak)")
         return body
+    }
+   /////////Aqui esta el progreso de subida
+    func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64)
+    {
+        var uploadProgress:Float = Float(totalBytesSent)/Float(totalBytesExpectedToSend)
+        progressBar.progress = uploadProgress
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
