@@ -9,8 +9,10 @@ import Alamofire
 import Foundation
 
 var usuariosg: [Users] = []
+let notificacionSubir = NSNotification.Name("uploadNotification")
+let notificacionTermina = NSNotification.Name("uploadedNotification")
 
-class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, URLSessionTaskDelegate {
+class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
     @IBOutlet weak var progressBar: UIProgressView!
     typealias Parameters = [String: String]
@@ -310,6 +312,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 print("Respuesta: \(response)")
             }
             if let data = data {
+                ////////////Notificacion para menuviewcontroller que mostrará si el video se subio o no
+                NotificationCenter.default.post(name: notificacionSubir, object: nil)
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     print("Respuesta JSON: \(json)")
@@ -324,6 +328,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 }
             }
         }.resume()
+        //////////////Notificación de que el video ya se subió
+        NotificationCenter.default.post(name: notificacionTermina, object: nil)
         
     }
     
@@ -354,13 +360,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         }
         body.append("--\(boundary)--\(lineBreak)")
         return body
-    }
-    
-   /////////Aqui esta el progreso de subida
-    func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64)
-    {
-        var uploadProgress:Float = Float(totalBytesSent)/Float(totalBytesExpectedToSend)
-        progressBar.progress = uploadProgress
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -12,6 +12,8 @@ import FBSDKCoreKit
 
 class MenuViewController: UIViewController {
     
+    @IBOutlet weak var activityCarga: UIActivityIndicatorView!
+    @IBOutlet weak var labelCarga: UILabel!
     @IBAction func mandarTerminosyCondiciones(_ sender: Any) {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TerminosyCondiciones")
@@ -44,6 +46,20 @@ class MenuViewController: UIViewController {
         super.viewDidLoad()
         let regresarButton:UIBarButtonItem = UIBarButtonItem(title: "Regresar", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MenuViewController.regresarButton(sender:)))
         self.navigationItem.setLeftBarButton(regresarButton, animated: true)
+        NotificationCenter.default.addObserver(forName: notificacionSubir, object: nil, queue: nil){ notification in
+            print("\(notification)")
+            self.labelCarga.isHidden = false
+            self.activityCarga.isHidden = false
+            self.labelCarga.text = "Subiendo video"
+            self.activityCarga.startAnimating()
+        }
+        NotificationCenter.default.addObserver(forName: notificacionTermina, object: nil, queue: nil){notification in
+            print("Se acabo la carga \(notification)")
+            self.activityCarga.stopAnimating()
+            self.activityCarga.isHidden = true
+            self.labelCarga.text = "El video se cargo con exito"
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {
