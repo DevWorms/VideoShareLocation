@@ -31,7 +31,7 @@ class UserController extends Controller
                 $apikey = Hash::make($request->get('tokenfb'));
                 $name = $request->get("name");
                 $tokenfb = $request->get("tokenfb");
-                $imagen = $request ->get ("url_img");
+                $imagen = $request->get("url_img");
 
                 if ($name == null || $name == "") {
 
@@ -43,9 +43,9 @@ class UserController extends Controller
                     $usuario = User::where("tokenfb", $tokenfb)->first();
                     if ($usuario) {
                         $usuario->name = $name;
-                        $usuario ->url_img = $imagen;
+                        $usuario->url_img = $imagen;
                         $usuario->save();
-                    }else {
+                    } else {
                         $usuario = User::create([
                             'tokenfb' => $tokenfb,
                             'name' => $name,
@@ -53,9 +53,6 @@ class UserController extends Controller
                             'url_img' => $imagen,
                         ]);
                     }
-                   /** por pruebas $usuario  $usuario = User::updateOrCreate([//busca el usuario y lo actaliza
-                        'tokenfb' => $tokenfb,
-                    ], ["name" => $name]);*/
                 }
             }
 
@@ -97,7 +94,6 @@ class UserController extends Controller
                 }
 
                 $res ['estado'] = 1;
-                $res ['mensaje'] = "¡Registro con éxito!";
                 $res ['user'] = $user;
                 return response()->json($res, 200);
             }
@@ -105,9 +101,7 @@ class UserController extends Controller
             $res['estado'] = 0;
             $res['mensaje'] = "Usuario incorrecto";
             return response()->json($res, 400);
-
-        } catch
-        (Exception $error) {
+        } catch (Exception $error) {
             $res['estado'] = 0;
             $res['mensaje'] = $error->getMessage();
             return response()->json($res, 500);
@@ -143,16 +137,14 @@ class UserController extends Controller
             $res['mensaje'] = "Usuario incorrecto";
             return response()->json($res, 400);
 
-        } catch
-        (Exception $error) {
+        } catch (Exception $error) {
             $res['estado'] = 0;
             $res['mensaje'] = $error->getMessage();
             return response()->json($res, 500);
         }
     }
 
-    public function returnVideo(Video $video)
-    {
+    public function returnVideo(Video $video) {
         $url = $video->ruta;
         $video->url = url(Storage::url($url));
 

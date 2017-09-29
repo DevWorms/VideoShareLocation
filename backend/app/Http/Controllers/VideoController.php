@@ -24,8 +24,8 @@ class VideoController extends Controller
     function __construct()
     {
         $this->size = 100000000;
-        $this->distance = 5;
-        $this->distance10Metros = 0.01;
+        $this->distance = 5; // 5 kilometros
+        $this->distance10Metros = 0.015; // 15 metros
         $this->extensions = [
             // extensiones de video
             "h263", "h264", "mp4", "mov", "m4v",
@@ -42,6 +42,7 @@ class VideoController extends Controller
                 'lat' => 'required',
                 'long' => 'required',
             ]);
+
             if ($validator->fails()) {
                 //Si los datos no estan completos, devuelve error
                 $errors = $validator->errors();
@@ -49,6 +50,7 @@ class VideoController extends Controller
                 $res['mensaje'] = $errors->first();
                 return response()->json($res, 400);
             }
+
             $user = User::where(['id' => $request->get('id'), 'apikey' => $request->get("apikey")])->firstOrfail();
             $video = $request->file("archivo");
             //$validator = Validator::make(['file' => $video], ['file' => 'required']);
@@ -105,7 +107,8 @@ class VideoController extends Controller
         }
     }
 
-    public function videos5Metros(Request $request, $video_id) {
+    public function videos5Metros(Request $request, $video_id)
+    {
         $user = null;
         try {
             $validator = Validator::make($request->all(), [
@@ -177,6 +180,7 @@ class VideoController extends Controller
                 'id' => 'required',
                 'apikey' => 'required',
             ]);
+
             if ($validator->fails()) {
                 //Si los datos no estan completos, devuelve error
                 $errors = $validator->errors();
@@ -184,128 +188,119 @@ class VideoController extends Controller
                 $res['mensaje'] = $errors->first();
                 return response()->json($res, 400);
             }
+
+            User::where(['id' => $request->get("id"), 'apikey' => $request->get("apikey")])->firstOrFail();
+
             $lat = $request->get("lat");
             $long = $request->get("long");
+            $horamin = Carbon::now()->subHour(3);
 
             if ($lat == null || $long == null) {
-
-                $usarios = User::where('id', '!=', $request->get("id"))->whereHas('videos')->with('videos')->select("id", "name", "url_img")->get();
-
-                foreach ($usarios as $user) {
-                    foreach ($user->videos as $video) {
-                        $video = $this->returnVideo($video);
-
-                    }
-
-                }
-                $res ['estado'] = 1;
-                $res ['users'] = $usarios;
-                return response()->json($res, 200);
-
+                $videos = Video::where('user_id', '!=', $request->get("id"))
+                    ->where('created_at', '>=', $horamin)
+                    ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
+                               cos( radians( `lat` ) )
+                               * cos( radians( `long` ) - radians(?)
+                               ) + sin( radians(?) ) *
+                               sin( radians( `lat` ) ) )
+                             ) AS distance', [$lat, $long, $lat])
+                    ->orderBy('created_at')
+                    ->with(['usuario' => function ($query) {
+                        $query->select('id', 'name', 'url_img');
+                    }])
+                    ->get();
             } else {
                 $boundaries = $this->getBoundaries($lat, $long);
-                $horamin = Carbon::now()->subHour(3);
-                $allusers = User::where('id', '!=', $request->get("id"))->whereHas("videos", function ($uv) use ($horamin, $boundaries, $lat, $long) {
-                    $uv->where('created_at', '>=', $horamin)
-                        ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
-                        ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
-                        ->selectRaw('( 6371 * acos( cos( radians(?) ) *
+
+                $videos = Video::where('user_id', '!=', $request->get("id"))
+                    ->where('created_at', '>=', $horamin)
+                    ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
+                    ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
+                    ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
                                cos( radians( `lat` ) )
                                * cos( radians( `long` ) - radians(?)
                                ) + sin( radians(?) ) *
                                sin( radians( `lat` ) ) )
                              ) AS distance', [$lat, $long, $lat])
-                        ->havingRaw("distance < ?", [$this->distance]);
-                })->get();
-                /**
-                 * $allvideo = Video::where('created_at', '>=', $horamin)
-                 * ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
-                 * ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
-                 * ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
-                 * cos( radians( `lat` ) )
-                 * cos( radians( `long` ) - radians(?)
-                 * ) + sin( radians(?) ) *
-                 * sin( radians( `lat` ) ) )
-                 * ) AS distance', [$lat, $long, $lat])
-                 * ->havingRaw("distance < ?", [$this->distance])
-                 * ->orderBy('created_at')->get();
-                 *
-                 * foreach ($allusers as $video) {
-                 * $video = $this->returnVideo($video);
-                 * }*/
-                foreach ($allusers as $user) {
-                    $allvideo = Video::where('created_at', '>=', $horamin)
-                        ->where("user_id", $user->id)
-                        ->whereBetween('lat', [$boundaries['min_lat'], $boundaries['max_lat']])
-                        ->whereBetween('long', [$boundaries['min_lng'], $boundaries['max_lng']])
-                        ->selectRaw('*, ( 6371 * acos( cos( radians(?) ) *
-                               cos( radians( `lat` ) )
-                               * cos( radians( `long` ) - radians(?)
-                               ) + sin( radians(?) ) *
-                               sin( radians( `lat` ) ) )
-                             ) AS distance', [$lat, $long, $lat])
-                        ->havingRaw("distance < ?", [$this->distance])
-                        ->orderBy('created_at')->get();
-
-                    foreach ($allvideo as $v) {
-                        $v = $this->returnVideo($v);
-                    }
-
-                    $user->videos = $allvideo;
-                }
-
-                $res ['estado'] = 1;
-                $res ['users'] = $allusers;
-                $res ['mensaje'] = "Exito";
-                return response()->json($res, 200);
-
+                    ->havingRaw("distance < ?", [$this->distance])
+                    ->orderBy('created_at')
+                    ->with(['usuario' => function ($query) {
+                        $query->select('id', 'name', 'url_img');
+                    }])
+                    ->get();
             }
 
+            $allVideos = collect();
+            $blacklist = [];
+
+            for ($i = 0; $i < $videos->count(); $i++) {
+                if (!in_array($i, $blacklist)) {
+                    $videoParent = $videos->get($i);
+                    $videosCercanos = collect();
+
+                    for ($j = $i + 1; $j < $videos->count(); $j++) {
+                        $distance = ($videoParent["distance"] - $videos->get($j)["distance"]);
+
+                        if ($distance < 0) {
+                            $distance = $distance * -1;
+                        }
+
+                        if ($distance <= $this->distance10Metros) {
+                            $videosCercanos->push($videos->get($j));
+                            array_push($blacklist, $j);
+                        }
+                    }
+
+                    $videoParent["videosCercanos"] = $videosCercanos->values();
+                    $allVideos->push($videoParent);
+                }
+            }
+
+            foreach ($allVideos as $video) {
+                $video = $this->returnFullVideo($video);
+            }
+
+            $res ['estado'] = 1;
+            $res ['videos'] = $allVideos;
+            $res ['mensaje'] = "Exito";
+            return response()->json($res, 200);
         } catch (ModelNotFoundException $ex) {
             $res['estado'] = 0;
-            $res['mensaje'] = "Usuario o contraseña incorrectos";
+            $res['mensaje'] = "Credenciales incorrectas";
             return response()->json($res, 400);
         } catch (Exception $error) {
             $res['estado'] = 0;
-            $res['mensaje'] = $error->getMessage();
+            $res['mensaje'] = $error->getMessage() . $error->getLine() . $error->getFile();
             return response()->json($res, 500);
         }
     }
-
-    /** public function videosusers(Request $request)
-     * {
-     * try {
-     * $validator = Validator::make($request->all(), [
-     * 'id' => 'required',
-     * 'apikey' => 'required',
-     * ]);
-     * if ($validator->fails()) {
-     * //Si los datos no estan completos, devuelve error
-     * $errors = $validator->errors();
-     * $res['estado'] = 0;
-     * $res['mensaje'] = $errors->first();
-     * return response()->json($res, 400);
-     * }
-     * $user = User::where(['id' => $request->get('id'), 'apikey' => $request->get("apikey")])
-     * ->firstOrfail();
-     * $usarios= User::whereHas('videos')->with('videos')->select("id","name")->get();
-     * $res ['estado'] = 1;
-     * $res ['users'] = $usarios;
-     * return response()->json($res, 200);
-     *
-     * } catch (ModelNotFoundException $ex) {
-     * $res['estado'] = 0;
-     * $res['mensaje'] = "Usuario o contraseña incorrectos";
-     * return response()->json($res, 400);
-     * }
-     *
-     * }*/
 
     public function returnVideo(Video $video)
     {
         $url = $video->ruta;
         $video->url = url(Storage::url($url));
 
+        return $video;
+    }
+
+    public function returnFullVideo(Video $video)
+    {
+        $url = $video->ruta;
+        $video->url = url(Storage::url($url));
+        $users = [];
+        $usersBlacklist = [];
+
+        foreach ($video->videosCercanos as $videoCercano) {
+            $videoCercano = $this->returnVideo($videoCercano);
+            if (!in_array($videoCercano->usuario->id, $usersBlacklist)) {
+                if (count($users) < 3) {
+                    array_push($usersBlacklist, $videoCercano->usuario->id);
+                    array_push($users, $videoCercano->usuario);
+                }
+            }
+        }
+
+        $video->users = $users;
         return $video;
     }
 }
