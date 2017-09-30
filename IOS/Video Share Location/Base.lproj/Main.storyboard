@@ -370,38 +370,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ygz-Hb-zh4">
-                                <rect key="frame" x="139" y="207" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="9Pq-aC-R0X">
-                                <rect key="frame" x="189" y="208" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="9Pq-aC-R0X" firstAttribute="top" secondItem="YqE-nC-m6e" secondAttribute="bottom" constant="9" id="6mO-Pd-vAR"/>
                             <constraint firstItem="1Rl-aA-7Gt" firstAttribute="leading" secondItem="7AX-KA-MtV" secondAttribute="leading" id="Bfe-VV-OiY"/>
-                            <constraint firstItem="9Pq-aC-R0X" firstAttribute="leading" secondItem="Ygz-Hb-zh4" secondAttribute="trailing" constant="8" id="H6c-iH-hEf"/>
                             <constraint firstItem="MWx-DX-JXi" firstAttribute="top" secondItem="1Rl-aA-7Gt" secondAttribute="bottom" constant="20" id="THm-eY-xPW"/>
                             <constraint firstAttribute="trailing" secondItem="1Rl-aA-7Gt" secondAttribute="trailing" id="YEO-IA-2mM"/>
                             <constraint firstItem="n65-z3-0HX" firstAttribute="leading" secondItem="7AX-KA-MtV" secondAttribute="leading" id="bYy-ay-Sbe"/>
-                            <constraint firstItem="Ygz-Hb-zh4" firstAttribute="top" secondItem="YqE-nC-m6e" secondAttribute="bottom" constant="8" id="ggh-ft-0wf"/>
                             <constraint firstAttribute="trailing" secondItem="YqE-nC-m6e" secondAttribute="trailing" id="iAF-QJ-Wth"/>
                             <constraint firstItem="n65-z3-0HX" firstAttribute="top" secondItem="oPu-NG-sqe" secondAttribute="bottom" constant="64" id="mk0-UD-ivc"/>
-                            <constraint firstItem="Ygz-Hb-zh4" firstAttribute="leading" secondItem="7AX-KA-MtV" secondAttribute="leadingMargin" constant="123" id="tg2-mF-0eZ"/>
                             <constraint firstAttribute="trailing" secondItem="n65-z3-0HX" secondAttribute="trailing" id="w70-Qy-F9K"/>
                             <constraint firstItem="YqE-nC-m6e" firstAttribute="leading" secondItem="7AX-KA-MtV" secondAttribute="leading" id="ydP-2T-JUx"/>
                             <constraint firstItem="YqE-nC-m6e" firstAttribute="top" secondItem="n65-z3-0HX" secondAttribute="bottom" constant="15" id="zl2-xn-eqP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="WeShick" id="FbO-8k-vse"/>
-                    <connections>
-                        <outlet property="activityCarga" destination="9Pq-aC-R0X" id="06n-Vc-bXP"/>
-                        <outlet property="labelCarga" destination="Ygz-Hb-zh4" id="5y4-xc-Tlf"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EnJ-Th-yKp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

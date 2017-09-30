@@ -9,14 +9,15 @@ import Alamofire
 import Foundation
 
 var usuariosg: [Users] = []
-let notificacionSubir = NSNotification.Name("uploadNotification")
-let notificacionTermina = NSNotification.Name("uploadedNotification")
+var videoprogresog: [VideoProgreso] = []
+
 
 class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
     @IBOutlet weak var progressBar: UIProgressView!
     typealias Parameters = [String: String]
     var usuarios: [Users] = []
+    var videoprogreso: [VideoProgreso] = []
     let DataUserDefault = UserDefaults.standard
     var mlatitud: Double = -13.965953
     var mlongitud: Double = -138.157899
@@ -236,7 +237,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             }
         }
     }
-    
+    /////////// Recupera videos del API ////////////////////////////////
     func videos(apikey: String, id: String) {
         let parameterString = "apikey=\(apikey)&id=0"
         print(parameterString)
@@ -311,15 +312,24 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             if let response = response {
                 print("Respuesta: \(response)")
             }
+            self.videoprogreso = [VideoProgreso]()
+            let video = VideoProgreso()
+            video.id = id
+            video.lat = lat
+            video.long = long
+            video.path = path
+            video.estado = "Subiendo"
+            self.videoprogreso.append(video)
+            videoprogresog = self.videoprogreso
             if let data = data {
-                ////////////Notificacion para menuviewcontroller que mostrará si el video se subio o no
-                NotificationCenter.default.post(name: notificacionSubir, object: nil)
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     print("Respuesta JSON: \(json)")
                     self.reloadMapData()
                 } catch {
                     print("Error formando JSON: \(error)")
+                    let n = videoprogresog.count - 1
+                    videoprogresog[n].estado = "Error al subir video"
                     let alerta = UIAlertController(title: "Error de conexion a intenet", message: "Revisa tu conexion", preferredStyle: UIAlertControllerStyle.alert)
                     alerta.addAction(UIAlertAction(title: "Entendido", style: UIAlertActionStyle.default, handler: { alertAction in
                         alerta.dismiss(animated: true, completion: nil)
@@ -328,9 +338,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 }
             }
         }.resume()
-        //////////////Notificación de que el video ya se subió
-        NotificationCenter.default.post(name: notificacionTermina, object: nil)
-        
+        let n = videoprogresog.count - 1
+        videoprogresog[n].estado = "Subido con exito"
     }
     
     func generateBoundary() -> String {
