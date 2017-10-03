@@ -10,10 +10,34 @@ import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
 
-class MenuViewController: UIViewController {
+class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var activityCarga: UIActivityIndicatorView!
-    @IBOutlet weak var labelCarga: UILabel!
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return videoprogresog.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as!VideosTableViewCell
+        cell.labelTitulo.text = videoprogresog[indexPath.row].path
+        cell.labelEstado.text = videoprogresog[indexPath.row].estado
+        cell.buttonBorrar.tag = indexPath.row
+        cell .buttonBorrar.addTarget(self, action: #selector(getter: VideosTableViewCell.buttonBorrar), for: .touchUpInside)
+        if (cell.labelEstado.text == "Subido con exito"){
+            cell.labelEstado.textColor = UIColor.green
+            cell.buttonBorrar.isHidden = false
+        }
+        if(cell.labelEstado.text == "Error al subir video"){
+            cell.labelEstado.textColor = UIColor.red
+            cell.buttonBorrar.isHidden = false
+        }
+        return cell
+    }
+    
+    
+    @IBAction func buttonBorrar(sender: UIButton){
+        videoprogresog.remove(at: sender.tag)
+    }
     @IBAction func mandarTerminosyCondiciones(_ sender: Any) {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TerminosyCondiciones")
@@ -46,20 +70,6 @@ class MenuViewController: UIViewController {
         super.viewDidLoad()
         let regresarButton:UIBarButtonItem = UIBarButtonItem(title: "Regresar", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MenuViewController.regresarButton(sender:)))
         self.navigationItem.setLeftBarButton(regresarButton, animated: true)
-        NotificationCenter.default.addObserver(forName: notificacionSubir, object: nil, queue: nil){ notification in
-            print("\(notification)")
-            self.labelCarga.isHidden = false
-            self.activityCarga.isHidden = false
-            self.labelCarga.text = "Subiendo video"
-            self.activityCarga.startAnimating()
-        }
-        NotificationCenter.default.addObserver(forName: notificacionTermina, object: nil, queue: nil){notification in
-            print("Se acabo la carga \(notification)")
-            self.activityCarga.stopAnimating()
-            self.activityCarga.isHidden = true
-            self.labelCarga.text = "El video se cargo con exito"
-            
-        }
     }
 
     override func didReceiveMemoryWarning() {
