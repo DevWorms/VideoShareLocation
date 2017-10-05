@@ -38,7 +38,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         apikey = DataUserDefault.string(forKey: "globalkey")
         userid = DataUserDefault.string(forKey: "globalid")
         useridd = DataUserDefault.integer(forKey: "globalidd")
-        DataUserDefault.set(7, forKey: "Distance")
+        DataUserDefault.set(15, forKey: "Distance")
         DataUserDefault.set(LatVideo, forKey: "LatVideo")
         DataUserDefault.set(LongVideo, forKey: "LongVideo")
         LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [Double]
@@ -189,9 +189,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 marker.snippet = "Videos: 0"
                 marker.icon = UIImage(named: "marker1")
                 marker.map = mapContainer
-                //let circulo = CLLocationCoordinate2D(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
-                //let radio = GMSCircle(position: circulo, radius: (UserDefaults.standard.double(forKey: "Distance")))
-                //radio.map = mapContainer
+                let circulo = CLLocationCoordinate2D(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
+                let radio = GMSCircle(position: circulo, radius: (UserDefaults.standard.double(forKey: "Distance")))
+                let ab = GMSCircle(position: circulo, radius: (0.4))
+                ab.map = mapContainer
+                radio.map = mapContainer
             }
         }
     }
@@ -207,9 +209,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 marker.snippet = "Videos: 0"
                 marker.icon = UIImage(named: "marker2")
                 marker.map = mapContainer
-                //let circulo = CLLocationCoordinate2D(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
-                //let radio = GMSCircle(position: circulo, radius: (UserDefaults.standard.double(forKey: "Distance")))
-                //radio.map = mapContainer
+                let circulo = CLLocationCoordinate2D(latitude: LatVideo[c] as! Double, longitude: LongVideo[c] as! Double)
+                let radio = GMSCircle(position: circulo, radius: (UserDefaults.standard.double(forKey: "Distance")))
+                radio.map = mapContainer
             }
         }
     }

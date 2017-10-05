@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_0" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,54 +19,42 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRN-FS-fRw">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoapp" highlightedImage="logoapp" translatesAutoresizingMaskIntoConstraints="NO" id="KYm-BE-phW">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DevWorms S.A de C.V." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBw-xP-1aj">
-                                        <rect key="frame" x="0.0" y="507" width="320" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="YRg-Rn-saU"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weshick" highlightedImage="logoapp" translatesAutoresizingMaskIntoConstraints="NO" id="KYm-BE-phW">
+                                <rect key="frame" x="-29" y="-54" width="426" height="558"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Devworms S.A de C.V." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBw-xP-1aj">
+                                <rect key="frame" x="0.0" y="420" width="320" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="KYm-BE-phW" secondAttribute="trailing" id="6Of-JJ-ddp"/>
-                                    <constraint firstItem="KYm-BE-phW" firstAttribute="top" secondItem="DRN-FS-fRw" secondAttribute="top" id="8xE-pZ-rmq"/>
-                                    <constraint firstAttribute="trailing" secondItem="WBw-xP-1aj" secondAttribute="trailing" id="EEV-20-oZh"/>
-                                    <constraint firstItem="KYm-BE-phW" firstAttribute="leading" secondItem="DRN-FS-fRw" secondAttribute="leading" id="LHI-js-Rpw"/>
-                                    <constraint firstAttribute="bottom" secondItem="WBw-xP-1aj" secondAttribute="bottom" constant="21" id="eWu-Xl-eWY"/>
-                                    <constraint firstItem="WBw-xP-1aj" firstAttribute="leading" secondItem="DRN-FS-fRw" secondAttribute="leading" id="sce-4r-zSB"/>
-                                    <constraint firstAttribute="bottom" secondItem="KYm-BE-phW" secondAttribute="bottom" id="vt7-vh-cQQ"/>
+                                    <constraint firstAttribute="height" constant="40" id="Y1U-AD-cQO"/>
                                 </constraints>
-                            </view>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="DRN-FS-fRw" secondAttribute="trailing" id="3xl-Wk-gU0"/>
-                            <constraint firstItem="DRN-FS-fRw" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="AcB-cJ-Bh5"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="DRN-FS-fRw" secondAttribute="bottom" id="WI1-9N-qdx"/>
-                            <constraint firstItem="DRN-FS-fRw" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="WfG-sI-w3H"/>
-                            <constraint firstItem="DRN-FS-fRw" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Yig-Zg-etk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KYm-BE-phW" secondAttribute="trailing" constant="-93" id="0st-L5-3C0"/>
+                            <constraint firstItem="WBw-xP-1aj" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="3se-Nh-gPB"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="KYm-BE-phW" secondAttribute="bottom" constant="-24" id="51o-1j-MPb"/>
+                            <constraint firstItem="KYm-BE-phW" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="-74" id="NXu-z9-Kt2"/>
+                            <constraint firstItem="WBw-xP-1aj" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="XPO-sj-nf9"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="WBw-xP-1aj" secondAttribute="bottom" constant="20" id="Ymr-Cm-SDK"/>
+                            <constraint firstItem="KYm-BE-phW" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-45" id="siX-js-c2O"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="43.125" y="368.75"/>
+            <point key="canvasLocation" x="43.125" y="368.66197183098592"/>
         </scene>
     </scenes>
     <resources>
         <image name="logoapp" width="792" height="1267"/>
+        <image name="weshick" width="1280" height="720"/>
     </resources>
 </document>
