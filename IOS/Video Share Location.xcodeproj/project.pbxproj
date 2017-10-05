@@ -24,7 +24,8 @@
 		94EAA6D41EFCEFC400871095 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94EAA6D31EFCEFC400871095 /* Assets.xcassets */; };
 		94EAA6D71EFCEFC400871095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94EAA6D51EFCEFC400871095 /* LaunchScreen.storyboard */; };
 		94F62B5E1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */; };
-		B0F255451F3AEEAA00E83DAA /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F255441F3AEEAA00E83DAA /* Media.swift */; };
+		B0CE5C131F841BBD00200FB5 /* VideosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CE5C121F841BBD00200FB5 /* VideosTableViewCell.swift */; };
+		B0FB4F3B1F805FB2000CE1DD /* VideoProgreso.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FB4F3A1F805FB2000CE1DD /* VideoProgreso.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +48,8 @@
 		94EAA6D61EFCEFC400871095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		94EAA6D81EFCEFC400871095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94F62B5D1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistroUsuarioViewController.swift; sourceTree = "<group>"; };
-		B0F255441F3AEEAA00E83DAA /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		B0CE5C121F841BBD00200FB5 /* VideosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosTableViewCell.swift; sourceTree = "<group>"; };
+		B0FB4F3A1F805FB2000CE1DD /* VideoProgreso.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoProgreso.swift; sourceTree = "<group>"; };
 		CF8E3E42B54DC1C9B357E130 /* Pods-Video Share Location.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Video Share Location.release.xcconfig"; path = "Pods/Target Support Files/Pods-Video Share Location/Pods-Video Share Location.release.xcconfig"; sourceTree = "<group>"; };
 		D65F163D577443A6078FAADC /* Pods_Video_Share_Location.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Video_Share_Location.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -99,10 +101,11 @@
 				943EF85A1F3305E000453111 /* SelectVideoViewController.swift */,
 				943EF85C1F3305F600453111 /* VideoDataCollectionViewCell.swift */,
 				145A18F81F1438FC002BBFC3 /* ListaVideoViewController.swift */,
-				B0F255441F3AEEAA00E83DAA /* Media.swift */,
 				949DE8F91F57E0D400EA7461 /* Users.swift */,
 				949DE8FC1F57ED5F00EA7461 /* MenuViewController.swift */,
 				949B7BF41F5874DA00A91A9B /* TerminosyCondicionesViewController.swift */,
+				B0FB4F3A1F805FB2000CE1DD /* VideoProgreso.swift */,
+				B0CE5C121F841BBD00200FB5 /* VideosTableViewCell.swift */,
 			);
 			path = "Video Share Location";
 			sourceTree = "<group>";
@@ -249,7 +252,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				949B7BF51F5874DB00A91A9B /* TerminosyCondicionesViewController.swift in Sources */,
-				B0F255451F3AEEAA00E83DAA /* Media.swift in Sources */,
 				145A18FB1F145165002BBFC3 /* LoginViewController.swift in Sources */,
 				94EAA6CF1EFCEFC400871095 /* ViewController.swift in Sources */,
 				9401E60A1F02425300AE0F4A /* MapaViewController.swift in Sources */,
@@ -259,6 +261,8 @@
 				949DE8FD1F57ED5F00EA7461 /* MenuViewController.swift in Sources */,
 				145A18F91F1438FC002BBFC3 /* ListaVideoViewController.swift in Sources */,
 				94F62B5E1F0F4F0F000C37C5 /* RegistroUsuarioViewController.swift in Sources */,
+				B0CE5C131F841BBD00200FB5 /* VideosTableViewCell.swift in Sources */,
+				B0FB4F3B1F805FB2000CE1DD /* VideoProgreso.swift in Sources */,
 				943EF8591F3305C100453111 /* UserDataCollectionViewCell.swift in Sources */,
 				94EAA6CD1EFCEFC400871095 /* AppDelegate.swift in Sources */,
 				943EF85B1F3305E000453111 /* SelectVideoViewController.swift in Sources */,
