@@ -14,36 +14,5 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if (dataAlreadyExist(dataKey: "loginEnd")){
-            let loginReceived:String = UserDefaults.standard.string(forKey: "loginEnd")!
-            if (loginReceived == "Si") {
-                mandarMapa()
-            } else if (loginReceived == "No") {
-                mandarLogin()
-            }
-        } else {
-            mandarLogin()
-        }
-    }
-    
-    func mandarLogin() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = vc
-        print("El Login no ha sido terminado")
-    }
-    
-    func mandarMapa(){
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "MapaViewController")
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = vc
-        print("Todo listo, iniciando..")
-    }
-    
-    func dataAlreadyExist(dataKey: String) -> Bool {
-        return UserDefaults.standard.object(forKey: dataKey) != nil
     }
 }
-

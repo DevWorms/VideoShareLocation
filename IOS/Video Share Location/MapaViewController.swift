@@ -11,7 +11,6 @@ import Foundation
 var usuariosg: [Users] = []
 var videoprogresog: [VideoProgreso] = []
 
-
 class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
     @IBOutlet weak var progressBar: UIProgressView!
@@ -26,8 +25,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     var apikey : String! = ""
     var userid : String! = ""
     var useridd : Int = 0
-    var LatVideo = [Double]()
-    var LongVideo = [Double]()
+    var LatVideo = [String]()
+    var LongVideo = [String]()
     
     @IBOutlet weak var mapContainer: GMSMapView!
     var usernames = [String]()
@@ -36,44 +35,55 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        apikey = DataUserDefault.string(forKey: "globalkey")
-        userid = DataUserDefault.string(forKey: "globalid")
-        useridd = DataUserDefault.integer(forKey: "globalidd")
-        DataUserDefault.set(15, forKey: "Distance")
-        DataUserDefault.set(LatVideo, forKey: "LatVideo")
-        DataUserDefault.set(LongVideo, forKey: "LongVideo")
-        LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [Double]
-        LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [Double]
-        
-        reloadMapData()
-        
-        camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 8.0) //Posicion de CDMX Centro
-        mapContainer.camera = camera
-        mapContainer.isMyLocationEnabled = true
-        mapContainer.settings.allowScrollGesturesDuringRotateOrZoom = true
-        mapContainer.settings.compassButton = true
-        mapContainer.settings.consumesGesturesInView = true
-        mapContainer.settings.myLocationButton = true
-        mapContainer.settings.zoomGestures = true
-
-        self.locationManager.delegate = self
-        self.locationManager.startUpdatingLocation()
-        self.mapContainer.delegate = self
-        
-        let refresh:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: #selector(MapaViewController.refresh))
-        let menu = UIButton(type: .custom)
-        menu.setImage(UIImage(named: "icon_menu"), for: .normal)
-        menu.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        menu.addTarget(self, action: #selector(MapaViewController.menu), for: .touchUpInside)
-        let menuItem = UIBarButtonItem(customView: menu)
-        
-        let navBackgroundImage:UIImage! = UIImage(named: "barra1")
-        let nav = self.navigationController?.navigationBar
-        nav?.tintColor = UIColor.darkText
-        nav!.setBackgroundImage(navBackgroundImage, for:.default)
-        
-        self.navigationItem.setLeftBarButton(refresh, animated: true)
-        self.navigationItem.setRightBarButtonItems([menuItem], animated: true)
+        if (dataAlreadyExist(dataKey: "loginEnd")){
+            let loginReceived:String = UserDefaults.standard.string(forKey: "loginEnd")!
+            if (loginReceived == "Si") {
+                apikey = DataUserDefault.string(forKey: "globalkey")
+                userid = DataUserDefault.string(forKey: "globalid")
+                useridd = DataUserDefault.integer(forKey: "globalidd")
+                DataUserDefault.set(7, forKey: "Distance")
+                DataUserDefault.set(LatVideo, forKey: "LatVideo")
+                DataUserDefault.set(LongVideo, forKey: "LongVideo")
+                LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [String]
+                LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [String]
+                
+                print("Usuario \(useridd)")
+                reloadMapData()
+                
+                camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 8.0) //Posicion de CDMX Centro
+                mapContainer.camera = camera
+                mapContainer.isMyLocationEnabled = true
+                mapContainer.settings.allowScrollGesturesDuringRotateOrZoom = true
+                mapContainer.settings.compassButton = true
+                mapContainer.settings.consumesGesturesInView = true
+                mapContainer.settings.myLocationButton = true
+                mapContainer.settings.zoomGestures = true
+                
+                self.locationManager.delegate = self
+                self.locationManager.startUpdatingLocation()
+                self.mapContainer.delegate = self
+                
+                let refresh:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: #selector(MapaViewController.refresh))
+                let menu = UIButton(type: .custom)
+                menu.setImage(UIImage(named: "icon_menu"), for: .normal)
+                menu.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+                menu.addTarget(self, action: #selector(MapaViewController.menu), for: .touchUpInside)
+                let menuItem = UIBarButtonItem(customView: menu)
+                
+                let navBackgroundImage:UIImage! = UIImage(named: "barra1")
+                let nav = self.navigationController?.navigationBar
+                nav?.tintColor = UIColor.darkText
+                nav!.setBackgroundImage(navBackgroundImage, for:.default)
+                
+                self.navigationItem.setLeftBarButton(refresh, animated: true)
+                self.navigationItem.setRightBarButtonItems([menuItem], animated: true)
+                
+            } else if (loginReceived == "No") {
+                mandarLogin()
+            }
+        } else {
+            mandarLogin()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -97,8 +107,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func crearMarker() {
         LatVideo.removeAll()
         LongVideo.removeAll()
-        LatVideo.append(-13.965953)
-        LongVideo.append(-138.157899)
+        LatVideo.append("-13.965953")
+        LongVideo.append("-138.157899")
         
         let marker = GMSMarker()
         marker.tracksInfoWindowChanges = true
@@ -117,7 +127,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 ponerMarker=true
                 for var nCoord in 0 ..< LatVideo.count {
                     let Punto1 = CLLocation(latitude: lat , longitude: long)
-                    let Punto2 = CLLocation(latitude: LatVideo[nCoord] , longitude: LongVideo[nCoord]) //Almacenado
+                    let Punto2 = CLLocation(latitude: Double(LatVideo[nCoord])! , longitude: Double(LongVideo[nCoord])!) //Almacenado
                     let distancia = Punto1.distance(from: Punto2)
                     if (distancia<=(UserDefaults.standard.double(forKey: "Distance"))) {
                         ponerMarker = false //Indicador para poner marker en mapa
@@ -129,8 +139,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                         LatVideo.removeAll()
                         LongVideo.removeAll()
                     }
-                    LatVideo.insert(lat, at: mContador)
-                    LongVideo.insert(long, at: mContador)
+                    LatVideo.insert(String(lat), at: mContador)
+                    LongVideo.insert(String(long), at: mContador)
                     DataUserDefault.set(LatVideo, forKey: "LatVideo")
                     DataUserDefault.set(LongVideo, forKey: "LongVideo")
                     mContador+=1
@@ -155,7 +165,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 ponerMarker=true
                 for var nCoord in 0 ..< LatVideo.count {
                     let Punto1 = CLLocation(latitude: lat , longitude: long)
-                    let Punto2 = CLLocation(latitude: LatVideo[nCoord] , longitude: LongVideo[nCoord]) //Almacenado
+                    let Punto2 = CLLocation(latitude: Double(LatVideo[nCoord])! , longitude: Double(LongVideo[nCoord])!) //Almacenado
                     let distancia = Punto1.distance(from: Punto2)
                     if (distancia<=(UserDefaults.standard.double(forKey: "Distance"))) {
                         ponerMarker = false //Indicador para poner marker en mapa
@@ -167,13 +177,12 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                         LatVideo.removeAll()
                         LongVideo.removeAll()
                     }
-                    LatVideo.append(lat)
-                    LongVideo.append(long)
+                    LatVideo.append(String(lat))
+                    LongVideo.append(String(long))
                     DataUserDefault.set(LatVideo, forKey: "LatVideo")
                     DataUserDefault.set(LongVideo, forKey: "LongVideo")
                     mContador+=1
                 }
-                //}
             }
         }
         markerOtroUsuario()
@@ -241,9 +250,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     /////////// Recupera videos del API ////////////////////////////////
     func videos(apikey: String, id: String) {
-        let parameterString = "apikey=\(apikey)&id=0"
+        let parameterString = "apikey=\(apikey)&id=\(useridd)"
         print(parameterString)
-        let strUrl = "http://videoshare.devworms.com/api/videos"
+        let strUrl = "https://weshick.com/api/videos"
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
             var urlRequest = URLRequest(url: URL(string: strUrl)!)
             urlRequest.httpMethod = "POST"
@@ -258,7 +267,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             print("Error al entrar Parse: \(error!)")
         } else if urlResponse != nil {
             if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
-                //print(json)
+                print(json)
                 if let jsonResult = json as? [String: Any] {
                     DispatchQueue.main.async {
                         self.usuarios = [Users]()
@@ -301,7 +310,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                           "lat": lat,
                           "long": long]
         let boundary = generateBoundary()
-        guard let url = URL(string: "http://videoshare.devworms.com/api/video") else { return }
+        guard let url = URL(string: "https://weshick.com/api/video") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
@@ -340,8 +349,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 }
             }
         }.resume()
-        let n = videoprogresog.count - 1
-        videoprogresog[n].estado = "Subido con exito"
+        //let n = videoprogresog.count - 1
+        //videoprogresog[n].estado = "Subido con exito"
     }
     
     func generateBoundary() -> String {
@@ -519,6 +528,18 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         }
         return numVideos
     }
+    
+    func mandarLogin() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = vc
+        print("El Login no ha sido terminado")
+    }
+    
+    func dataAlreadyExist(dataKey: String) -> Bool {
+        return UserDefaults.standard.object(forKey: dataKey) != nil
+    }
 }
     /*
     ================================================================================================
@@ -551,10 +572,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             if UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(destinationPath) {
                 UISaveVideoAtPathToSavedPhotosAlbum(destinationPath, self, #selector(MapaViewController.video(_: didFinishSavingWithError:contextInfo:)), nil)
              }
-        }
-        
-        func dataAlreadyExist(dataKey: String) -> Bool {
-            return UserDefaults.standard.stringArray(forKey: dataKey) != nil
         }
         
         func arrayAlreadyExist(dataKey: String) -> Bool {

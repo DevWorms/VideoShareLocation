@@ -86,17 +86,17 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         loadingLogin.view.addSubview(spinnerIndicator)
         self.present(loadingLogin, animated: false, completion: nil)
         login(token:idFace, name:name, imageURL: imageURL)
-        
+        print("Quitamos loading")
         loadingLogin.dismiss(animated: true, completion: nil)
     }
     
     func dataAlreadyExist(userKey: String) -> Bool {
         return UserDefaults.standard.object(forKey: userKey) != nil
     }
-
+    
     func login(token:String, name:String, imageURL: String) {
         let parameterString = "tokenfb=\(token)&name=\(name)&url_img=\(imageURL)"
-        let strUrl = "http://videoshare.devworms.com/api/login"
+        let strUrl = "https://weshick.com/api/login"
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
             var urlRequest = URLRequest(url: URL(string: strUrl)!)
             urlRequest.httpMethod = "POST"
@@ -131,7 +131,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                             
                             let mMapaViewController = self.storyBoard.instantiateViewController(withIdentifier: "MapaViewController")
                             
-                            self.present(mMapaViewController, animated: true, completion: nil)
+                            self.present(mMapaViewController, animated: false, completion: nil)
                         }
                     }
                 }
