@@ -4,9 +4,8 @@ import FBSDKCoreKit
 
 var globalkey = "globalkey"
 var globalid = "globalid"
-var gkey = ""
-var gid = ""
-var gidd : Int = 0
+var key = ""
+var id : Int = 0
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
@@ -115,19 +114,17 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 if let jsonResult = json as? [String: Any] {
                     DispatchQueue.main.async {
                         if let result = jsonResult["user"] as? [String: Any]{
-                            gkey = result["apikey"] as! String
+                            key = result["apikey"] as! String
                             let idd = result["id"]
                             if idd != nil{
                                 let r = idd as! Int
-                                gid = "\(r)"
-                                gidd = r
+                                id = r
                             }
-                            UserDefaults.standard.set(gkey, forKey: globalkey)
-                            UserDefaults.standard.set(gid, forKey: globalid)
-                            UserDefaults.standard.set(gidd, forKey: "globalidd")
+                            UserDefaults.standard.set(key, forKey: globalkey)
+                            UserDefaults.standard.set(id, forKey: "globalid")
                             
-                            print("API Key: \(gkey)")
-                            print("ID Usuario: \(gidd)")
+                            print("API Key: \(key)")
+                            print("ID Usuario: \(id)")
                             
                             let mMapaViewController = self.storyBoard.instantiateViewController(withIdentifier: "MapaViewController")
                             

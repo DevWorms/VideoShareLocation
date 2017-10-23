@@ -7,6 +7,7 @@ import CoreLocation
 import SwiftyJSON
 import Alamofire
 import Foundation
+import AVKit
 
 var usuariosg: [Users] = []
 var videoprogresog: [VideoProgreso] = []
@@ -23,12 +24,12 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     var locationManager = CLLocationManager()
     var camera: GMSCameraPosition!
     var apikey : String! = ""
-    var userid : String! = ""
-    var useridd : Int = 0
+    var userid : Int = 0
     var LatVideo = [String]()
     var LongVideo = [String]()
+    @IBOutlet weak var imagePreview: UIImageView!
     
-    @IBOutlet weak var mapContainer: GMSMapView!
+    @IBOutlet weak var mapContainer: GMSMapView!/Users/Akula/Desktop/Respaldo_220917_0222.zip
     var usernames = [String]()
     var idUsers = [Int]()
     
@@ -39,15 +40,18 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             let loginReceived:String = UserDefaults.standard.string(forKey: "loginEnd")!
             if (loginReceived == "Si") {
                 apikey = DataUserDefault.string(forKey: "globalkey")
-                userid = DataUserDefault.string(forKey: "globalid")
-                useridd = DataUserDefault.integer(forKey: "globalidd")
+                userid = DataUserDefault.integer(forKey: "globalid")
+                
+                //10206265586238734 FB Token Juan Ibarra
+                apikey = "$2y$10$X3H4hkbXWhb2ZD0AbbbyO.1Mm0CFGj5Bxn8gOOpbs/nzCLyu7ry5y"
+                userid = 10
+                
                 DataUserDefault.set(7, forKey: "Distance")
                 DataUserDefault.set(LatVideo, forKey: "LatVideo")
                 DataUserDefault.set(LongVideo, forKey: "LongVideo")
                 LatVideo = DataUserDefault.array(forKey: "LatVideo") as! [String]
                 LongVideo = DataUserDefault.array(forKey: "LongVideo") as! [String]
-                
-                print("Usuario \(useridd)")
+
                 reloadMapData()
                 
                 camera = GMSCameraPosition.camera(withLatitude: 19.419444, longitude: -99.145556, zoom: 8.0) //Posicion de CDMX Centro
@@ -58,6 +62,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 mapContainer.settings.consumesGesturesInView = true
                 mapContainer.settings.myLocationButton = true
                 mapContainer.settings.zoomGestures = true
+                mapContainer.setMinZoom(14, maxZoom: 30)
                 
                 self.locationManager.delegate = self
                 self.locationManager.startUpdatingLocation()
@@ -101,7 +106,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func reloadMapData(){
         mapContainer.clear()
-        videos(apikey: apikey, id: userid)
+        videos(apikey: apikey, id: String(userid), lat: String(self.mlatitud), long: String(self.mlongitud))
     }
     
     func crearMarker() {
@@ -249,9 +254,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         }
     }
     /////////// Recupera videos del API ////////////////////////////////
-    func videos(apikey: String, id: String) {
-        let parameterString = "apikey=\(apikey)&id=\(useridd)"
-        print(parameterString)
+    func videos(apikey: String, id: String, lat: String, long: String) {
+        let parameterString = "apikey=\(apikey)&id=\(userid)&lat=\(lat)&long=\(long)"
+        print("Parametros videos: \(parameterString)")
         let strUrl = "https://weshick.com/api/videos"
         if let httpBody = parameterString.data(using: String.Encoding.utf8) {
             var urlRequest = URLRequest(url: URL(string: strUrl)!)
@@ -276,7 +281,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                             for user in result {
                                 let usuario = Users()
                                 if let nombre = user["name"] as? String, let videos = user["videos"] as? [[String:Any]], let idd = user["id"] as? Int, let url_img = user["url_img"] as? String {
-                                    if (idd==self.useridd){
+                                    if (idd==self.userid){
                                         self.DataUserDefault.set(contador, forKey: "IndiceUsuario")
                                         print("Envia IndiceUsuario \(contador)")
                                     }
@@ -296,19 +301,21 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                                 usuariosg = self.usuarios
                             }
                         }
-                        print("Total de usuarios: \(self.usuarios.count)")
-                        self.crearMarker()
+                        //print("Total de usuarios: \(self.usuarios.count)")
+                        //self.crearMarker()
                     }
                 }
             }
         }
     }
+    
  ////////Inicia Subir video a API
-    func SubirVideo(apikey: String, id : String, lat: String, long: String, path: String ) {
+    func SubirVideo(apikey: String, id : String, lat: String, long: String, videoPath: String, thumbnailPath: String) {
         let parameters = ["apikey": apikey,
                           "id": id,
                           "lat": lat,
-                          "long": long]
+                          "long": long
+                          ]
         let boundary = generateBoundary()
         guard let url = URL(string: "https://weshick.com/api/video") else { return }
         var request = URLRequest(url: url)
@@ -316,7 +323,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.addValue("Client-ID f65203f7020dddc", forHTTPHeaderField: "Authorization")
         
-        let dataBody = createDataBody(withParameters: parameters, media: path , boundary: boundary)
+        let dataBody = createDataBody(withParameters: parameters, videoPath: videoPath, thumbnailPath: thumbnailPath  , boundary: boundary)
         request.httpBody = dataBody
         let session = URLSession.shared
         session.uploadTask(with: request, from: dataBody) { (data, response, error) in
@@ -328,7 +335,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             video.id = id
             video.lat = lat
             video.long = long
-            video.path = path
+            video.path = videoPath
             video.estado = "Subiendo"
             self.videoprogreso.append(video)
             videoprogresog = self.videoprogreso
@@ -357,7 +364,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         return "Boundary-\(NSUUID().uuidString)"
     }
     
-    func createDataBody(withParameters params: Parameters?, media: String?, boundary: String) -> Data {
+    func createDataBody(withParameters params: Parameters?, videoPath: String?, thumbnailPath: String?, boundary: String) -> Data {
         let lineBreak = "\r\n"
         var body = Data()
         if let parameters = params {
@@ -367,11 +374,22 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 body.append("\(value + lineBreak)")
             }
         }
-        if let media = media {
+        if let media = videoPath {
             do{
                 body.append("--\(boundary + lineBreak)")
                 body.append("Content-Disposition: form-data; name=archivo; filename=\"\(media)\"\(lineBreak)")
                 body.append("Content-Type: \("video/quicktime" + lineBreak + lineBreak)")
+                try body.append(NSData(contentsOfFile: media) as Data)
+                body.append(lineBreak)
+            }catch{
+                print("Error Media:\(error)")
+            }
+        }
+        if let media = thumbnailPath {
+            do{
+                body.append("--\(boundary + lineBreak)")
+                body.append("Content-Disposition: form-data; name=thumbnail; filename=\"\(media)\"\(lineBreak)")
+                body.append("Content-Type: \("image/jpeg" + lineBreak + lineBreak)")
                 try body.append(NSData(contentsOfFile: media) as Data)
                 body.append(lineBreak)
             }catch{
@@ -471,6 +489,11 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.mostrarRuta(inicio: ubicacionInicio, destino: ubicacionDestino)
     }
     
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        //Posicion de la camara al establecer la camara en un punto del mapa
+        reloadMapData()
+    }
+    
     func showModalUsuarios() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "UserVC")
@@ -556,7 +579,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 alerta.addAction(UIAlertAction(title: "Subir video", style: UIAlertActionStyle.default, handler: { alertAction in
                     let UploadLat = "\(self.mlatitud)"
                     let UploadLong = "\(self.mlongitud)"
-                    self.SubirVideo(apikey: self.apikey, id: String(self.userid), lat: UploadLat , long: UploadLong, path: sourcePath)
+                    let thumbnailPath = self.GenerarPreview(PathVideo: sourcePath)
+                    self.SubirVideo(apikey: self.apikey, id: String(self.userid), lat: UploadLat , long: UploadLong, videoPath: sourcePath, thumbnailPath: thumbnailPath!)
                     alerta.dismiss(animated: true, completion: nil)
                     self.reloadMapData()
                 }))
@@ -577,11 +601,36 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         func arrayAlreadyExist(dataKey: String) -> Bool {
             return UserDefaults.standard.array(forKey: dataKey) != nil
         }
-    }
-
-    extension MapaViewController: UINavigationControllerDelegate {
         
+        func GenerarPreview(PathVideo: String) -> String? {
+            let vidURL = URL(fileURLWithPath:PathVideo as String)
+            let asset = AVURLAsset(url: vidURL)
+            let generator = AVAssetImageGenerator(asset: asset)
+            generator.appliesPreferredTrackTransform = true
+            let timestamp = CMTime(seconds: 1, preferredTimescale: 7)
+            do {
+                let imageRef = try generator.copyCGImage(at: timestamp, actualTime: nil)
+                let image:UIImage = UIImage.init(cgImage: imageRef)
+                if let data = UIImageJPEGRepresentation(image, 0.8) {
+                    let filename = getDocumentsDirectory().appendingPathComponent("Imagen.jpeg")
+                    try? data.write(to: filename)
+                    return filename.path
+                } else {
+                    return "Error"
+                }
+            }
+            catch let error as NSError {
+                print("Error Preview, URL: \(PathVideo), Error: \(error)")
+                return nil
+            }
+        }
+        func getDocumentsDirectory() -> URL {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            return paths[0]
+        }
     }
+extension MapaViewController: UINavigationControllerDelegate {
+}
 
 extension Data {
     mutating func append(_ string: String) {
