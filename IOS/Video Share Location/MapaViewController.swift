@@ -63,33 +63,42 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 mapContainer.settings.consumesGesturesInView = true
                 mapContainer.settings.myLocationButton = true
                 mapContainer.settings.zoomGestures = true
-                //mapContainer.setMinZoom(14, maxZoom: 30)
                 
                 self.locationManager.delegate = self
                 self.locationManager.startUpdatingLocation()
                 self.mapContainer.delegate = self
                 
                 let refresh:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: #selector(MapaViewController.refresh))
-                let menu = UIButton(type: .custom)
-                menu.setImage(UIImage(named: "icon_menu"), for: .normal)
-                menu.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-                menu.addTarget(self, action: #selector(MapaViewController.menu), for: .touchUpInside)
-                let menuItem = UIBarButtonItem(customView: menu)
                 
                 let navBackgroundImage:UIImage! = UIImage(named: "barra1")
                 let nav = self.navigationController?.navigationBar
+                nav?.contentMode = .scaleAspectFit
                 nav?.tintColor = UIColor.darkText
                 nav!.setBackgroundImage(navBackgroundImage, for:.default)
                 
                 self.navigationItem.setLeftBarButton(refresh, animated: true)
-                self.navigationItem.setRightBarButtonItems([menuItem], animated: true)
-                
+                RightBarButtonItem()
             } else if (loginReceived == "No") {
                 mandarLogin()
             }
         } else {
             mandarLogin()
         }
+    }
+    
+    func RightBarButtonItem() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(MapaViewController.menu(sender:)))
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        customView.addGestureRecognizer(tapRecognizer)
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "icon_menu"))
+        //imageView.isCircular = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.frame = customView.bounds
+        customView.addSubview(imageView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: customView)
+    }
+    func avatarViewAction(){
+        
     }
     
     override func didReceiveMemoryWarning() {

@@ -86,7 +86,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         self.present(loadingLogin, animated: false, completion: nil)
         login(token:idFace, name:name, imageURL: imageURL)
         print("Quitamos loading")
-        loadingLogin.dismiss(animated: true, completion: nil)
     }
     
     func dataAlreadyExist(userKey: String) -> Bool {
@@ -127,6 +126,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                             print("ID Usuario: \(id)")
                             
                             let mMapaViewController = self.storyBoard.instantiateViewController(withIdentifier: "MapaViewController")
+                            
+                            self.loadingLogin.dismiss(animated: true, completion: nil)
                             
                             self.present(mMapaViewController, animated: false, completion: nil)
                         }
