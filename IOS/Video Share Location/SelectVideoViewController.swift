@@ -18,8 +18,7 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
     var numDeVideo = [Int]()
     var urlVideo = [String]()
     var previewImages = [UIImage]()
-    var IdUserSelected = -1
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionViewVideo.delegate = self
@@ -35,29 +34,20 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
         
         let LatSelected : Double = UserDefaults.standard.double(forKey: "LatSelected")
         let LongSelected : Double = UserDefaults.standard.double(forKey: "LongSelected")
-        for i in 0..<usuariosg.count{
-            if (Int(usuariosg[i].idusuario) == UserSelected) {
-                IdUserSelected = i
-            }
-        }
-        
         var contador : Int = 0
-        for h in 0..<usuariosg[IdUserSelected].videoinfo.count {
-            let LatCurrent : Double = Double(usuariosg[IdUserSelected].videoinfo[h]["lat"] as! String)!
-            let ant1 : String = usuariosg[IdUserSelected].videoinfo[h]["long"] as! String
-            let ant2 : String = ant1.replacingOccurrences(of: "\n", with: "", options: .literal, range: nil)
-            let LongCurrent : Double = Double(ant2)!
-            
+        for h in 0..<LatUser.count {
+            let LatCurrent : Double = Double(LatUser[h])!
+            let LongCurrent : Double = Double(LongUser[h])!
             let Punto1 = CLLocation(latitude: LatSelected, longitude: LongSelected)
             let Punto2 = CLLocation(latitude: LatCurrent, longitude: LongCurrent)
             let distancia = Punto1.distance(from: Punto2)
-
-            if(distancia <= UserDefaults.standard.double(forKey: "Distance")){
-                nombreVideo.append("Video \(distancia)")
-                urlVideo.append(usuariosg[IdUserSelected].videoinfo[h]["url"] as! String)
+            
+            if(distancia <= UserDefaults.standard.double(forKey: "Distance") && IdUser[h] == UserSelected) {
+                nombreVideo.append("Video \(h)")
+                urlVideo.append(URLVideo[h])
                 numDeVideo.append(contador)
                 DispatchQueue.main.async {
-                    let preview : UIImage = self.videoSnapshot(URLVideo: usuariosg[self.IdUserSelected].videoinfo[h]["url"] as! String)!
+                    let preview : UIImage = self.toStringURL(URLVideo: URLVideoImg[h])!
                     self.previewImages.append(preview)
                 }
             }
@@ -65,24 +55,12 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
         }
     }
     
-    func videoSnapshot(URLVideo: String) -> UIImage? {
+    func toStringURL(URLVideo: String) -> UIImage? {
         let url = URL(string:URLVideo)
-        let asset = AVURLAsset(url: url!)
-        let generator = AVAssetImageGenerator(asset: asset)
-        generator.appliesPreferredTrackTransform = true
-        
-        let timestamp = CMTime(seconds: 1, preferredTimescale: 7)
-        do {
-            let imageRef = try generator.copyCGImage(at: timestamp, actualTime: nil)
-            let image:UIImage = UIImage.init(cgImage: imageRef)
-            return image
-        }
-        catch let error as NSError {
-            print("Error Preview, URL: \(URLVideo), Error: \(error)")
-            return nil
-        }
+        let data = try? Data(contentsOf: url!)
+        let image: UIImage = UIImage(data: data!)!
+        return image
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return nombreVideo.count
@@ -95,7 +73,7 @@ class SelectVideoViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let videoURL = URL(string: usuariosg[IdUserSelected].videoinfo[(numDeVideo[indexPath.row])]["url"] as! String)
+        let videoURL = URL(string: urlVideo[indexPath.row])
         let player = AVPlayer(url: videoURL!)
         let playerViewController = AVPlayerViewController()
         playerViewController.player = player

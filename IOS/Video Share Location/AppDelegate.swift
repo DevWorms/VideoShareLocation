@@ -5,14 +5,13 @@ import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        GMSServices.provideAPIKey("AIzaSyAGyIu10hVEYb8lTHwiONTYXG-HjlO_rI0")
+        //GMSServices.provideAPIKey("AIzaSyAGyIu10hVEYb8lTHwiONTYXG-HjlO_rI0")
+        GMSServices.provideAPIKey("AIzaSyC3-m6Fv8QS2ePtMkCid-4ZXAvLibQ-SsM")
         return true
     }
         
@@ -21,8 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        
-        //FBSDKAppEvents.activateApp()
+        FBSDKAppEvents.activateApp()
     }
     
     func applicationDidBecomeActive(application: UIApplication!) {
@@ -47,7 +45,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
-

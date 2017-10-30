@@ -19,8 +19,7 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
     var usernames = [String]()
     var idUsers = [Int]()
     var urlPhotos = [String]()
-    let diccionario = UserDefaults.standard
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionViewUser.delegate = self
@@ -29,26 +28,23 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
         usernames = [String]()
         idUsers = [Int]()
         urlPhotos = [String]()
+        
         let LatSelected : Double = UserDefaults.standard.double(forKey: "LatSelected")
         let LongSelected : Double = UserDefaults.standard.double(forKey: "LongSelected")
-        for i in 0..<usuariosg.count{
-            for h in 0..<usuariosg[i].videoinfo.count {
-                let LatCurrent : Double = Double(usuariosg[i].videoinfo[h]["lat"] as! String)!
-                let ant1 : String = usuariosg[i].videoinfo[h]["long"] as! String
-                let ant2 : String = ant1.replacingOccurrences(of: "\n", with: "", options: .literal, range: nil)
-                let LongCurrent : Double = Double(ant2)!
-                let Punto1 = CLLocation(latitude: LatSelected, longitude: LongSelected)
-                let Punto2 = CLLocation(latitude: LatCurrent, longitude: LongCurrent)
-                let distancia = Punto1.distance(from: Punto2)
-                if(distancia<=UserDefaults.standard.double(forKey: "Distance")){
-                    if (!idUsers.contains(Int(usuariosg[i].idusuario)!)) {
-                        usernames.append(usuariosg[i].nombre)
-                        idUsers.append(Int(usuariosg[i].idusuario)!)
-                        let aString = usuariosg[i].url_img
-                        let bString = aString.replacingOccurrences(of: "http://", with: "https://", options: .literal, range: nil)
-                        urlPhotos.append(bString)
-                        print("En el modal Usuario -> Usuario: \(Int(usuariosg[i].idusuario)!), Nombre: \(usuariosg[i].nombre)")
-                    }
+        for i in 0..<LatUser.count{
+            let LatCurrent : Double = Double(LatUser[i])!
+            let LongCurrent : Double = Double(LongUser[i])!
+            let Punto1 = CLLocation(latitude: LatSelected, longitude: LongSelected)
+            let Punto2 = CLLocation(latitude: LatCurrent, longitude: LongCurrent)
+            let distancia = Punto1.distance(from: Punto2)
+            if(distancia<=UserDefaults.standard.double(forKey: "Distance")){
+                if (!idUsers.contains(IdUser[i])) {
+                    usernames.append(NombreUser[i])
+                    idUsers.append(IdUser[i])
+                    let aString = URLImgUser[i]
+                    let bString = aString.replacingOccurrences(of: "http://", with: "https://", options: .literal, range: nil)
+                    urlPhotos.append(bString)
+                    print("En el modal Usuario -> Usuario: \(IdUser[i]), Nombre: \(NombreUser[i])")
                 }
             }
         }
@@ -59,11 +55,10 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionViewUser.dequeueReusableCell(withReuseIdentifier: "collectionUserData", for: indexPath) as! UserDataCollectionViewCell
         DispatchQueue.main.async {
-            let facebookProfileUrl = NSURL(string: self.urlPhotos[indexPath.row])
-            if let data = NSData(contentsOf: facebookProfileUrl! as URL) {
+            let ProfileUrl = NSURL(string: self.urlPhotos[indexPath.row])
+            if let data = NSData(contentsOf: ProfileUrl! as URL) {
                 cell.imageViewUser.image = UIImage(data: data as Data)
             } else {
                 cell.imageViewUser.image = UIImage(named: "icon_user")
@@ -74,8 +69,8 @@ class SelectUserViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        diccionario.setValue(idUsers,forKey: "ArrayUserSelected")
-        diccionario.set(indexPath.row,forKey: "NumUserSelected")
+        DataUserDefault.setValue(idUsers,forKey: "ArrayUserSelected")
+        DataUserDefault.set(indexPath.row,forKey: "NumUserSelected")
         showModalVideos()
     }
     
