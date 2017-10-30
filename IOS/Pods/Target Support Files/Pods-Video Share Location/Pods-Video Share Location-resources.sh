@@ -77,12 +77,10 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"
-  install_resource "GooglePlaces/Frameworks/GooglePlaces.framework/Versions/A/Resources/GooglePlaces.bundle"
+  install_resource "GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"
-  install_resource "GooglePlaces/Frameworks/GooglePlaces.framework/Versions/A/Resources/GooglePlaces.bundle"
+  install_resource "GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

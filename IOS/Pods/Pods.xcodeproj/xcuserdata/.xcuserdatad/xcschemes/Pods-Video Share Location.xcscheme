@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '4FA029B653FA3BA471A077E89C48CB86'
+               BlueprintIdentifier = 'C7AD136C86AC93CF51F4F91DC5834627'
                BlueprintName = 'Pods-Video Share Location'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods-Video Share Location.framework'>

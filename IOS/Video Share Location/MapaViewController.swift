@@ -137,6 +137,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
      */
     func reloadMapData(){
         if(isInternetAvailable()) {
+            mapContainer.clear()
             videos(apikey: apikey, id: String(userid), lat: String(self.mPosLat), long: String(self.mPosLong))
         } else {
             showNoInternetConnection()
@@ -227,9 +228,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         if error != nil {
             print("Error al entrar Parse de Videos: \(error!)")
         } else if urlResponse != nil {
-            /////////////////////Limpiar mapa y coloca marker en centro de pantalla/////////////////////
-            mapContainer.clear()
-            /////////////////////Limpiar mapa y coloca marker en centro de pantalla/////////////////////
             if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
                 if let jsonResult = json as? [String: Any] {
                     if let videos = jsonResult["videos"] as?  [[String: Any]] {
