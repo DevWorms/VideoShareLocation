@@ -1,0 +1,6 @@
+framework module Pods_WeShick {
+  umbrella header "Pods-WeShick-umbrella.h"
+
+  export *
+  module * { export * }
+}
