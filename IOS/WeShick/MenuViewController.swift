@@ -22,11 +22,11 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.labelEstado.text = videoprogresog[indexPath.row].estado
         cell.buttonBorrar.tag = indexPath.row
         cell .buttonBorrar.addTarget(self, action: #selector(getter: VideosTableViewCell.buttonBorrar), for: .touchUpInside)
-        if (cell.labelEstado.text == "Subido con exito"){
+        if (cell.labelEstado.text == "Completo"){
             cell.labelEstado.textColor = UIColor.green
             cell.buttonBorrar.isHidden = false
         }
-        if(cell.labelEstado.text == "Error al subir video"){
+        if(cell.labelEstado.text == "Error"){
             cell.labelEstado.textColor = UIColor.red
             cell.buttonBorrar.isHidden = false
         }

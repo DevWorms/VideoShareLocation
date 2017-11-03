@@ -379,8 +379,9 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                     self.reloadMapData() //Recarga al subir un video para ver los cambios
                 } catch {
                     print("Error formando JSON: \(error)")
-                    let n = videoprogresog.count - 1
-                    videoprogresog[n].estado = "Error al subir video"
+                    let vid = self.videoprogreso.count
+                    let n = vid - 1
+                    videoprogresog[n].estado = "Error"
                     let alerta = UIAlertController(title: "Error de conexion a intenet", message: "Revisa tu conexion", preferredStyle: UIAlertControllerStyle.alert)
                     alerta.addAction(UIAlertAction(title: "Entendido", style: UIAlertActionStyle.default, handler: { alertAction in
                         alerta.dismiss(animated: true, completion: nil)
@@ -389,6 +390,10 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 }
             }
             }.resume()
+        let n = self.videoprogreso.count
+        let vid = n - 1
+        self.videoprogreso[vid].estado = "Completo"
+        videoprogresog = self.videoprogreso
     }
     /*
      ================================================================================================
