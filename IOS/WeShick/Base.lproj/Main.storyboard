@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,7 +13,7 @@
         <!--Iniciar sesión-->
         <scene sceneID="RrP-Hl-ZEu">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" title="Iniciar sesión" id="krf-su-8e7" customClass="LoginViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" title="Iniciar sesión" id="krf-su-8e7" customClass="LoginViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="q2g-sP-ONz"/>
                         <viewControllerLayoutGuide type="bottom" id="9cO-6I-Fn4"/>
@@ -39,7 +39,7 @@
         <!--Mapa-->
         <scene sceneID="saF-nu-u66">
             <objects>
-                <viewController id="PPV-uQ-HAP" userLabel="Mapa" customClass="MapaViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="PPV-uQ-HAP" userLabel="Mapa" customClass="MapaViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aDl-Xt-4h6"/>
                         <viewControllerLayoutGuide type="bottom" id="874-1e-o2c"/>
@@ -103,7 +103,7 @@
         <!--Select User View Controller-->
         <scene sceneID="Ov5-TK-p4N">
             <objects>
-                <viewController storyboardIdentifier="UserVC" id="9Pl-NO-Ed0" customClass="SelectUserViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserVC" id="9Pl-NO-Ed0" customClass="SelectUserViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ltj-HM-DEm"/>
                         <viewControllerLayoutGuide type="bottom" id="ayh-5Z-ARA"/>
@@ -128,7 +128,7 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionUserData" id="XcB-hz-apU" customClass="UserDataCollectionViewCell" customModule="Video_Share_Location" customModuleProvider="target">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionUserData" id="XcB-hz-apU" customClass="UserDataCollectionViewCell" customModule="WeShick" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.5" width="114" height="135"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -136,10 +136,10 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p0O-yI-YcF">
-                                                            <rect key="frame" x="0.0" y="0.0" width="124" height="123"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="108" height="123"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E6h-u7-FqQ">
-                                                            <rect key="frame" x="-9" y="117" width="132" height="18"/>
+                                                            <rect key="frame" x="7" y="117" width="100" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -210,7 +210,7 @@
         <!--Select Video View Controller-->
         <scene sceneID="ZKm-bh-jCa">
             <objects>
-                <viewController storyboardIdentifier="VideoVC" id="OFj-yX-Oox" customClass="SelectVideoViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VideoVC" id="OFj-yX-Oox" customClass="SelectVideoViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Naf-xa-4qB"/>
                         <viewControllerLayoutGuide type="bottom" id="mNX-rc-JRm"/>
@@ -235,7 +235,7 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionVideoData" id="yQj-hz-Vdg" customClass="VideoDataCollectionViewCell" customModule="Video_Share_Location" customModuleProvider="target">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionVideoData" id="yQj-hz-Vdg" customClass="VideoDataCollectionViewCell" customModule="WeShick" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.5" width="114" height="135"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -243,7 +243,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P83-lB-8zp">
-                                                            <rect key="frame" x="0.0" y="0.0" width="131" height="143"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="115" height="143"/>
                                                         </imageView>
                                                     </subviews>
                                                 </view>
@@ -303,7 +303,7 @@
         <!--WeShick-->
         <scene sceneID="TOD-jZ-7CW">
             <objects>
-                <viewController storyboardIdentifier="MenuViewController" id="lXv-Ht-xOe" customClass="MenuViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuViewController" id="lXv-Ht-xOe" customClass="MenuViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LFX-TC-eL1"/>
                         <viewControllerLayoutGuide type="bottom" id="GTB-ZL-uxW"/>
@@ -347,7 +347,7 @@
                                 <rect key="frame" x="8" y="207" width="359" height="361"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="uST-TW-49u" customClass="VideosTableViewCell" customModule="Video_Share_Location" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="uST-TW-49u" customClass="VideosTableViewCell" customModule="WeShick" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="359" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uST-TW-49u" id="SUH-Fa-Ofx">
@@ -416,7 +416,7 @@
         <!--Terminosy Condiciones View Controller-->
         <scene sceneID="dN1-cK-wnq">
             <objects>
-                <viewController storyboardIdentifier="TerminosyCondiciones" id="h7Y-Vq-KZp" customClass="TerminosyCondicionesViewController" customModule="Video_Share_Location" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TerminosyCondiciones" id="h7Y-Vq-KZp" customClass="TerminosyCondicionesViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Cc5-be-urI"/>
                         <viewControllerLayoutGuide type="bottom" id="8uc-z1-Qi8"/>
@@ -454,7 +454,7 @@
                 <navigationController storyboardIdentifier="MapaViewController" automaticallyAdjustsScrollViewInsets="NO" id="rXz-mu-xSg" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pyo-sg-sZI">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="48"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

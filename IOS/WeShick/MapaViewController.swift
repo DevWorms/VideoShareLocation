@@ -349,6 +349,15 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                           "lat": lat,
                           "long": long
         ]
+        self.videoprogreso = [VideoProgreso]()
+        let video = VideoProgreso()
+        video.id = id
+        video.lat = lat
+        video.long = long
+        video.path = videoPath
+        video.estado = "Subiendo"
+        self.videoprogreso.append(video)
+        videoprogresog = self.videoprogreso
         let boundary = generateBoundary()
         guard let url = URL(string: "https://weshick.com/api/video") else { return }
         var request = URLRequest(url: url)
@@ -363,15 +372,6 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             if let response = response {
                 print("Respuesta: \(response)")
             }
-            self.videoprogreso = [VideoProgreso]()
-            let video = VideoProgreso()
-            video.id = id
-            video.lat = lat
-            video.long = long
-            video.path = videoPath
-            video.estado = "Subiendo"
-            self.videoprogreso.append(video)
-            videoprogresog = self.videoprogreso
             if let data = data {
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
