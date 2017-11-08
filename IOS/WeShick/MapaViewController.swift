@@ -377,6 +377,10 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     print("Respuesta JSON: \(json)")
                     self.reloadMapData() //Recarga al subir un video para ver los cambios
+                    let n = self.videoprogreso.count
+                    let vid = n - 1
+                    self.videoprogreso[vid].estado = "Completo"
+                    videoprogresog = self.videoprogreso
                 } catch {
                     print("Error formando JSON: \(error)")
                     let vid = self.videoprogreso.count
@@ -390,10 +394,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 }
             }
             }.resume()
-        let n = self.videoprogreso.count
-        let vid = n - 1
-        self.videoprogreso[vid].estado = "Completo"
-        videoprogresog = self.videoprogreso
+        
+        
     }
     /*
      ================================================================================================
