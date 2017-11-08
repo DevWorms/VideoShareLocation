@@ -12,6 +12,8 @@ import FBSDKCoreKit
 
 class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var tableView: UITableView!
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return videoprogresog.count
     }
@@ -21,7 +23,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.labelTitulo.text = videoprogresog[indexPath.row].path
         cell.labelEstado.text = videoprogresog[indexPath.row].estado
         cell.buttonBorrar.tag = indexPath.row
-        cell .buttonBorrar.addTarget(self, action: #selector(getter: VideosTableViewCell.buttonBorrar), for: .touchUpInside)
+        cell .buttonBorrar.addTarget(self, action: #selector(self.btnBorrarCelda(sender:)), for: .touchUpInside)
         if (cell.labelEstado.text == "Completo"){
             cell.labelEstado.textColor = UIColor.green
             cell.buttonBorrar.isHidden = false
@@ -33,10 +35,12 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    
-    @IBAction func buttonBorrar(sender: UIButton){
+    @objc func btnBorrarCelda(sender: UIButton) {
+        print(sender.tag)
         videoprogresog.remove(at: sender.tag)
+        tableView.reloadData()
     }
+    
     @IBAction func mandarTerminosyCondiciones(_ sender: Any) {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TerminosyCondiciones")

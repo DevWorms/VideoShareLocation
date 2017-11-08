@@ -356,8 +356,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         video.long = long
         video.path = videoPath
         video.estado = "Subiendo"
-        self.videoprogreso.append(video)
-        videoprogresog = self.videoprogreso
+        videoprogresog.append(video)
+        //videoprogresog = self.videoprogreso
         let boundary = generateBoundary()
         guard let url = URL(string: "https://weshick.com/api/video") else { return }
         var request = URLRequest(url: url)
@@ -377,13 +377,13 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     print("Respuesta JSON: \(json)")
                     self.reloadMapData() //Recarga al subir un video para ver los cambios
-                    let n = self.videoprogreso.count
+                    let n = videoprogresog.count
                     let vid = n - 1
-                    self.videoprogreso[vid].estado = "Completo"
-                    videoprogresog = self.videoprogreso
+                    videoprogresog[vid].estado = "Completo"
+                    //videoprogresog = self.videoprogreso
                 } catch {
                     print("Error formando JSON: \(error)")
-                    let vid = self.videoprogreso.count
+                    let vid = videoprogresog.count
                     let n = vid - 1
                     videoprogresog[n].estado = "Error"
                     let alerta = UIAlertController(title: "Error de conexion a intenet", message: "Revisa tu conexion", preferredStyle: UIAlertControllerStyle.alert)
