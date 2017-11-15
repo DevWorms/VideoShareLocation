@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94AA37381FBC09BB000B6853 /* AvisodePrivacidadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AA37371FBC09BB000B6853 /* AvisodePrivacidadViewController.swift */; };
 		94BB49CB1FA84E280048C41E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BB49CA1FA84E280048C41E /* AppDelegate.swift */; };
 		94BB49CD1FA84E280048C41E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BB49CC1FA84E280048C41E /* ViewController.swift */; };
 		94BB49D01FA84E280048C41E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BB49CE1FA84E280048C41E /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		1230CDE93A23664B2A846DBF /* Pods-WeShick.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeShick.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeShick/Pods-WeShick.release.xcconfig"; sourceTree = "<group>"; };
 		32AA175599992A14A4FFE9DF /* Pods-WeShick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeShick.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeShick/Pods-WeShick.debug.xcconfig"; sourceTree = "<group>"; };
+		94AA37371FBC09BB000B6853 /* AvisodePrivacidadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvisodePrivacidadViewController.swift; sourceTree = "<group>"; };
 		94BB49C71FA84E280048C41E /* WeShick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeShick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94BB49CA1FA84E280048C41E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94BB49CC1FA84E280048C41E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				94BB49EA1FA853790048C41E /* TerminosyCondicionesViewController.swift */,
 				94BB49EC1FA853980048C41E /* VideoProgreso.swift */,
 				94BB49EE1FA853C00048C41E /* VideosTableViewCell.swift */,
+				94AA37371FBC09BB000B6853 /* AvisodePrivacidadViewController.swift */,
 			);
 			path = WeShick;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				94BB49CD1FA84E280048C41E /* ViewController.swift in Sources */,
 				94BB49ED1FA853980048C41E /* VideoProgreso.swift in Sources */,
 				94BB49E31FA852B90048C41E /* SelectUserViewController.swift in Sources */,
+				94AA37381FBC09BB000B6853 /* AvisodePrivacidadViewController.swift in Sources */,
 				94BB49DD1FA8522F0048C41E /* MapaViewController.swift in Sources */,
 				94BB49CB1FA84E280048C41E /* AppDelegate.swift in Sources */,
 				94BB49EB1FA853790048C41E /* TerminosyCondicionesViewController.swift in Sources */,
@@ -392,11 +396,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = FN75477QMR;
 				INFOPLIST_FILE = WeShick/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.devworms.WeShick;
+				PRODUCT_BUNDLE_IDENTIFIER = com.devworms.weshickapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -411,11 +415,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = FN75477QMR;
 				INFOPLIST_FILE = WeShick/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.devworms.WeShick;
+				PRODUCT_BUNDLE_IDENTIFIER = com.devworms.weshickapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;

@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import WebKit
 
 class TerminosyCondicionesViewController: UIViewController {
     
+    @IBOutlet weak var cargarWebTerminosyCondiciones: WKWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        let url = URL(string: "https://www.weshick.com")!
+        cargarWebTerminosyCondiciones.load(URLRequest(url: url))
+        cargarWebTerminosyCondiciones.allowsBackForwardNavigationGestures = true
         
         let regresarButton:UIBarButtonItem = UIBarButtonItem(title: "Regresar", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TerminosyCondicionesViewController.regresarButton(sender:)))
         self.navigationItem.setLeftBarButton(regresarButton, animated: true)

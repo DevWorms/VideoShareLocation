@@ -46,6 +46,11 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         let vc = storyboard.instantiateViewController(withIdentifier: "TerminosyCondiciones")
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    @IBAction func mandarAvisoDePrivacidad(_ sender: Any) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "AvisodePrivacidad")
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     @IBAction func logout(_ sender: Any) {
         let alerta = UIAlertController(title: "¿Estas seguro hacer?", message: "Volveras a la pantalla de inicio", preferredStyle: UIAlertControllerStyle.alert)
