@@ -14,7 +14,7 @@ class AvisodePrivacidadViewController: UIViewController {
     @IBOutlet weak var cargarWebAvisodePrivacidad: WKWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let url = URL(string: "http://www.devworms.com")!
+        let url = URL(string: "http://www.devworms.com/aviso.php")!
         cargarWebAvisodePrivacidad.load(URLRequest(url: url))
         cargarWebAvisodePrivacidad.allowsBackForwardNavigationGestures = true
         

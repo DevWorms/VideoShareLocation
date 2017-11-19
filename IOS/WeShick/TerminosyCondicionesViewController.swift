@@ -14,7 +14,7 @@ class TerminosyCondicionesViewController: UIViewController {
     @IBOutlet weak var cargarWebTerminosyCondiciones: WKWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let url = URL(string: "https://www.weshick.com")!
+        let url = URL(string: "https://www.weshick.com/termino")!
         cargarWebTerminosyCondiciones.load(URLRequest(url: url))
         cargarWebTerminosyCondiciones.allowsBackForwardNavigationGestures = true
         
