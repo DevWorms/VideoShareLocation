@@ -195,8 +195,8 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=walking"
         reloadMapData()
         Alamofire.request(url).responseJSON { response in
-            let json = JSON(data: response.data!)
-            let routes = json["routes"].arrayValue
+            let json = try? JSON(data: response.data!)
+            let routes = json!["routes"].arrayValue
             for route in routes {
                 let routeOverviewPolyline = route["overview_polyline"].dictionary
                 let points = routeOverviewPolyline?["points"]?.stringValue
@@ -205,6 +205,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 polyline.strokeWidth = 3
                 polyline.strokeColor = UIColor.blue
                 polyline.map = self.mapContainer
+                //try self.Context!.save()
             }
         }
     }
