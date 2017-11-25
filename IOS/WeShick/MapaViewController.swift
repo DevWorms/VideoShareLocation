@@ -47,6 +47,7 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     var LatVideo = [String]()
     var LongVideo = [String]()
     var TengoVideo = [Int]()
+    var firstView : Bool = false
     
     @IBOutlet weak var imagePreview: UIImageView!
     
@@ -451,6 +452,12 @@ class MapaViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let location = locations.last
         mlatitud = (location?.coordinate.latitude)!
         mlongitud = (location?.coordinate.longitude)!
+        if (!firstView){
+            camera = GMSCameraPosition.camera(withLatitude: mlatitud, longitude: mlongitud, zoom: 15.0)
+            mapContainer.camera = camera
+            reloadMapData()
+            firstView = true
+        }
         //self.locationManager.stopUpdatingLocation()
     }
     /*
@@ -764,7 +771,9 @@ extension MapaViewController: UIImagePickerControllerDelegate {
         return paths[0]
     }
 }
+
 extension MapaViewController: UINavigationControllerDelegate {
+    
 }
 
 extension Data {

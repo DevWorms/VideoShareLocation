@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rXz-mu-xSg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rXz-mu-xSg">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,10 +14,6 @@
         <scene sceneID="RrP-Hl-ZEu">
             <objects>
                 <viewController storyboardIdentifier="LoginViewController" title="Iniciar sesión" id="krf-su-8e7" customClass="LoginViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="q2g-sP-ONz"/>
-                        <viewControllerLayoutGuide type="bottom" id="9cO-6I-Fn4"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="q1q-9B-upZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -28,9 +24,8 @@
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <viewLayoutGuide key="safeArea" id="wfX-be-29o"/>
+                        <viewLayoutGuide key="safeArea" id="8Ej-rz-OmP"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Iniciar sesión" id="sOb-Iv-Yv4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MvH-Iq-ADR" sceneMemberID="firstResponder"/>
             </objects>
@@ -40,10 +35,6 @@
         <scene sceneID="saF-nu-u66">
             <objects>
                 <viewController id="PPV-uQ-HAP" userLabel="Mapa" customClass="MapaViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="aDl-Xt-4h6"/>
-                        <viewControllerLayoutGuide type="bottom" id="874-1e-o2c"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="52R-J3-0VU" colorLabel="IBBuiltInLabel-Blue">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -85,11 +76,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ook-IY-kHy" firstAttribute="width" secondItem="52R-J3-0VU" secondAttribute="width" id="2h7-ER-P3A"/>
-                            <constraint firstItem="874-1e-o2c" firstAttribute="top" secondItem="ook-IY-kHy" secondAttribute="bottom" id="AB1-OC-I74"/>
-                            <constraint firstItem="ook-IY-kHy" firstAttribute="leading" secondItem="52R-J3-0VU" secondAttribute="leading" id="lGg-9o-0LI"/>
-                            <constraint firstAttribute="trailing" secondItem="ook-IY-kHy" secondAttribute="trailing" id="pT6-Vj-9ep"/>
+                            <constraint firstItem="Wj1-wb-t2g" firstAttribute="bottom" secondItem="ook-IY-kHy" secondAttribute="bottom" id="AB1-OC-I74"/>
+                            <constraint firstItem="ook-IY-kHy" firstAttribute="leading" secondItem="Wj1-wb-t2g" secondAttribute="leading" id="lGg-9o-0LI"/>
+                            <constraint firstItem="Wj1-wb-t2g" firstAttribute="trailing" secondItem="ook-IY-kHy" secondAttribute="trailing" id="pT6-Vj-9ep"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="lrQ-En-fDO"/>
+                        <viewLayoutGuide key="safeArea" id="Wj1-wb-t2g"/>
                     </view>
                     <navigationItem key="navigationItem" title="WeShick" id="4xp-Qh-2ZU" userLabel="WeShick"/>
                     <connections>
@@ -104,10 +95,6 @@
         <scene sceneID="Ov5-TK-p4N">
             <objects>
                 <viewController storyboardIdentifier="UserVC" id="9Pl-NO-Ed0" customClass="SelectUserViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Ltj-HM-DEm"/>
-                        <viewControllerLayoutGuide type="bottom" id="ayh-5Z-ARA"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hdm-Mu-4hY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -136,10 +123,10 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p0O-yI-YcF">
-                                                            <rect key="frame" x="0.0" y="0.0" width="124" height="123"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="116" height="115"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E6h-u7-FqQ">
-                                                            <rect key="frame" x="-9" y="117" width="132" height="18"/>
+                                                            <rect key="frame" x="-1" y="117" width="116" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -193,11 +180,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="0.05936399648" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="2hs-yG-S5E" firstAttribute="leading" secondItem="hdm-Mu-4hY" secondAttribute="leading" id="bB2-xI-TbU"/>
-                            <constraint firstItem="2hs-yG-S5E" firstAttribute="top" secondItem="Ltj-HM-DEm" secondAttribute="bottom" constant="152" id="mid-R6-qle"/>
-                            <constraint firstAttribute="trailing" secondItem="2hs-yG-S5E" secondAttribute="trailing" id="ukC-wz-rDC"/>
+                            <constraint firstItem="2hs-yG-S5E" firstAttribute="leading" secondItem="JFV-ll-fh1" secondAttribute="leading" id="bB2-xI-TbU"/>
+                            <constraint firstItem="2hs-yG-S5E" firstAttribute="top" secondItem="JFV-ll-fh1" secondAttribute="top" constant="152" id="mid-R6-qle"/>
+                            <constraint firstItem="JFV-ll-fh1" firstAttribute="trailing" secondItem="2hs-yG-S5E" secondAttribute="trailing" id="ukC-wz-rDC"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Ooc-lo-GLn"/>
+                        <viewLayoutGuide key="safeArea" id="JFV-ll-fh1"/>
                     </view>
                     <connections>
                         <outlet property="collectionViewUser" destination="VX5-YE-l39" id="OMN-OO-SON"/>
@@ -211,10 +198,6 @@
         <scene sceneID="ZKm-bh-jCa">
             <objects>
                 <viewController storyboardIdentifier="VideoVC" id="OFj-yX-Oox" customClass="SelectVideoViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Naf-xa-4qB"/>
-                        <viewControllerLayoutGuide type="bottom" id="mNX-rc-JRm"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bsb-8e-Yp9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -243,7 +226,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P83-lB-8zp">
-                                                            <rect key="frame" x="0.0" y="0.0" width="131" height="143"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="123" height="135"/>
                                                         </imageView>
                                                     </subviews>
                                                 </view>
@@ -286,11 +269,11 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="KHo-Gw-tzG" firstAttribute="leading" secondItem="bsb-8e-Yp9" secondAttribute="leading" id="Coh-bR-I2b"/>
-                            <constraint firstItem="KHo-Gw-tzG" firstAttribute="top" secondItem="Naf-xa-4qB" secondAttribute="bottom" constant="152" id="GQU-9d-Uki"/>
-                            <constraint firstAttribute="trailing" secondItem="KHo-Gw-tzG" secondAttribute="trailing" id="ROg-w3-jxo"/>
+                            <constraint firstItem="KHo-Gw-tzG" firstAttribute="leading" secondItem="GaG-Kp-hxO" secondAttribute="leading" id="Coh-bR-I2b"/>
+                            <constraint firstItem="KHo-Gw-tzG" firstAttribute="top" secondItem="GaG-Kp-hxO" secondAttribute="top" constant="152" id="GQU-9d-Uki"/>
+                            <constraint firstItem="GaG-Kp-hxO" firstAttribute="trailing" secondItem="KHo-Gw-tzG" secondAttribute="trailing" id="ROg-w3-jxo"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="huc-9p-oXj"/>
+                        <viewLayoutGuide key="safeArea" id="GaG-Kp-hxO"/>
                     </view>
                     <connections>
                         <outlet property="collectionViewVideo" destination="EqH-Ml-6Uh" id="Vl9-dg-Iqd"/>
@@ -304,10 +287,6 @@
         <scene sceneID="TOD-jZ-7CW">
             <objects>
                 <viewController storyboardIdentifier="MenuViewController" id="lXv-Ht-xOe" customClass="MenuViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="LFX-TC-eL1"/>
-                        <viewControllerLayoutGuide type="bottom" id="GTB-ZL-uxW"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="l9y-bw-zYv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -394,7 +373,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="E0D-q4-V9X"/>
+                        <viewLayoutGuide key="safeArea" id="gLb-EI-alX"/>
                     </view>
                     <navigationItem key="navigationItem" title="WeShick" id="3Dj-FR-oS1"/>
                     <connections>
@@ -409,10 +388,6 @@
         <scene sceneID="dN1-cK-wnq">
             <objects>
                 <viewController storyboardIdentifier="TerminosyCondiciones" id="h7Y-Vq-KZp" customClass="TerminosyCondicionesViewController" customModule="WeShick" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Cc5-be-urI"/>
-                        <viewControllerLayoutGuide type="bottom" id="8uc-z1-Qi8"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="QrV-k4-cjv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -435,7 +410,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="JoG-K0-hfo"/>
+                        <viewLayoutGuide key="safeArea" id="ykj-fX-jhT"/>
                     </view>
                     <connections>
                         <outlet property="cargarWebTerminosyCondiciones" destination="ZFE-bd-4mO" id="5ef-RY-5T3"/>
@@ -471,7 +446,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="kmm-6O-oKT"/>
+                        <viewLayoutGuide key="safeArea" id="Cry-8g-CVv"/>
                     </view>
                     <connections>
                         <outlet property="cargarWebAvisodePrivacidad" destination="ajQ-uG-ODr" id="NJG-sK-NEm"/>
